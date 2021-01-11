@@ -5,6 +5,8 @@ public class main extends PApplet {
         PApplet.main("main");
     }
 
+    MainMenu mainMenu;
+
     @Override
     public void settings() {
         size(1280,720);
@@ -12,11 +14,21 @@ public class main extends PApplet {
 
     @Override
     public void setup() {
-
+        mainMenu = new MainMenu(this);
     }
 
     @Override
     public void draw() {
+        mainMenu.drawMenu();
+    }
 
+    @Override
+    public void mouseClicked() {
+        mainMenu.menuMouseClick();
+    }
+
+    @Override
+    public void keyTyped() {
+        mainMenu.menuKeyTyped();
     }
 }
