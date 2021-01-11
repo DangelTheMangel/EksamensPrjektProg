@@ -5,7 +5,7 @@ public class main extends PApplet {
         PApplet.main("main");
     }
 
-    SettingMenu mainMenu;
+    SettingMenu settingMenu;
 
     @Override
     public void settings() {
@@ -14,21 +14,21 @@ public class main extends PApplet {
 
     @Override
     public void setup() {
-        mainMenu = new SettingMenu(this);
+        settingMenu = new SettingMenu(this);
     }
 
     @Override
     public void draw() {
-        mainMenu.drawMenu();
+        settingMenu.drawMenu();
     }
 
     @Override
     public void mouseClicked() {
-        mainMenu.menuMouseClick();
+        settingMenu.menuMouseClick();
     }
 
     @Override
     public void keyTyped() {
-        mainMenu.menuKeyTyped();
+        settingMenu.menuKeyTyped();
     }
 }
