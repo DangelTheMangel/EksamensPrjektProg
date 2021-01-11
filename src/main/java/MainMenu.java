@@ -8,6 +8,7 @@ public class MainMenu {
     }
 
     void drawMenu(){
+        p.clear();
 
     }
 
