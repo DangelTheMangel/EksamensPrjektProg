@@ -5,13 +5,30 @@ public class main extends PApplet {
         PApplet.main("main");
     }
 
+    SettingMenu settingMenu;
+
+    @Override
+    public void settings() {
+        size(1280,720);
+    }
+
     @Override
     public void setup() {
-
+        settingMenu = new SettingMenu(this);
     }
 
     @Override
     public void draw() {
+        settingMenu.drawMenu();
+    }
 
+    @Override
+    public void mouseClicked() {
+        settingMenu.menuMouseClick();
+    }
+
+    @Override
+    public void keyTyped() {
+        settingMenu.menuKeyTyped();
     }
 }
