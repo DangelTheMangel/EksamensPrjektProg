@@ -23,6 +23,7 @@ public class Tile {
             System.out.println("Av!"); //placeholder output, tænker tile bliver mørkere
         }
     }
+    void
 
     //Vi skal have en method der kan gøre så man klikker på den og den udregner movement af spilleren.
 

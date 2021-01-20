@@ -20,6 +20,9 @@ public class main extends PApplet {
     @Override
     public void draw() {
         settingMenu.drawMenu();
+        for(int I = 0; I>10; I++){
+            new Tile("Water", I*10, 10); //en tile er 10x10
+        }
     }
 
     @Override
