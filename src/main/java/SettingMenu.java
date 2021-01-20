@@ -5,8 +5,10 @@ import processing.core.PVector;
 public class SettingMenu {
     PApplet p;
     Boolean visible = true;
-    int displayResolutionInt = 0;
-    PVector[] displayResolution = {new PVector(480,234),new PVector(640,360),new PVector(1280,720),new PVector(1600,900),new PVector(1920,1080)};
+    int displayResolutionInt = 2;
+    int lastDisplayResolutionInt = 2;
+    public float size = 1;
+    PVector[] displayResolution = {new PVector(480,234,0.375f),new PVector(640,360,0.5f),new PVector(1280,720,1),new PVector(1600,900,1.25f),new PVector(1920,1080,1.5f )};
     // Res  = Resolution
     AlmindeligKnap ResLeft, ResRight, btnBack;
     int screenWidth, screenHeight;
@@ -18,22 +20,30 @@ public class SettingMenu {
     }
 
     void drawMenu(){
+        //det skal udrenges ikke det her lort;
+
+        p.textSize(16*size);
         if(visible){
             p.clear();
             p.background(200);
+            p.pushMatrix();
+            p.text("mx: " + p.mouseX + " my: " + p.mouseY, p.mouseX,p.mouseY);
+
             String displayInfo = (int)displayResolution[displayResolutionInt].x + " X " + (int)displayResolution[displayResolutionInt].y;
             p.text(displayInfo,
-                    450 - p.textWidth(displayInfo)/2,230);
+                    (450 - p.textWidth(displayInfo)/2) * size,(230)*size);
 
 
             ResLeft.tegnKnap();
             ResRight.tegnKnap();
             screenResManger();
+            p.popMatrix();
         }
     }
     void screenResManger(){
 
         if(ResLeft.erKlikket()) {
+            lastDisplayResolutionInt = displayResolutionInt;
             displayResolutionInt--;
             if (displayResolutionInt<0)
                 displayResolutionInt = displayResolution.length - 1;
@@ -47,11 +57,19 @@ public class SettingMenu {
                 p.frame.setLocation(screenWidth, screenHeight);
                 p.frame.setSize((int) displayResolution[displayResolutionInt].x, (int) displayResolution[displayResolutionInt].y);
             }
+            if(displayResolutionInt == 2){
+                size=1;
+            }else{
+                size = (int) displayResolution[displayResolutionInt].x/displayResolution[lastDisplayResolutionInt ].x;
+            }
            // RestSettings();
+            reSizeMenu(size);
+            System.out.println("size: " + size);
             ResLeft.registrerRelease();
         }
 
         if(ResRight.erKlikket()) {
+            lastDisplayResolutionInt = displayResolutionInt;
             displayResolutionInt++;
             if (displayResolutionInt == displayResolution.length)
                 displayResolutionInt = 0;
@@ -65,8 +83,15 @@ public class SettingMenu {
                 p.frame.setLocation(screenWidth, screenHeight);
                 p.frame.setSize((int) displayResolution[displayResolutionInt].x, (int) displayResolution[displayResolutionInt].y);
             }
+            if(displayResolutionInt == 2){
+                size=1;
+            }else{
+                size = (int) displayResolution[displayResolutionInt].x/displayResolution[lastDisplayResolutionInt ].x;
+            }
+
            // RestSettings();
-            System.out.println("abe");
+            reSizeMenu(size);
+            System.out.println("size: " + size);
             ResRight.registrerRelease();
 
         }
@@ -76,11 +101,25 @@ public class SettingMenu {
     public static final javax.swing.JFrame getJFrame(final PSurface surface) {
         return (javax.swing.JFrame) ( (processing.awt.PSurfaceAWT.SmoothCanvas) surface.getNative()).getFrame();
     }
-    
+
+    void reSizeMenu(float s){
+        reSizeBtn(s,ResLeft);
+        reSizeBtn(s,ResRight);
+    }
+
+    public void reSizeBtn(float s, Knap btn){
+        btn.positionX *= s;
+        btn.positionY *= s;
+        btn.sizeX *= s;
+        btn.sizeY *= s;
+
+
+    }
 
 
     void menuMouseClick(){
         if(visible){
+            System.out.println(" my: " + p.mouseX  +" my: " +p.mouseY);
             ResLeft.registrerKlik(p.mouseX,p.mouseY);
             ResRight.registrerKlik(p.mouseX,p.mouseY);
         }
