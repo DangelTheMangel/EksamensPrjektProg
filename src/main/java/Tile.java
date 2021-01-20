@@ -27,8 +27,6 @@ public class Tile {
     //Vi skal have en method der kan gøre så man klikker på den og den udregner movement af spilleren.
 
     //
-
-
 }
 
 
