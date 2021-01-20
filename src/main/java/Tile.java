@@ -7,6 +7,7 @@ public class Tile {
     String Contents; //Contents kan være "Vand", "Land", "Skattekiste", "Havn" osv.
     int xPos;
     int yPos;
+    float darken; //gør felter mørkere når man hover
 
     //----------CONSTRUCTOR----------
     Tile(String C,float x, float y){
@@ -21,9 +22,16 @@ public class Tile {
 
         if(p.mouseX < xPos && p.mouseX >xPos + 10 && p.mouseY < yPos && p.mouseY > yPos + 10) { //ved virkelig ikke om det er rigtigt
             System.out.println("Av!"); //placeholder output, tænker tile bliver mørkere
+            darken = 1.5f;
+        }
+        else{darken = 1;}
+
+        if(Contents=="WATER"){
+            p.fill(60*darken, 100*darken, 200*darken);
+        }else if(Contents=="SAND") {
+            p.fill(190*darken, 181*darken, 115*darken);
         }
     }
-    void
 
     //Vi skal have en method der kan gøre så man klikker på den og den udregner movement af spilleren.
 
