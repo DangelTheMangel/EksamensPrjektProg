@@ -5,10 +5,10 @@ import processing.core.PVector;
 public class SettingMenu {
     PApplet p;
     Boolean visible = true;
-    int displayResolutionInt = 2;
-    int lastDisplayResolutionInt = 2;
+    int displayResolutionInt = 1;
+    int lastDisplayResolutionInt = 1;
     public float size = 1;
-    PVector[] displayResolution = {new PVector(480,234,0.375f),new PVector(640,360,0.5f),new PVector(1280,720,1),new PVector(1600,900,1.25f),new PVector(1920,1080,1.5f )};
+    PVector[] displayResolution = {new PVector(640,360,0.5f),new PVector(1280,720,1),new PVector(1600,900,1.25f),new PVector(1920,1080,1.5f )};
     // Res  = Resolution
     AlmindeligKnap ResLeft, ResRight, btnBack;
     int screenWidth, screenHeight;
@@ -57,11 +57,9 @@ public class SettingMenu {
                 p.frame.setLocation(screenWidth, screenHeight);
                 p.frame.setSize((int) displayResolution[displayResolutionInt].x, (int) displayResolution[displayResolutionInt].y);
             }
-            if(displayResolutionInt == 2){
-                size=1;
-            }else{
-                size = (int) displayResolution[displayResolutionInt].x/displayResolution[lastDisplayResolutionInt ].x;
-            }
+
+                size =  displayResolution[displayResolutionInt].z;
+
            // RestSettings();
             reSizeMenu(size);
             System.out.println("size: " + size);
@@ -83,11 +81,9 @@ public class SettingMenu {
                 p.frame.setLocation(screenWidth, screenHeight);
                 p.frame.setSize((int) displayResolution[displayResolutionInt].x, (int) displayResolution[displayResolutionInt].y);
             }
-            if(displayResolutionInt == 2){
-                size=1;
-            }else{
-                size = (int) displayResolution[displayResolutionInt].x/displayResolution[lastDisplayResolutionInt ].x;
-            }
+
+                size =  displayResolution[displayResolutionInt].z;
+
 
            // RestSettings();
             reSizeMenu(size);
@@ -108,10 +104,8 @@ public class SettingMenu {
     }
 
     public void reSizeBtn(float s, Knap btn){
-        btn.positionX *= s;
-        btn.positionY *= s;
-        btn.sizeX *= s;
-        btn.sizeY *= s;
+        btn.size = s;
+
 
 
     }

@@ -3,7 +3,10 @@ import processing.core.PApplet;
 public abstract class Knap {
     //variabler
     float positionX, positionY, sizeX, sizeY;
+    float realPositionX, realPositionY, realSizeX, realSizeY;
+    float size =1;
     float mouseX, mouseY;
+
     String text;
     boolean klikket = false;
   
@@ -17,6 +20,11 @@ public abstract class Knap {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.text = text;
+        realSizeY =sizeY ;
+        realSizeX =sizeX;
+
+        realPositionY =posY;
+        realPositionX =posX;
 
     }
 
@@ -37,6 +45,12 @@ public abstract class Knap {
     }
 
     void tegnKnap() {
+        positionX = realPositionX * size;
+        positionY = realPositionY * size;
+        sizeX = realSizeX*size;
+        sizeY = realSizeY*size;
+
+
         p.stroke(1, 46, 74, 100);
         if(klikket){
             p.fill(255);
