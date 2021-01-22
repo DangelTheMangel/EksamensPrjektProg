@@ -7,20 +7,36 @@ public class Tile {
     String Contents; //Contents kan være "Vand", "Land", "Skattekiste", "Havn" osv.
     int xPos;
     int yPos;
+    boolean cliked = false;
     float darken; //gør felter mørkere når man hover
 
     //----------CONSTRUCTOR----------
-    Tile(String C,float x, float y){
-        C = Contents;
-        x = xPos;
-        y = yPos;
+    Tile(PApplet p,String C,float x, float y){
+        Contents =C ;
+        this.p = p;
+        xPos = (int) x;
+        yPos = (int)y;
     }
+
+    void checkIfCliked(int pX, int pY,int s){
+        int positionX =0+ s*pX;
+        int positionY =0+ s*pY;
+        if (p.mouseX > positionX &&
+                p.mouseX < positionX + s &&
+                p.mouseY > positionY &&
+                p.mouseY < positionY + s) {
+            cliked = true;
+        }
+    }
+
     //----------METHODS----------
     //Idk, vi skal måske have noget der displayer den. Når man hover over den bliver den mørkere
-    void Display(){
-        p.rect(xPos,yPos,10,10);
-
-        if(p.mouseX < xPos && p.mouseX >xPos + 10 && p.mouseY < yPos && p.mouseY > yPos + 10) { //ved virkelig ikke om det er rigtigt
+    void Display(int pX, int pY,int s){
+        p.fill(200);
+        p.rect(0+ s*pX,0+ s*pY,s,s);
+        p.fill(0);
+        p.text(xPos +"x"+ yPos,0+ s*pX,0+ s*pY);
+        if(p.mouseX < xPos && p.mouseX >xPos + s && p.mouseY < yPos && p.mouseY > yPos + s) { //ved virkelig ikke om det er rigtigt
             System.out.println("Av!"); //placeholder output, tænker tile bliver mørkere
             darken = 1.5f;
         }
