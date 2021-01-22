@@ -10,11 +10,11 @@ public class Boat {
     ArrayList<Item> inventory;
 
     //----------CONSTRUCTOR----------
-    Item(float v,int a, String n, String i){
-        v = value;
-        a = ammount;
-        n = Name;
-        i = Img;
+    Boat(int x, int y, float s, float m){
+        x = xPos;
+        y = yPos;
+        s = score;
+        m = money;
     }
     //----------METHODS----------
     void idk_mand(){
