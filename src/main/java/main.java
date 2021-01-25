@@ -28,7 +28,7 @@ public class main extends PApplet {
 
             for (int j = 1; j < 33; ++j){
                 System.out.println(x + " x " + j);
-                Tile t = new Tile(this,"Water",x ,j );
+                Tile t = new Tile(this,"WATER",x ,j );
             gb.tileSet.add(t);}
         }
     }
