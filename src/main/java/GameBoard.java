@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class GameBoard {
     PApplet p;
+
     //til bord klassen
     ArrayList<Tile> tileSet = new ArrayList<Tile>();
     ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
@@ -39,7 +40,7 @@ public class GameBoard {
 
 
             showneTileSet.get(i).Display(posX,posY,100);
-
+            showneTileSet.get(i).checkIfMouseOver(posX,posY,100);
             if(showneTileSet.get(i).cliked){
                 playerPos = new PVector(showneTileSet.get(i).xPos,showneTileSet.get(i).yPos);
                 showneTileSet.get(i).cliked = false;
