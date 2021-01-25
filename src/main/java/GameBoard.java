@@ -5,17 +5,19 @@ import java.util.ArrayList;
 
 public class GameBoard {
     PApplet p;
+
     //til bord klassen
     ArrayList<Tile> tileSet = new ArrayList<Tile>();
     ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
     PVector playerPos = new PVector(5,5);
-
+    Boolean visible = false;
     GameBoard(PApplet p){
         this.p = p;
 
     }
 
     void drawBoard(){
+        if(visible){
         p.clear();
         p.background(200);
         fillUpShownTiles();
@@ -38,12 +40,12 @@ public class GameBoard {
 
 
             showneTileSet.get(i).Display(posX,posY,100);
-
+            showneTileSet.get(i).checkIfMouseOver(posX,posY,100);
             if(showneTileSet.get(i).cliked){
                 playerPos = new PVector(showneTileSet.get(i).xPos,showneTileSet.get(i).yPos);
                 showneTileSet.get(i).cliked = false;
             }
-        }
+        }}
     }
 
     void fillUpShownTiles(){
@@ -59,7 +61,8 @@ public class GameBoard {
     }
 
     void boardmouseClicked(){
-        for(int i = 0;i<showneTileSet.size();++i){
+       if(visible){
+           for(int i = 0;i<showneTileSet.size();++i){
             int posX = showneTileSet.get(i).xPos;
             int posY = showneTileSet.get(i).yPos;
 
@@ -76,6 +79,7 @@ public class GameBoard {
 
             showneTileSet.get(i).checkIfCliked(posX,posY,100);
         }
+    }
     }
 }
 
