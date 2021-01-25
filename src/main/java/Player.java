@@ -1,8 +1,8 @@
 public class Player extends Boat {
     Player(float x, float y, float s, float m){
-        x = xPos;
-        y = yPos;
-        s = score;
-        m = money;
+        xPos = x;
+        yPos = y;
+        score = s;
+        money = m;
     }
 }

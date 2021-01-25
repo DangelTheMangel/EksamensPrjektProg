@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class main extends PApplet {
@@ -73,12 +74,37 @@ public class main extends PApplet {
 
         settingMenu = new SettingMenu(this);
         mainMenu = new MainMenu(this);
-        settingMenu.visible = true;
+        gb.visible = true;
+
+        PVector[] shopLoc = {new PVector(),new PVector(),new PVector()};
+        for(int i=0; i<3;++i){
+            int px = (int) random(1,33);
+            int py = (int) random(1,33);
+            shopLoc[i] = new PVector(px,py);
+        }
         for(int x = 1;x<33;++x) {
 
             for (int j = 1; j < 33; ++j){
+
+
                 System.out.println(x + " x " + j);
-                Tile t = new Tile(this,"WATER",x ,j );
+
+                Tile t = new Tile(this,"Water",x ,j );
+
+                for(int e=0; e<3;++e){
+                    if(x == shopLoc[e].x&& j== shopLoc[e].y){
+                        t.Contents ="SHOP";
+                        System.out.println(x + " x " + j);
+                    }else{
+                        if(Math.random() > 0.3){
+                            t.Contents ="WATER";
+                        }else{
+                            t.Contents ="SAND";
+                        }
+                    }
+                }
+
+
             gb.tileSet.add(t);}
         }
     }
