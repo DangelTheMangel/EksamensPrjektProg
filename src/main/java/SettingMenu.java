@@ -4,19 +4,21 @@ import processing.core.PVector;
 
 public class SettingMenu {
     PApplet p;
+
     Boolean visible = true;
     int displayResolutionInt = 1;
     int lastDisplayResolutionInt = 1;
     public float size = 1;
     PVector[] displayResolution = {new PVector(640,360,0.5f),new PVector(1280,720,1),new PVector(1600,900,1.25f),new PVector(1920,1080,1.5f )};
     // Res  = Resolution
-    AlmindeligKnap ResLeft, ResRight, btnBack;
+    AlmindeligKnap ResLeft, ResRight, backToMain;
     int screenWidth, screenHeight;
     SettingMenu(PApplet p){
         this.p =p;
 
         ResLeft = new AlmindeligKnap(p,200,200,50,50,"<");
         ResRight = new AlmindeligKnap(p,650,200,50,50,">");
+        backToMain = new AlmindeligKnap(p,540,600,200,50,"Back to Menu");
     }
 
     void drawMenu(){
@@ -24,20 +26,28 @@ public class SettingMenu {
 
         p.textSize(16*size);
         if(visible){
-            p.clear();
+
             p.background(200);
-            p.pushMatrix();
+
             p.text("mx: " + p.mouseX + " my: " + p.mouseY, p.mouseX,p.mouseY);
 
             String displayInfo = (int)displayResolution[displayResolutionInt].x + " X " + (int)displayResolution[displayResolutionInt].y;
             p.text(displayInfo,
                     (450 - p.textWidth(displayInfo)/2) * size,(230)*size);
 
-
+            backToMain.tegnKnap();
             ResLeft.tegnKnap();
             ResRight.tegnKnap();
             screenResManger();
-            p.popMatrix();
+
+        }
+    }
+
+    void btnChangeScreen(MainMenu mm,GameBoard gb){
+        if(backToMain.klikket){
+            visible = false;
+            mm.visible = true;
+            backToMain.registrerRelease();
         }
     }
     void screenResManger(){
@@ -101,6 +111,7 @@ public class SettingMenu {
     void reSizeMenu(float s){
         reSizeBtn(s,ResLeft);
         reSizeBtn(s,ResRight);
+        reSizeBtn(s,backToMain);
     }
 
     public void reSizeBtn(float s, Knap btn){
@@ -113,9 +124,10 @@ public class SettingMenu {
 
     void menuMouseClick(){
         if(visible){
-            System.out.println(" my: " + p.mouseX  +" my: " +p.mouseY);
+
             ResLeft.registrerKlik(p.mouseX,p.mouseY);
             ResRight.registrerKlik(p.mouseX,p.mouseY);
+            backToMain.registrerKlik(p.mouseX,p.mouseY);
         }
     }
 
