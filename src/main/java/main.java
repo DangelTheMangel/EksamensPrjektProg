@@ -72,16 +72,7 @@ public class main extends PApplet {
                 e.printStackTrace();
             }
    //}
-        Item Banana = new Item(10,0,"Banana","idk");
-        Item Rum = new Item(50,0,"Rum","idk");
-        Item Eyepatch = new Item(30,0,"Eyepatch","idk");
 
-        ArrayList StockInventory = new ArrayList<Item>();
-        StockInventory.add(Banana);
-        StockInventory.add(Rum);
-        StockInventory.add(Eyepatch);
-
-        Player KaptajnGokke = new Player(0f, 0f, 0f, 100f, StockInventory);
 
 
 

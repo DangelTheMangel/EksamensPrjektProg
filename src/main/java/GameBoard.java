@@ -1,3 +1,4 @@
+
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -17,7 +18,17 @@ public class GameBoard {
 
     GameBoard(PApplet p){
         this.p = p;
-        player = new Player(p,16,16,0,0);
+        Item Banana = new Item(10,0,"Banana","idk");
+        Item Rum = new Item(50,0,"Rum","idk");
+        Item Eyepatch = new Item(30,0,"Eyepatch","idk");
+
+        ArrayList StockInventory = new ArrayList<Item>();
+       StockInventory.add(new Item(10,0,"Banana","idk"));
+        StockInventory.add(Rum);
+        StockInventory.add(Eyepatch);
+        player = new Player(p,16,16,0,0,StockInventory);
+
+
 
     }
 
