@@ -1,8 +1,10 @@
+
+import processing.core.PApplet;
+import processing.core.PImage;
+
 public class Player extends Boat {
-    Player(float x, float y, float s, float m){
-        xPos = x;
-        yPos = y;
-        score = s;
-        money = m;
+
+    Player(PApplet p, float x, float y, float s, float m) {
+        super(p, x, y, s, m);
     }
 }
