@@ -10,9 +10,4 @@ public class Boat {
     ArrayList<Item> inventory;
 
     //---------- DEFAULT CONSTRUCTOR :) ----------
-
-    //----------METHODS----------
-    void idk_mand(){
-
-    }
 }
