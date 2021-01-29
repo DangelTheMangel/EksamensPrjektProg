@@ -1,4 +1,5 @@
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 
 import java.util.ArrayList;
@@ -9,11 +10,14 @@ public class GameBoard {
     //til bord klassen
     ArrayList<Tile> tileSet = new ArrayList<Tile>();
     ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
+    PImage playerPic;
 
-    Player player = new Player(16,16,0,0);
+    Player player;
     Boolean visible = false;
+
     GameBoard(PApplet p){
         this.p = p;
+        player = new Player(p,16,16,0,0);
 
     }
 
@@ -50,12 +54,24 @@ public class GameBoard {
             showneTileSet.get(i).checkIfMouseOver(posX,posY,100);
 
             if(player.xPos == showneTileSet.get(i).xPos && player.yPos == showneTileSet.get(i).yPos){
-                p.ellipse(100*posX + 50,100*posY+ 50,100,100);
+                //p.ellipse(100*posX + 50,100*posY+ 50,100,100);
+                player.displayBoat(posX,posY,100);
             }
 
             if(showneTileSet.get(i).cliked){
-                player.xPos =showneTileSet.get(i).xPos;
-                player.yPos =showneTileSet.get(i).yPos;
+                if(showneTileSet.get(i).Contents.equals("SHOP")){
+                    System.out.println("ShopTime");
+
+                }else {
+                    player.xPos =showneTileSet.get(i).xPos;
+                    player.yPos =showneTileSet.get(i).yPos;
+
+                }
+               /* if(showneTileSet.get(i).Contents.equals("WATER")){
+                    player.xPos =showneTileSet.get(i).xPos;
+                    player.yPos =showneTileSet.get(i).yPos;
+                }*/
+
                 //playerPos = new PVector(showneTileSet.get(i).xPos,showneTileSet.get(i).yPos);
                 showneTileSet.get(i).cliked = false;
             }

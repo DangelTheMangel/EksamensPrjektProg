@@ -2,8 +2,7 @@ import processing.core.PApplet;
 
 import javax.swing.text.AbstractDocument;
 
-public class
-Item {
+public class Item {
     PApplet p;
     float value;
     String Name;
@@ -12,9 +11,11 @@ Item {
 
     //----------CONSTRUCTOR----------
     Item(float v,int a, String n, String i){
-        value = v;
-        ammount = a;
-        Name = n;
-        Img = i;
+        v = value;
+        a = ammount;
+        n = Name;
+        i = Img;
     }
+    //----------METHODS----------
+
 }

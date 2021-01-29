@@ -89,6 +89,7 @@ public class main extends PApplet {
             settingMenu = new SettingMenu(this);
         mainMenu = new MainMenu(this);
         gb.visible = true;
+        gb.player.boatPic = loadImage("Skibet32.png");
 
         PVector[] shopLoc = {new PVector(),new PVector(),new PVector()};
         for(int i=0; i<3;++i){
@@ -103,12 +104,12 @@ public class main extends PApplet {
 
                 System.out.println(x + " x " + j);
 
-                Tile t = new Tile(this,"Water",x ,j );
+                Tile t = new TerrainTile(this,"",x ,j );
 
                 for(int e=0; e<3;++e){
                     if(x == shopLoc[e].x&& j== shopLoc[e].y){
-                        t.Contents ="SHOP";
-                        System.out.println(x + " x " + j);
+                        t = new ShopTile(this,"",x ,j);
+                        System.out.println("SHOP:  "+x + " x " + j);
                     }else{
                         if(Math.random() > 0.3){
                             t.Contents ="WATER";

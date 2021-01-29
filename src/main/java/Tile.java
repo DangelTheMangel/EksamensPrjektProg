@@ -1,8 +1,6 @@
 import processing.core.PApplet;
 
-import javax.swing.text.AbstractDocument;
-
-public class Tile {
+public abstract class Tile {
     float strong = 0;
     PApplet p;
     String Contents; //Contents kan være "Vand", "Land", "Skattekiste", "Havn" osv.
@@ -12,12 +10,17 @@ public class Tile {
     float darken; //gør felter mørkere når man hover
 
     //----------CONSTRUCTOR----------
-    Tile(PApplet p,String C,float x, float y){
+
+
+    public Tile(PApplet p,String C,float x, float y) {
         Contents =C ;
         this.p = p;
         xPos = (int) x;
         yPos = (int)y;
     }
+
+
+
 
     void checkIfCliked(int pX, int pY,int s){
         int positionX =0+ s*pX;

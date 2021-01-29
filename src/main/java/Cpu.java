@@ -1,8 +1,8 @@
+import processing.core.PApplet;
+
 public class Cpu extends Boat {
-    Cpu(float x, float y, float s, float m){
-        x = xPos;
-        y = yPos;
-        s = score;
-        m = money;
+
+    public Cpu(PApplet p, float x, float y, float s, float m) {
+        super(p, x, y, s, m);
     }
 }
