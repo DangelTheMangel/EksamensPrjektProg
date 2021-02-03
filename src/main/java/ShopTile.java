@@ -6,4 +6,9 @@ public class ShopTile extends Tile {
         super(p, C, x, y);
         Contents = "SHOP";
     }
+
+    public void drawShopMenu(){
+
+
+    }
 }

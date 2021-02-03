@@ -72,6 +72,7 @@ public class GameBoard {
             if(showneTileSet.get(i).cliked){
                 if(showneTileSet.get(i).Contents.equals("SHOP")){
                     System.out.println("ShopTime");
+                    showneTileSet.get(i).drawShopMenu();
 
                 }else {
                     player.xPos =showneTileSet.get(i).xPos;
