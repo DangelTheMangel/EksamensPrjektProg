@@ -11,10 +11,10 @@ public class Item {
 
     //----------CONSTRUCTOR----------
     Item(float v,int a, String n, String i){
-        v = value;
-        a = ammount;
-        n = Name;
-        i = Img;
+        value = v;
+        ammount = a;
+        Name = n;
+        Img = i;
     }
     //----------METHODS----------
 

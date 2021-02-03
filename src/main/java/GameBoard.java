@@ -13,7 +13,7 @@ public class GameBoard {
     ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
     PImage playerPic;
 
-    Player player;
+    public Player player;
     Boolean visible = false;
 
     GameBoard(PApplet p){
@@ -36,6 +36,9 @@ public class GameBoard {
         if(visible){
         p.clear();
         p.background(200);
+        ArrayList<Item> t = player.inventory;
+
+        p.text("Taske: " +"\n" +t.get(0).Name +t.get(0).ammount +"\n" + t.get(1).Name +t.get(1).ammount +"\n" + t.get(2).Name +t.get(2).ammount,1030,110);
         fillUpShownTiles();
 
         for(int i = 0;i<showneTileSet.size();++i){
@@ -61,7 +64,11 @@ public class GameBoard {
 
 
 
+
+
             showneTileSet.get(i).Display(posX,posY,100);
+            showneTileSet.get(i).drawShopMenu(player);
+
             showneTileSet.get(i).checkIfMouseOver(posX,posY,100);
 
             if(player.xPos == showneTileSet.get(i).xPos && player.yPos == showneTileSet.get(i).yPos){
@@ -72,7 +79,10 @@ public class GameBoard {
             if(showneTileSet.get(i).cliked){
                 if(showneTileSet.get(i).Contents.equals("SHOP")){
                     System.out.println("ShopTime");
-                    showneTileSet.get(i).drawShopMenu();
+                    showneTileSet.get(i).showShop();
+
+
+
 
                 }else {
                     player.xPos =showneTileSet.get(i).xPos;
@@ -129,6 +139,7 @@ public class GameBoard {
                    posY = i-19;
                }/**/
 
+            showneTileSet.get(i).clickShop();
             showneTileSet.get(i).checkIfCliked(posX,posY,100);
         }
     }
