@@ -82,12 +82,12 @@ public class main extends PApplet {
         gb.visible = true;
         gb.player.boatPic = loadImage("Skibet32.png");
 
-        PVector[] shopLoc = {new PVector(),new PVector(),new PVector()};
-        for(int i=0; i<3;++i){
+        PVector[] shopLoc = {new PVector(16,16),new PVector(15,17),new PVector(17,17)};
+       /* for(int i=0; i<3;++i){
             int px = (int) random(1,33);
             int py = (int) random(1,33);
             shopLoc[i] = new PVector(px,py);
-        }
+        }*/
         for(int x = 1;x<33;++x) {
 
             for (int j = 1; j < 33; ++j){
@@ -99,6 +99,7 @@ public class main extends PApplet {
 
                 for(int e=0; e<3;++e){
                     if(x == shopLoc[e].x&& j== shopLoc[e].y){
+                        System.out.println("x: "+ x + "=="+ "Shop: " +shopLoc[e].x + "x: "+ j + "=="+ "Shop: " +shopLoc[e].y );
                         t = new ShopTile(this,"",x ,j);
                         System.out.println("SHOP:  "+x + " x " + j);
                     }else{

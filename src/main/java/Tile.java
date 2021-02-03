@@ -64,7 +64,7 @@ public abstract class Tile {
         p.stroke(strong*255,strong*190,0);
         p.rect(0+ s*pX,0+ s*pY,s,s);
         p.fill(0);
-        p.text(xPos +"x"+ yPos,0+ s*pX,0+ s*pY);
+        p.text(xPos +"x"+ yPos + "\n C:" + Contents , s*pX, s*pY);
 
 
 
@@ -76,6 +76,8 @@ public abstract class Tile {
 
 
     }
+
+    public abstract void drawShopMenu();
 
     //Vi skal have en method der kan gøre så man klikker på den og den udregner movement af spilleren.
 
