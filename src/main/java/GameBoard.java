@@ -26,7 +26,7 @@ public class GameBoard {
        StockInventory.add(new Item(10,0,"Banana","idk"));
         StockInventory.add(Rum);
         StockInventory.add(Eyepatch);
-        player = new Player(p,16,16,0,0,StockInventory);
+        player = new Player(p,16,16,0,1000000,StockInventory);
 
 
 
@@ -37,8 +37,15 @@ public class GameBoard {
         p.clear();
         p.background(200);
         ArrayList<Item> t = player.inventory;
-
-        p.text("Taske: " +"\n" +t.get(0).Name +t.get(0).ammount +"\n" + t.get(1).Name +t.get(1).ammount +"\n" + t.get(2).Name +t.get(2).ammount,1030,110);
+        p.fill(200);
+        p.rect(1020,100,400,500);
+        p.fill(0);
+        p.text("Penge"+player.money
+                        +"\nTaske: "
+                        +"\n" +t.get(0).Name +t.get(0).ammount
+                        +"\n" + t.get(1).Name +t.get(1).ammount
+                        +"\n" + t.get(2).Name +t.get(2).ammount
+                ,1030,120);
         fillUpShownTiles();
 
         for(int i = 0;i<showneTileSet.size();++i){
