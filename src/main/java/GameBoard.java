@@ -12,12 +12,17 @@ public class GameBoard {
     ArrayList<Tile> tileSet = new ArrayList<Tile>();
     ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
     PImage playerPic;
-
+    AlmindeligKnap btnMenu;
+    public PauseMenu pauseMenu;
+    SettingMenu settingMenu;
     public Player player;
+    float scaleSize = 1;
     Boolean visible = false;
 
-    GameBoard(PApplet p){
+    GameBoard(PApplet p, PauseMenu pauseMenu){
+
         this.p = p;
+        this.pauseMenu = pauseMenu;
         Item Banana = new Item(10,0,"Banana","idk");
         Item Rum = new Item(50,0,"Rum","idk");
         Item Eyepatch = new Item(30,0,"Eyepatch","idk");
@@ -27,8 +32,10 @@ public class GameBoard {
         StockInventory.add(Rum);
         StockInventory.add(Eyepatch);
         player = new Player(p,16,16,0,1000000,StockInventory);
-
-
+        btnMenu = new AlmindeligKnap(p,50,50,50,50,"-\n-\n-");
+        pauseMenu.gb = this;
+        pauseMenu.mainMenu.gb = this;
+          settingMenu = pauseMenu.settingMenu;
 
     }
 
@@ -36,17 +43,26 @@ public class GameBoard {
         if(visible){
         p.clear();
         p.background(200);
+
         ArrayList<Item> t = player.inventory;
         p.fill(200);
-        p.rect(1020,100,400,500);
+        p.rect(1020*scaleSize,100*scaleSize,400*scaleSize,500*scaleSize);
         p.fill(0);
         p.text("Penge"+player.money
                         +"\nTaske: "
                         +"\n" +t.get(0).Name +t.get(0).ammount
                         +"\n" + t.get(1).Name +t.get(1).ammount
                         +"\n" + t.get(2).Name +t.get(2).ammount
-                ,1030,120);
+                ,1030*scaleSize,120*scaleSize);
         fillUpShownTiles();
+
+        btnMenu.tegnKnap();
+        if(btnMenu.klikket){
+            System.out.println("fuck!");
+            pauseMenu.visible = true;
+            visible = false;
+            btnMenu.registrerRelease();
+        }
 
         for(int i = 0;i<showneTileSet.size();++i){
             int posX = showneTileSet.get(i).xPos;
@@ -73,25 +89,24 @@ public class GameBoard {
 
 
 
-            showneTileSet.get(i).Display(posX,posY,100);
-            showneTileSet.get(i).drawShopMenu(player);
+            showneTileSet.get(i).Display(posX,posY,(int) (100*scaleSize));
+            showneTileSet.get(i).drawShopMenu(player,scaleSize);
 
-            showneTileSet.get(i).checkIfMouseOver(posX,posY,100);
+            showneTileSet.get(i).checkIfMouseOver(posX,posY, (int) (100*scaleSize));
 
             if(player.xPos == showneTileSet.get(i).xPos && player.yPos == showneTileSet.get(i).yPos){
                 //p.ellipse(100*posX + 50,100*posY+ 50,100,100);
-                player.displayBoat(posX,posY,100);
+                player.displayBoat(posX,posY, (int) (100*scaleSize));
             }
 
             if(showneTileSet.get(i).cliked){
                 if(showneTileSet.get(i).Contents.equals("SHOP")){
                     System.out.println("ShopTime");
-                    showneTileSet.get(i).showShop();
+                    showneTileSet.get(i).showShop(scaleSize);
 
+                } else if(showneTileSet.get(i).Contents.equals("BORDER")){
 
-
-
-                }else {
+                } else {
                     player.xPos =showneTileSet.get(i).xPos;
                     player.yPos =showneTileSet.get(i).yPos;
 
@@ -106,7 +121,10 @@ public class GameBoard {
             }
         }}
     }
+    void reSizeGamebord(){
+        settingMenu.reSizeBtn(scaleSize,btnMenu);
 
+    }
     void fillUpShownTiles(){
         showneTileSet.clear();
         PVector playerPos = new PVector(player.xPos,player.yPos);
@@ -124,6 +142,7 @@ public class GameBoard {
     }
 
     void boardmouseClicked(){
+        btnMenu.registrerKlik(p.mouseX,p.mouseY);
        if(visible){
            for(int i = 0;i<showneTileSet.size();++i){
             int posX = showneTileSet.get(i).xPos;
@@ -147,7 +166,7 @@ public class GameBoard {
                }/**/
 
             showneTileSet.get(i).clickShop();
-            showneTileSet.get(i).checkIfCliked(posX,posY,100);
+            showneTileSet.get(i).checkIfCliked(posX,posY,(int) (100*scaleSize));
         }
     }
     }
