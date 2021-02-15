@@ -11,9 +11,9 @@ public class ShopTile extends Tile {
         shopMenu = new ShopMenu(p);
     }
 
-    public void drawShopMenu(Player player){
+    public void drawShopMenu(Player player,float s){
         if(shopMenu.visible){
-           shopMenu.drawMenu(player);
+           shopMenu.drawMenu(player,s);
 
 
         }
@@ -21,7 +21,9 @@ public class ShopTile extends Tile {
 
     }
 
-    public void showShop(){
+
+    public void showShop(float s){
+        shopMenu.reSizeShopMenu(s);
         shopMenu.visible = !shopMenu.visible;
 
     }

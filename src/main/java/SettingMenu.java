@@ -5,12 +5,16 @@ import processing.core.PVector;
 public class SettingMenu {
     PApplet p;
 
+
+
     Boolean visible = false;
     int displayResolutionInt = 1;
     int lastDisplayResolutionInt = 1;
     public float size = 1;
     PVector[] displayResolution = {new PVector(640,360,0.5f),new PVector(1280,720,1),new PVector(1600,900,1.25f),new PVector(1920,1080,1.5f )};
     // Res  = Resolution
+    PauseMenu pauseMenu;
+    boolean backToMainMenu = true;
     AlmindeligKnap ResLeft, ResRight, backToMain;
     int screenWidth, screenHeight;
     SettingMenu(PApplet p){
@@ -22,7 +26,7 @@ public class SettingMenu {
     }
 
     void drawMenu(){
-        //det skal udrenges ikke det her lort;
+
 
         p.textSize(16*size);
         if(visible){
@@ -45,8 +49,15 @@ public class SettingMenu {
 
     void btnChangeScreen(MainMenu mm,GameBoard gb){
         if(backToMain.klikket){
+
+            if(backToMainMenu ) {
+                mm.reSizeMainMenu();
+                mm.visible = true;
+            }else {
+                pauseMenu.reSizePauseMenu();
+                pauseMenu.visible = true;
+            }
             visible = false;
-            mm.visible = true;
             backToMain.registrerRelease();
         }
     }
@@ -109,6 +120,8 @@ public class SettingMenu {
     }
 
     void reSizeMenu(float s){
+        pauseMenu.gb.scaleSize = s;
+        pauseMenu.mainMenu.scaleSize = s;
         reSizeBtn(s,ResLeft);
         reSizeBtn(s,ResRight);
         reSizeBtn(s,backToMain);
@@ -116,8 +129,6 @@ public class SettingMenu {
 
     public void reSizeBtn(float s, Knap btn){
         btn.size = s;
-
-
 
     }
 

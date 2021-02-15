@@ -30,16 +30,16 @@ public class ShopMenu {
 
     }
 
-    void drawMenu(Player player){
+    void drawMenu(Player player,float s){
         p.fill(200);
-        p.rect(610,100,400,500);
+        p.rect(s*610,s*100,s*400,s*500);
         p.fill(0);
         p.textSize(32);
-        p.text("Shop",810 - p.textWidth("Shop")/2,150);
+        p.text("Shop",s*810 - p.textWidth("Shop")/2,s*150);
         p.textSize(10);
         ArrayList<Item> t = StockInventory ;
 
-        p.text("Taske: " +"\n" +t.get(0).Name +t.get(0).ammount +"\n" + t.get(1).Name +t.get(1).ammount +"\n" + t.get(2).Name +t.get(2).ammount,850 ,150);
+        p.text("Taske: " +"\n" +t.get(0).Name +t.get(0).ammount +"\n" + t.get(1).Name +t.get(1).ammount +"\n" + t.get(2).Name +t.get(2).ammount,s*850 ,s*150);
 
 
         //buy
@@ -90,6 +90,16 @@ public class ShopMenu {
 
 
 
+
+    }
+    void reSizeShopMenu(float s){
+        btnBuyBa.size = s;
+        btnBuyRum.size = s;
+        btnBuyEye.size = s;
+        btnSellBa.size = s;
+        btnSellRum.size = s;
+        btnSellEye.size = s;
+        btnCloseShop.size = s;
 
     }
     void btbBuyItem(AlmindeligKnap btn, Player player ,Item item){

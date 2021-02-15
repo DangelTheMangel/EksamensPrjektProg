@@ -26,10 +26,10 @@ public class main extends PApplet {
     }
 
 
-
+    public PauseMenu pauseMenu;
     public SettingMenu settingMenu;
     public static MainMenu mainMenu;
-    public GameBoard gb = new GameBoard(this);
+    public GameBoard gb ;
     @Override
     public void settings() {
 
@@ -39,84 +39,62 @@ public class main extends PApplet {
 
     @Override
     public void setup() {
-       // JFileChooser fc = new JFileChooser();//to choose mp3
-      //int result = fc.showOpenDialog(null);
-
-      // so if we chose file then we can proceed
-    // if(result == JFileChooser.APPROVE_OPTION){ "C:\\Users\\Christian\\IdeaProjects\\EksamensPrjektProg1\\src\\main\\resources\\bgmusik.mp3"
-            try {
-               // File f =new File(lo)
-//virker ikke!"!3
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        try {
-                            File file = new File("src/main/resources/bgmusik.mp3");
-
-                            FileInputStream fis = new FileInputStream(file);
-                            BufferedInputStream bis = new BufferedInputStream(fis);
-                            Player player = new Player(bis);
-                        } catch (JavaLayerException | FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
 
 
-                        //  player.play();
-
-                        //now try block for our player
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-   //}
-
-
-
-
-
-            settingMenu = new SettingMenu(this);
+        settingMenu = new SettingMenu(this);
         mainMenu = new MainMenu(this);
+        pauseMenu = new PauseMenu(this,settingMenu,mainMenu);
+        gb = new GameBoard(this,pauseMenu);
         gb.visible = true;
         gb.player.boatPic = loadImage("Skibet32.png");
 
+
+
+        GenerateMap(32);
+
+
+    }
+   public  void loadedMap(File selection){
+        if (selection == null) {
+            println("Window was closed or the user hit cancel.");
+        } else {
+            
+            println("User selected " + selection.getAbsolutePath());
+        }
+    }
+    void GenerateMap(int NumberoFTiles){
         PVector[] shopLoc = {new PVector(16,16),new PVector(15,17),new PVector(17,17)};
        /* for(int i=0; i<3;++i){
             int px = (int) random(1,33);
             int py = (int) random(1,33);
             shopLoc[i] = new PVector(px,py);
         }*/
-        for(int x = 1;x<33;++x) {
 
-            for (int j = 1; j < 33; ++j){
-
-
-                System.out.println(x + " x " + j);
-
+        for(int x = -1;x<NumberoFTiles+3;++x) {
+            for (int j = -1; j < NumberoFTiles+3; ++j){
                 Tile t = new TerrainTile(this,"",x ,j );
-
+                if((x <= 0 || j<= 0)||(33 <= x || 33<= j)){
+                    t.Contents = "BORDER";
+                }else{
+                    if(Math.random() > 0.3){
+                        t.Contents ="WATER";
+                    }else{
+                        t.Contents ="SAND";
+                    }
+                }
                 for(int e=0; e<3;++e){
                     if(x == shopLoc[e].x&& j== shopLoc[e].y){
                         System.out.println("x: "+ x + "=="+ "Shop: " +shopLoc[e].x + "x: "+ j + "=="+ "Shop: " +shopLoc[e].y );
                         t = new ShopTile(this,"",x ,j);
                         System.out.println("SHOP:  "+x + " x " + j);
-                    }else{
-                        if(Math.random() > 0.3){
-                            t.Contents ="WATER";
-                        }else{
-                            t.Contents ="SAND";
-                        }
                     }
                 }
 
-
-            gb.tileSet.add(t);}
+                System.out.println(x + " x " + j + "tile contens: " + t.Contents);
+                gb.tileSet.add(t);}
         }
+
     }
-
-
 
     @Override
     public void draw() {
@@ -128,11 +106,16 @@ public class main extends PApplet {
         if(gb.visible){
             gb.drawBoard();
         }
+        if(pauseMenu.visible){
+            pauseMenu.drawMenu();
+        }
 
         if(mainMenu.visible){
             mainMenu.drawMenu();
 
         }
+
+
 
     }
 
@@ -151,9 +134,12 @@ public class main extends PApplet {
         }
 
         if(mainMenu.visible){
-
+            mainMenu.menuMouseClick(mouseX,mouseY);
         }
 
+        if(pauseMenu.visible){
+            pauseMenu.clickMenu(mouseX,mouseY);
+        }
 
     }
 

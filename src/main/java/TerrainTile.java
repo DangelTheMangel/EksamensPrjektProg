@@ -6,12 +6,12 @@ public class TerrainTile extends Tile{
     }
 
     @Override
-    public void drawShopMenu(Player player) {
+    public void drawShopMenu(Player player, float scaleSize) {
 
     }
 
     @Override
-    public void showShop() {
+    public void showShop(float s) {
 
     }
 
