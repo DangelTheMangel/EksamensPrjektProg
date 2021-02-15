@@ -47,6 +47,7 @@ public class main extends PApplet {
         gb = new GameBoard(this,pauseMenu);
         gb.visible = true;
         gb.player.boatPic = loadImage("Skibet32.png");
+        gb.cpu.boatPic = loadImage("Skibet32.png");
 
 
 
@@ -85,7 +86,7 @@ public class main extends PApplet {
                 for(int e=0; e<3;++e){
                     if(x == shopLoc[e].x&& j== shopLoc[e].y){
                         System.out.println("x: "+ x + "=="+ "Shop: " +shopLoc[e].x + "x: "+ j + "=="+ "Shop: " +shopLoc[e].y );
-                        t = new ShopTile(this,"",x ,j);
+                        t = new ShopTile(this,"SHOP",x ,j);
                         System.out.println("SHOP:  "+x + " x " + j);
                     }
                 }

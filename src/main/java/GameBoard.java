@@ -10,15 +10,18 @@ public class GameBoard {
 
     //til bord klassen
     ArrayList<Tile> tileSet = new ArrayList<Tile>();
-    ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
+   // ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
     PImage playerPic;
     AlmindeligKnap btnMenu;
     public PauseMenu pauseMenu;
     SettingMenu settingMenu;
     public Player player;
+    Cpu cpu;
+    int roundCount = 1;
+    int turnCount ;
     float scaleSize = 1;
     Boolean visible = false;
-
+    Boolean turnEnded = false;
     GameBoard(PApplet p, PauseMenu pauseMenu){
 
         this.p = p;
@@ -32,18 +35,20 @@ public class GameBoard {
         StockInventory.add(Rum);
         StockInventory.add(Eyepatch);
         player = new Player(p,16,16,0,1000000,StockInventory);
+        cpu = new Cpu(p,16,15,0,1000000,StockInventory);
         btnMenu = new AlmindeligKnap(p,50,50,50,50,"-\n-\n-");
         pauseMenu.gb = this;
         pauseMenu.mainMenu.gb = this;
           settingMenu = pauseMenu.settingMenu;
-
+        turnCount = (int) p.random(0,7);
     }
 
     void drawBoard(){
+
         if(visible){
         p.clear();
         p.background(200);
-
+        //ui
         ArrayList<Item> t = player.inventory;
         p.fill(200);
         p.rect(1020*scaleSize,100*scaleSize,400*scaleSize,500*scaleSize);
@@ -53,10 +58,17 @@ public class GameBoard {
                         +"\n" +t.get(0).Name +t.get(0).ammount
                         +"\n" + t.get(1).Name +t.get(1).ammount
                         +"\n" + t.get(2).Name +t.get(2).ammount
+                        +"\n Round: " + roundCount
+                        +"\n Turn: " + turnCount
                 ,1030*scaleSize,120*scaleSize);
-        fillUpShownTiles();
+        player.fillUpShownTiles(tileSet);
+        cpu.fillUpShownTiles(tileSet);
 
+
+        //burger menu kanp
         btnMenu.tegnKnap();
+
+        //brætet
         if(btnMenu.klikket){
             System.out.println("fuck!");
             pauseMenu.visible = true;
@@ -64,6 +76,7 @@ public class GameBoard {
             btnMenu.registrerRelease();
         }
 
+        ArrayList<Tile> showneTileSet = player.showneTileSet;
         for(int i = 0;i<showneTileSet.size();++i){
             int posX = showneTileSet.get(i).xPos;
             int posY = showneTileSet.get(i).yPos;
@@ -83,22 +96,17 @@ public class GameBoard {
             }else{
                 posX = 5;
                 posY = i-19;
-            }/**/
-
-
-
-
-
+            }
+            //drawing bord
             showneTileSet.get(i).Display(posX,posY,(int) (100*scaleSize));
             showneTileSet.get(i).drawShopMenu(player,scaleSize);
-
             showneTileSet.get(i).checkIfMouseOver(posX,posY, (int) (100*scaleSize));
 
-            if(player.xPos == showneTileSet.get(i).xPos && player.yPos == showneTileSet.get(i).yPos){
-                //p.ellipse(100*posX + 50,100*posY+ 50,100,100);
-                player.displayBoat(posX,posY, (int) (100*scaleSize));
-            }
+            //drawing boats
+            drawShips(player,i,posX,posY);
+            drawShips(cpu,i,posX,posY);
 
+            //
             if(showneTileSet.get(i).cliked){
                 if(showneTileSet.get(i).Contents.equals("SHOP")){
                     System.out.println("ShopTime");
@@ -109,41 +117,45 @@ public class GameBoard {
                 } else {
                     player.xPos =showneTileSet.get(i).xPos;
                     player.yPos =showneTileSet.get(i).yPos;
-
+                    --turnCount;
+                    if(turnCount <=0){
+                        turnEnded = true;
+                    }
                 }
-               /* if(showneTileSet.get(i).Contents.equals("WATER")){
-                    player.xPos =showneTileSet.get(i).xPos;
-                    player.yPos =showneTileSet.get(i).yPos;
-                }*/
 
-                //playerPos = new PVector(showneTileSet.get(i).xPos,showneTileSet.get(i).yPos);
                 showneTileSet.get(i).cliked = false;
             }
-        }}
+
+
+        }
+        if(turnEnded){
+            cpu.Turn();
+            ++roundCount;
+            turnCount = (int) p.random(0,7);
+            turnEnded = false;
+
+        }
+        }
     }
     void reSizeGamebord(){
         settingMenu.reSizeBtn(scaleSize,btnMenu);
 
     }
-    void fillUpShownTiles(){
-        showneTileSet.clear();
-        PVector playerPos = new PVector(player.xPos,player.yPos);
 
-        for(int i = 0;i<tileSet.size();++i){
-            if(tileSet.get(i).xPos - playerPos.x > -3 && tileSet.get(i).xPos - playerPos.x < 3){
-
-                if(tileSet.get(i).yPos - playerPos.y > -3 && tileSet.get(i).yPos - playerPos.y < 3){
-
-                    showneTileSet.add(tileSet.get(i));
-                }
-            }
-
+    void drawShips(Boat boat,int i,int posX,int posY){
+        ArrayList<Tile> showneTileSet = player.showneTileSet;
+        if(boat.xPos == showneTileSet.get(i).xPos && boat.yPos == showneTileSet.get(i).yPos){
+            //p.ellipse(100*posX + 50,100*posY+ 50,100,100);
+            boat.displayBoat(posX,posY, (int) (100*scaleSize));
         }
     }
 
     void boardmouseClicked(){
+        ArrayList<Tile> showneTileSet = player.showneTileSet;
+
+        System.out.println("x: " + cpu.xPos + " y:" + cpu.yPos);
         btnMenu.registrerKlik(p.mouseX,p.mouseY);
-       if(visible){
+        if(turnEnded == false){
            for(int i = 0;i<showneTileSet.size();++i){
             int posX = showneTileSet.get(i).xPos;
             int posY = showneTileSet.get(i).yPos;
@@ -167,8 +179,10 @@ public class GameBoard {
 
             showneTileSet.get(i).clickShop();
             showneTileSet.get(i).checkIfCliked(posX,posY,(int) (100*scaleSize));
+
         }
     }
     }
+
 }
 

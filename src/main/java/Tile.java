@@ -30,6 +30,7 @@ public abstract class Tile {
                 p.mouseY > positionY &&
                 p.mouseY < positionY + s) {
             cliked = true;
+
         }
     }
 
@@ -77,8 +78,8 @@ public abstract class Tile {
 
     }
 
-    public abstract void drawShopMenu(Player player);
-    public abstract  void showShop();
+    public abstract void drawShopMenu(Player player, float scaleSize);
+    public abstract  void showShop(float s);
     public abstract void clickShop();
 
     //Vi skal have en method der kan gøre så man klikker på den og den udregner movement af spilleren.
