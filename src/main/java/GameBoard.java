@@ -31,21 +31,29 @@ public class GameBoard {
         Item Eyepatch = new Item(30,0,"Eyepatch","idk");
 
         ArrayList StockInventory = new ArrayList<Item>();
-       StockInventory.add(new Item(10,0,"Banana","idk"));
+       StockInventory.add(Banana);
         StockInventory.add(Rum);
         StockInventory.add(Eyepatch);
-        player = new Player(p,16,16,0,1000000,StockInventory);
-        cpu = new Cpu(p,16,15,0,1000000,StockInventory);
+        player = new Player(p,16,16,0,100,StockInventory);
+        ArrayList CpuStockInventory = new ArrayList<Item>();
+        CpuStockInventory.add(new Item(10,10,"Banana","idk"));
+        CpuStockInventory.add(new Item(50,10,"Ru","idk"));
+        CpuStockInventory.add(new Item(30,10,"Eyepatch","idk"));
+
+
+        cpu = new Cpu(p,16,15,0,10, StockInventory);
         btnMenu = new AlmindeligKnap(p,50,50,50,50,"-\n-\n-");
         pauseMenu.gb = this;
         pauseMenu.mainMenu.gb = this;
           settingMenu = pauseMenu.settingMenu;
         turnCount = (int) p.random(0,7);
+
     }
 
     void drawBoard(){
 
         if(visible){
+        //    System.out.println("cpu: " + cpu.inventory.get(0) + "player: " + player.inventory.get(0));
         p.clear();
         p.background(200);
         //ui
@@ -53,13 +61,19 @@ public class GameBoard {
         p.fill(200);
         p.rect(1020*scaleSize,100*scaleSize,400*scaleSize,500*scaleSize);
         p.fill(0);
-        p.text("Penge"+player.money
-                        +"\nTaske: "
+        p.text(     "\nTaske: " +"\nPenge"+player.money
                         +"\n" +t.get(0).Name +t.get(0).ammount
                         +"\n" + t.get(1).Name +t.get(1).ammount
                         +"\n" + t.get(2).Name +t.get(2).ammount
+                        +"\n -----------------\n"
                         +"\n Round: " + roundCount
                         +"\n Turn: " + turnCount
+                        +"\n -----------------\n"
+                        +"\nCpu-Taske: "
+                        +"\nPenge"+cpu.money
+                        +"\n" +cpu.inventory.get(0).Name +cpu.inventory.get(0).ammount
+                        +"\n" + cpu.inventory.get(1).Name +cpu.inventory.get(1).ammount
+                        +"\n" + cpu.inventory.get(2).Name +cpu.inventory.get(2).ammount
                 ,1030*scaleSize,120*scaleSize);
         player.fillUpShownTiles(tileSet);
         cpu.fillUpShownTiles(tileSet);

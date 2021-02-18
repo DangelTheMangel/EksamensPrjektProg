@@ -64,7 +64,7 @@ public class main extends PApplet {
         }
     }
     void GenerateMap(int NumberoFTiles){
-        PVector[] shopLoc = {new PVector(16,16),new PVector(15,17),new PVector(17,17)};
+        PVector[] shopLoc = {new PVector(16,16),new PVector(0,0),new PVector(0,0) };//new PVector(15,17),new PVector(17,17)};
        /* for(int i=0; i<3;++i){
             int px = (int) random(1,33);
             int py = (int) random(1,33);
