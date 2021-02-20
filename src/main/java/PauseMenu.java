@@ -54,6 +54,7 @@ public class PauseMenu {
     }
 
     if(btnSave.klikket){
+        gb.saveManger.saveGame(32,gb.tileSet);
         btnSave.registrerRelease();
     }
 
