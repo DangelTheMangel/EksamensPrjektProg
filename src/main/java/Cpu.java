@@ -6,8 +6,8 @@ import java.util.Random;
 public class Cpu extends Boat {
 
 
-    public Cpu(PApplet p, float x, float y, float s, float m, ArrayList<Item> inventory) {
-        super(p, x, y, s, m, inventory);
+    public Cpu(PApplet p, float x, float y, float s, float m) {
+        super(p, x, y, s, m);
     }
 
     void Turn(){
@@ -59,8 +59,6 @@ public class Cpu extends Boat {
             for(int i = 0; i<inventory.size();++i){
                 System.out.println("itemName: " + item.Name + "|iName: " + inventory.get(i).Name+"|");
                 if(inventory.get(i).Name.equals(item.Name)){
-
-
 
                     inventory.get(i).ammount -= amount;
                     item.ammount += amount;

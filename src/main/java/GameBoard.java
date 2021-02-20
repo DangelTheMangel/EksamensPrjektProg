@@ -15,6 +15,7 @@ public class GameBoard {
     AlmindeligKnap btnMenu;
     public PauseMenu pauseMenu;
     SettingMenu settingMenu;
+    SaveManger saveManger;
     public Player player;
     Cpu cpu;
     int roundCount = 1;
@@ -26,28 +27,25 @@ public class GameBoard {
 
         this.p = p;
         this.pauseMenu = pauseMenu;
-        Item Banana = new Item(10,0,"Banana","idk");
-        Item Rum = new Item(50,0,"Rum","idk");
-        Item Eyepatch = new Item(30,0,"Eyepatch","idk");
-
-        ArrayList StockInventory = new ArrayList<Item>();
-       StockInventory.add(Banana);
-        StockInventory.add(Rum);
-        StockInventory.add(Eyepatch);
-        player = new Player(p,16,16,0,100,StockInventory);
-        ArrayList CpuStockInventory = new ArrayList<Item>();
-        CpuStockInventory.add(new Item(10,10,"Banana","idk"));
-        CpuStockInventory.add(new Item(50,10,"Ru","idk"));
-        CpuStockInventory.add(new Item(30,10,"Eyepatch","idk"));
-
-
-        cpu = new Cpu(p,16,15,0,10, StockInventory);
+        startGame();
         btnMenu = new AlmindeligKnap(p,50,50,50,50,"-\n-\n-");
         pauseMenu.gb = this;
         pauseMenu.mainMenu.gb = this;
-          settingMenu = pauseMenu.settingMenu;
-        turnCount = (int) p.random(0,7);
+        settingMenu = pauseMenu.settingMenu;
 
+
+
+    }
+
+    void startGame(){
+        player = new Player(p,16,16,0,1000);
+        cpu = new Cpu(p,16,15,0,1000);
+        player.generateInventory();
+        cpu.generateInventory();
+
+        cpu.boatPic = p.loadImage("Skibet32.png");
+        player.boatPic = p.loadImage("Skibet32.png");
+        turnCount = (int) p.random(0,7);
     }
 
     void drawBoard(){

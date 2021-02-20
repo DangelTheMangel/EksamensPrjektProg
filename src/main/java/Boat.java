@@ -14,7 +14,7 @@ public class Boat {
     ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
 
     //---------- DEFAULT CONSTRUCTOR :) ----------
-    public Boat(PApplet p,float x, float y, float s, float m,ArrayList<Item> inventory ){
+    public Boat(PApplet p,float x, float y, float s, float m ){
         this.p = p;
         this.inventory = inventory;
         xPos = x;
@@ -26,6 +26,19 @@ public class Boat {
 
 
 
+    void generateInventory(){
+        ArrayList StockInventory = new ArrayList<Item>();
+        Item Banana = new Item(10,0,"Banana","idk");
+        Item Rum = new Item(5,0,"Rum","idk");
+        Item Eyepatch = new Item(3,0,"Eyepatch","idk");
+        StockInventory.add(Banana);
+        StockInventory.add(Rum);
+        StockInventory.add(Eyepatch);
+
+
+        inventory = StockInventory;
+
+    }
 
     //----------METHODS----------
     void displayBoat(int pX, int pY,int s){

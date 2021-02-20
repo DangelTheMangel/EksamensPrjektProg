@@ -3,6 +3,7 @@ import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 import processing.core.PApplet;
 import processing.core.PVector;
+import processing.data.Table;
 
 import javax.print.DocFlavor;
 import javax.swing.*;
@@ -29,6 +30,7 @@ public class main extends PApplet {
     public PauseMenu pauseMenu;
     public SettingMenu settingMenu;
     public static MainMenu mainMenu;
+
     public GameBoard gb ;
     @Override
     public void settings() {
@@ -45,13 +47,15 @@ public class main extends PApplet {
         mainMenu = new MainMenu(this);
         pauseMenu = new PauseMenu(this,settingMenu,mainMenu);
         gb = new GameBoard(this,pauseMenu);
+        gb.saveManger = new SaveManger(this);
         gb.visible = true;
-        gb.player.boatPic = loadImage("Skibet32.png");
-        gb.cpu.boatPic = loadImage("Skibet32.png");
+
+
+        gb.saveManger.generateGame(32, gb.tileSet);
+        gb.saveManger.gb = gb;
 
 
 
-        GenerateMap(32);
 
 
     }
@@ -59,43 +63,18 @@ public class main extends PApplet {
         if (selection == null) {
             println("Window was closed or the user hit cancel.");
         } else {
-            
-            println("User selected " + selection.getAbsolutePath());
+            Table map = null;
+
+            try{
+                map = loadTable(selection.getAbsolutePath());
+                println("User selected " + selection.getAbsolutePath() + " First tile: " + map.getString(0,0));
+                gb.saveManger.loadGame(32,map, gb.tileSet);
+            }catch (NullPointerException ignored){
+                System.out.println(selection.getAbsolutePath());
+            }
         }
     }
-    void GenerateMap(int NumberoFTiles){
-        PVector[] shopLoc = {new PVector(16,16),new PVector(0,0),new PVector(0,0) };//new PVector(15,17),new PVector(17,17)};
-       /* for(int i=0; i<3;++i){
-            int px = (int) random(1,33);
-            int py = (int) random(1,33);
-            shopLoc[i] = new PVector(px,py);
-        }*/
 
-        for(int x = -1;x<NumberoFTiles+3;++x) {
-            for (int j = -1; j < NumberoFTiles+3; ++j){
-                Tile t = new TerrainTile(this,"",x ,j );
-                if((x <= 0 || j<= 0)||(33 <= x || 33<= j)){
-                    t.Contents = "BORDER";
-                }else{
-                    if(Math.random() > 0.3){
-                        t.Contents ="WATER";
-                    }else{
-                        t.Contents ="SAND";
-                    }
-                }
-                for(int e=0; e<3;++e){
-                    if(x == shopLoc[e].x&& j== shopLoc[e].y){
-                        System.out.println("x: "+ x + "=="+ "Shop: " +shopLoc[e].x + "x: "+ j + "=="+ "Shop: " +shopLoc[e].y );
-                        t = new ShopTile(this,"SHOP",x ,j);
-                        System.out.println("SHOP:  "+x + " x " + j);
-                    }
-                }
-
-                System.out.println(x + " x " + j + "tile contens: " + t.Contents);
-                gb.tileSet.add(t);}
-        }
-
-    }
 
     @Override
     public void draw() {
