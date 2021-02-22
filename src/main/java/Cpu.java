@@ -13,17 +13,18 @@ public class Cpu extends Boat {
     void Turn(){
         ///cpu og player deler åbenbart items så hvad du gøre ved dene ene sker der også hos den anden 
         boolean canSeeShop = false;
-        ArrayList<Tile> shopTileset = new ArrayList<Tile>();
+        ArrayList<ShopTile> shopTileset = new ArrayList<ShopTile>();
 
         for(int i = 0; i<showneTileSet.size()-1;++i){
             if(showneTileSet.get(i).Contents.equals("SHOP")){
-                shopTileset.add(showneTileSet.get(i));
+                shopTileset.add((ShopTile) showneTileSet.get(i));
                 canSeeShop = true;
             }
             }
         if(canSeeShop){ // && Math.random()<0.5){
             System.out.println("Valgte at shoppe");
-            shop((ShopTile) shopTileset.get((int) p.random(0,shopTileset.size())));
+            int random = (int) p.random(0,shopTileset.size());
+            shop(shopTileset.get( random));
         }else {
             System.out.println("Valgte at rykke");
             Move();
@@ -44,7 +45,7 @@ public class Cpu extends Boat {
 
         if(Math.random() < 0.5){
             System.out.println("sælger lortet");
-            sell((Item) shop.StockInventory.get((int) p.random(0,s)),(int) p.random(1,100));
+            sell(inventory.get((int) p.random(0,inventory.size())),(int) p.random(1,100));
             soultSomthing = true;
         }
 
@@ -66,9 +67,15 @@ public class Cpu extends Boat {
                     break;
 
                 }
-            }}else if(amount > 1){
+            }
+
+        }else if(amount > 1){
+            System.out.println("amount: " + amount);
+        sell(item,amount-1);
+        } else if(amount < 1){
             System.out.println("amount: " + amount);
             buy(item,amount-1);
+
         }
     }
 
