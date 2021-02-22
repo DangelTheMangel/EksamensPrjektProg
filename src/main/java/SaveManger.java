@@ -12,6 +12,8 @@ public class SaveManger {
     }
 
     void saveGame(int NumberoFTiles, ArrayList<Tile> tileSet){
+
+
         ArrayList<Tile> mapTiles = new ArrayList<Tile>();
         for(int i = 0; i<tileSet.size();++i){
             String contens = tileSet.get(i).Contents;
@@ -36,8 +38,58 @@ public class SaveManger {
          }
 
         }
+
+        loadBoatToSting(map,"Player",33,gb.player);
+        loadBoatToSting(map,"CPU",34,gb.cpu);
+        map.setString(0,32,"Round");
+        map.setString(2,32,"Turn");
+        map.setInt(1,32,gb.roundCount);
+        map.setInt(3,32,gb.turnCount);
         p.saveTable(map,"F:\\new.csv");
         System.out.println("Done!");
+    }
+
+    void loadBoatToSting(Table map, String titel , int column, Boat boat){
+        map.setString(0,column,titel);
+        map.setString(1,column, String.valueOf(gb.player.money));
+        map.setInt(2,column,(int)boat.xPos);
+        map.setInt(3,column,(int)boat.yPos);
+        ArrayList<Item> inventory = boat.inventory;
+        for(int i = 0 ; i < inventory.size();++i){
+            String name = inventory.get(i).Name;
+            float value = inventory.get(i).value;
+            int amount = inventory.get(i).ammount;
+            map.setString(4+(i*3),column, name);
+            map.setFloat(5+(i*3),column, value);
+            map.setInt(6+(i*3),column, amount);
+
+            System.out.println("Name: "+map.getString(2+i,column) +  " Value: "+map.getString(3+i,column)+
+                    " Amount: "+map.getString(4+i,column)
+                    + "\n row:" +(4+(i*3))
+                    + "\n row:" +(5+(i*3))
+                    + "\n row:" +(6+(i*3)));
+        }
+
+    }
+
+    void loadMapToBoat(Table map, String titel , int column, Boat boat){
+
+        ArrayList<Item> inventory = boat.inventory;
+        ArrayList<Item> newInventory = new ArrayList<Item>();
+        for(int i = 0 ; i < inventory.size();++i) {
+            Item item = new Item(map.getFloat(5+(i*3),column),map.getInt(6+(i*3),column),map.getString(4+(i*3),column),"");
+            newInventory.add(item);
+        }
+        boat.money = map.getFloat(1,column);
+        boat.inventory = newInventory;
+
+        gb.roundCount = map.getInt(1,32);
+        gb.turnCount = map.getInt(3,32);
+        boat.xPos = map.getInt(2,column);
+        boat.yPos = map.getInt(3,column);
+        System.out.println("Boat " + titel + "have been loaded");
+
+
     }
 
     void loadGame(int NumberoFTiles, Table map,ArrayList<Tile> tileSet){
@@ -66,6 +118,10 @@ public class SaveManger {
         }
         gb.startGame();
 
+        loadMapToBoat(map, "Player" ,33, gb.player);
+        loadMapToBoat(map, "CPU" ,34, gb.cpu);
+
+
     }
 
 
@@ -83,6 +139,7 @@ public class SaveManger {
             int py = (int) p.random(1,33);
             shopLoc[i] = new PVector(px,py);
         }*/
+
 
         for(int x = -1;x<NumberoFTiles+3;++x) {
             for (int j = -1; j < NumberoFTiles+3; ++j){
