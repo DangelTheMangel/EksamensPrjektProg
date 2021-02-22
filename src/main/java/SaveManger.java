@@ -126,7 +126,7 @@ public class SaveManger {
 
 
 
-    void generateGame(int NumberoFTiles, ArrayList<Tile> tileSet){
+    void generateGame(int numberOfTiles, ArrayList<Tile> tileSet){
         /*void GenerateMap(int NumberoFTiles){
         PVector[] shopLoc = {new PVector(16,16),new PVector(0,0),new PVector(0,0) };//new PVector(15,17),new PVector(17,17)};
        /*
@@ -141,8 +141,8 @@ public class SaveManger {
         }*/
 
 
-        for(int x = -1;x<NumberoFTiles+3;++x) {
-            for (int j = -1; j < NumberoFTiles+3; ++j){
+        for(int x = -1;x<numberOfTiles+3;++x) {
+            for (int j = -1; j < numberOfTiles+3; ++j){
                 Tile t = new TerrainTile(p,"",x ,j );
                 if((x <= 0 || j<= 0)||(33 <= x || 33<= j)){
                     t.Contents = "BORDER";
