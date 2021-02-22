@@ -11,13 +11,13 @@ public class SaveManger {
         this.p = p;
     }
 
-    void saveGame(int NumberoFTiles, ArrayList<Tile> tileSet){
+    void saveGame(int numberOfTiles, ArrayList<Tile> tileSet){
 
 
         ArrayList<Tile> mapTiles = new ArrayList<Tile>();
         for(int i = 0; i<tileSet.size();++i){
-            String contens = tileSet.get(i).Contents;
-            if(!contens.equalsIgnoreCase("BORDER")) {
+            String contents = tileSet.get(i).Contents;
+            if(!contents.equalsIgnoreCase("BORDER")) {
                 mapTiles.add(tileSet.get(i));
             }
         }
@@ -39,8 +39,8 @@ public class SaveManger {
 
         }
 
-        loadBoatToSting(map,"Player",33,gb.player);
-        loadBoatToSting(map,"CPU",34,gb.cpu);
+        loadBoatToString(map,"Player",33,gb.player);
+        loadBoatToString(map,"CPU",34,gb.cpu);
         map.setString(0,32,"Round");
         map.setString(2,32,"Turn");
         map.setInt(1,32,gb.roundCount);
@@ -49,7 +49,7 @@ public class SaveManger {
         System.out.println("Done!");
     }
 
-    void loadBoatToSting(Table map, String titel , int column, Boat boat){
+    void loadBoatToString(Table map, String titel , int column, Boat boat){
         map.setString(0,column,titel);
         map.setString(1,column, String.valueOf(gb.player.money));
         map.setInt(2,column,(int)boat.xPos);
