@@ -15,6 +15,8 @@ public class Item {
         ammount = a;
         Name = n;
         Img = i;
+
+
     }
     //----------METHODS----------
 
