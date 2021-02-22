@@ -109,7 +109,7 @@ public class SaveManger {
                         contens = "SAND";
                     }else if(contens.equals("S")){
                         contens = "SHOP";
-
+                        t = new ShopTile(p,contens,xPos+1,yPos+1);
                     }
                     t.Contents = contens;
                 }

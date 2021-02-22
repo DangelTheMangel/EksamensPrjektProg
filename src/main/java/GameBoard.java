@@ -143,7 +143,7 @@ public class GameBoard {
         if(turnEnded){
             cpu.Turn();
             ++roundCount;
-            turnCount = (int) p.random(0,7);
+            turnCount = (int) p.random(0,6);
             turnEnded = false;
 
         }
