@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 /*
 * så man kan se et terning kast-casper
 * map generation - casper
-* mængde af spiller i settings
+* ✔️mængde af spiller i settings
 *tilføj lyd
 *Menuer i havnen påvirker i din ryk???
 *✔️ esc for at få menuen frem
@@ -146,11 +146,11 @@ public class main extends PApplet {
             }
         }
     }
-    /*  @Override
+
     public void keyTyped() {
 
-        //settingMenu.menuKeyTyped();
-    }*/
+        settingMenu.menuKeyTyped();
+    }
 
 
 }

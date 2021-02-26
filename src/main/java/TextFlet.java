@@ -4,7 +4,9 @@ public class TextFlet {
 
     //variabler
     float positionX, positionY, sizeX, sizeY;
+    float realPositionX, realPositionY, realSizeX, realSizeY;
     float mouseX, mouseY;
+    float size =1;
     String textFletNavn;
     String indput = ""; //dit navn består af en masse bogstaver <3
 
@@ -20,6 +22,11 @@ public class TextFlet {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.textFletNavn = text;
+        realSizeY =sizeY ;
+        realSizeX =sizeX;
+
+        realPositionY =posY;
+        realPositionX =posX;
     }
 
     void KlikTjek(float mouseX, float mouseY) {
@@ -38,6 +45,11 @@ public class TextFlet {
     }
 
     void tegnTextFlet() {
+        positionX = realPositionX * size;
+        positionY = realPositionY * size;
+        sizeX = realSizeX*size;
+        sizeY = realSizeY*size;
+
         p.stroke(1, 46, 74, 100);
         if(klikket){
             p.fill(227, 225, 252, 250);

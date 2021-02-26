@@ -34,7 +34,10 @@ public class GameBoard {
         pauseMenu.gb = this;
         pauseMenu.mainMenu.gb = this;
         pauseMenu.mainMenu.chooseGameMenu.gb = this;
+
         settingMenu = pauseMenu.settingMenu;
+        settingMenu.gb = this;
+        settingMenu.tfNumbersOfPlayers.indput = ""+ numbersOfCpus;
 
 
 

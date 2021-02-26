@@ -86,6 +86,11 @@ public class MainMenu {
         settingMenu.reSizeBtn(scaleSize,btnLoadGame);
         settingMenu.reSizeBtn(scaleSize,btnHowToPlay);
         settingMenu.reSizeBtn(scaleSize,btnCloseGame);
+
+        settingMenu.reSizeBtn(scaleSize,chooseGameMenu.btnBackToMenu);
+        settingMenu.reSizeBtn(scaleSize,chooseGameMenu.btnLoadGame);
+        settingMenu.reSizeBtn(scaleSize,chooseGameMenu.btnNewGame);
+        settingMenu.reSizeBtn(scaleSize,chooseGameMenu.btnPlay);
     }
 
     void menuMouseClick(float mx,float my){
