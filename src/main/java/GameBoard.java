@@ -33,6 +33,7 @@ public class GameBoard {
         btnMenu = new AlmindeligKnap(p,50,50,50,50,"-\n-\n-");
         pauseMenu.gb = this;
         pauseMenu.mainMenu.gb = this;
+        pauseMenu.mainMenu.chooseGameMenu.gb = this;
         settingMenu = pauseMenu.settingMenu;
 
 
