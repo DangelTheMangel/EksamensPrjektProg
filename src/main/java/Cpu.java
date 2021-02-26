@@ -1,7 +1,6 @@
 import processing.core.PApplet;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Cpu extends Boat {
 
@@ -21,7 +20,7 @@ public class Cpu extends Boat {
                 canSeeShop = true;
             }
             }
-        if(canSeeShop){ // && Math.random()<0.5){
+        if(canSeeShop && Math.random()<0.5){
             System.out.println("Valgte at shoppe");
             int random = (int) p.random(0,shopTileset.size());
             shop(shopTileset.get( random));

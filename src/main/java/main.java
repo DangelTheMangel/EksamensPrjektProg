@@ -18,6 +18,18 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+/*
+* så man kan se et terning kast-casper
+* map generation - casper
+* mængde af spiller i settings
+*tilføj lyd
+*Menuer i havnen påvirker i din ryk???
+*✔️ esc for at få menuen frem
+*Når man vælger en tile på kortet vælger spillet automatisk ruten derhen
+* gøre ui pænere
+* lav tur liste
+* */
+
 public class main extends PApplet {
     public static void main(String[] args) {
 
@@ -124,8 +136,21 @@ public class main extends PApplet {
     }
 
     @Override
+    public void keyPressed() {
+        if (key == ESC) {
+            key = 0;
+            if(gb.pauseMenu.visible){
+                gb.pauseMenu.aktiverGameBord();
+            }else if(gb.visible){
+                gb.aktiverPauseMenu();
+            }
+        }
+    }
+    /*  @Override
     public void keyTyped() {
 
         //settingMenu.menuKeyTyped();
-    }
+    }*/
+
+
 }

@@ -4,7 +4,7 @@ import javax.swing.text.AbstractDocument;
 
 public class Item {
     PApplet p;
-    float value;
+    float value, stockValue;
     String Name;
     String Img;
     int ammount;
@@ -15,6 +15,7 @@ public class Item {
         ammount = a;
         Name = n;
         Img = i;
+        stockValue = (float)value;
 
 
     }

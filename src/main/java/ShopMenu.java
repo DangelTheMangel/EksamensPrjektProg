@@ -1,13 +1,13 @@
 import processing.core.PApplet;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ShopMenu {
     PApplet p;
     Boolean visible = false;
-    ArrayList StockInventory = new ArrayList<Item>();
+    ArrayList<Item> StockInventory = new ArrayList<Item>();
     AlmindeligKnap btnBuyBa,btnBuyRum,btnBuyEye, btnSellBa, btnSellRum,btnSellEye,btnCloseShop;
+    float bananPrices, eyepachPrices, rumPrices;
     ShopMenu(PApplet p){
         this.p = p;
         Item Banana = new Item(10,(int) p.random(0,100),"Banana","idk");
@@ -26,7 +26,18 @@ public class ShopMenu {
         btnSellRum = new AlmindeligKnap(p,830,330,160,50,"slæg en rom");
 
         btnCloseShop = new AlmindeligKnap(p,630,500,360,50,"luk butik");
+        bananPrices=determinePrice(StockInventory.get(0));
+        rumPrices = determinePrice(StockInventory.get(1));
+        eyepachPrices=determinePrice(StockInventory.get(2));
 
+
+    }
+
+    float determinePrice(Item item){
+        float itemPrices = item.value;
+        float extra  = p.random(-(itemPrices/2),(itemPrices/2));
+        item.value = itemPrices + extra;
+        return itemPrices + extra;
 
     }
 
@@ -45,19 +56,19 @@ public class ShopMenu {
         //buy
         btnBuyEye.tegnKnap();
         if(btnBuyEye.klikket){
-            buyItem((Item) StockInventory.get(2),player,btnBuyEye);
+            buyItem((Item) StockInventory.get(2),player,btnBuyEye,eyepachPrices);
             btnBuyEye.registrerRelease();
         }
 
         btnBuyRum.tegnKnap();
         if(btnBuyRum.klikket){
-            buyItem((Item) StockInventory.get(1),player,btnBuyRum);
+            buyItem((Item) StockInventory.get(1),player,btnBuyRum,rumPrices);
             btnBuyRum.registrerRelease();
         }
 
         btnBuyBa.tegnKnap();
         if(btnBuyBa.klikket){
-            buyItem((Item) StockInventory.get(0),player,btnBuyBa);
+            buyItem((Item) StockInventory.get(0),player,btnBuyBa,bananPrices);
             btnBuyBa.registrerRelease();
         }
 
@@ -66,24 +77,25 @@ public class ShopMenu {
         //sell
         btnSellEye.tegnKnap();
         if(btnSellEye.klikket){
-            SellItem((Item) StockInventory.get(2),player,btnSellEye);
+            SellItem((Item) player.inventory.get(2),player,btnSellEye, 1,eyepachPrices);
             btnSellEye.registrerRelease();
         }
 
         btnSellRum.tegnKnap();
         if(btnSellRum.klikket){
-            SellItem((Item) StockInventory.get(1),player,btnSellRum);
+            SellItem((Item) player.inventory.get(1),player,btnSellRum,1,rumPrices);
             btnSellRum.registrerRelease();
         }
 
         btnSellBa.tegnKnap();
         if(btnSellBa.klikket){
-            SellItem((Item) StockInventory.get(0),player,btnSellBa);
+            SellItem((Item) player.inventory.get(0),player,btnSellBa,1,bananPrices);
             btnSellBa.registrerRelease();
         }
 
         btnCloseShop.tegnKnap();
         if(btnCloseShop.klikket){
+
             visible = false;
             btnCloseShop.registrerRelease();
         }
@@ -117,8 +129,8 @@ public class ShopMenu {
         btnCloseShop.registrerKlik(p.mouseX,p.mouseY);
     }
 
-    void buyItem(Item item ,Player player , AlmindeligKnap btn ){
-        if(player.money - item.value>= 0 && item.ammount-1 >= 0 && btn.klikket){
+    void buyItem(Item item ,Player player , AlmindeligKnap btn, float itemPrices ){
+        if(player.money - itemPrices>= 0 && item.ammount-1 >= 0 && btn.klikket){
             for(int i = 0; i<player.inventory.size();++i){
                 System.out.println("itemName: " + item.Name + "|iName: " + player.inventory.get(i).Name+"|");
                 if(player.inventory.get(i).Name.equals(item.Name)){
@@ -127,7 +139,7 @@ public class ShopMenu {
 
                     ++player.inventory.get(i).ammount;
                     --item.ammount;
-                    player.money = player.money - item.value;
+                    player.money = player.money - itemPrices;
                     btn.registrerRelease();
                     break;
 
@@ -136,8 +148,8 @@ public class ShopMenu {
         }
     }
 
-    void SellItem(Item item ,Player player , AlmindeligKnap btn){
-        for(int i = 0; i<player.inventory.size();++i){
+    void SellItem(Item item ,Player player , AlmindeligKnap btn, int amount, float itemPrices){
+       /* for(int i = 0; i<player.inventory.size();++i){
             System.out.println("itemName: " + item.Name + "|iName: " + player.inventory.get(i).Name+"|");
             if(player.inventory.get(i).Name.equals(item.Name)){
                 if(player.inventory.get(i).ammount- 1> 0) {
@@ -151,11 +163,28 @@ public class ShopMenu {
                     btn.registrerRelease();
                     break;
                 }
+            }*/
+
+            int sellAmount =item.ammount-amount;
+        if( sellAmount >= 0 ){
+            for(int i = 0; i<StockInventory.size();++i){
+                System.out.println("itemName: " + item.Name + "|iName: " + player.inventory.get(i).Name+"|");
+                if(StockInventory.get(i).Name.equals(item.Name)){
+//.equals(item.Name)
+                    item.ammount-= amount;
+                    StockInventory.get(i).ammount += amount;
+                    player.money = player.money + itemPrices;
+                    btn.registrerRelease();
+                    break;
+
+                }
             }
+
+        }
         }
 
 
     }
 
 
-}
+

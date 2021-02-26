@@ -34,10 +34,7 @@ public class PauseMenu {
     btnSave.tegnKnap();
 
     if(btnResume.klikket){
-        gb.visible = true;
-        gb.reSizeGamebord();
-        visible = false;
-        btnResume.registrerRelease();
+        aktiverGameBord();
     }
 
     if(btnSettings.klikket){
@@ -76,5 +73,12 @@ public class PauseMenu {
         btnSettings.registrerKlik(mx,my);
         btnExitToMain.registrerKlik(mx,my);
         btnSave.registrerKlik(mx,my);
+    }
+
+    void aktiverGameBord(){
+        gb.visible = true;
+        gb.reSizeGamebord();
+        visible = false;
+        btnResume.registrerRelease();
     }
 }

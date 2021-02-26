@@ -38,13 +38,19 @@ public class SaveManger {
          }
 
         }
-
-        loadBoatToSting(map,"Player",33,gb.player);
-        loadBoatToSting(map,"CPU",34,gb.cpu);
         map.setString(0,32,"Round");
         map.setString(2,32,"Turn");
+        map.setString(4,32,"Numbers of CPU's");
         map.setInt(1,32,gb.roundCount);
         map.setInt(3,32,gb.turnCount);
+        map.setInt(5,32,gb.numbersOfCpus);
+        loadBoatToSting(map,"Player",33,gb.player);
+
+        for(int i = 0; i< gb.cpuArrayList.size();++i){
+            loadBoatToSting(map,"CPU",34+i,gb.cpuArrayList.get(i));
+        }
+
+
         p.saveTable(map,"F:\\new.csv");
         System.out.println("Done!");
     }
@@ -77,7 +83,11 @@ public class SaveManger {
         ArrayList<Item> inventory = boat.inventory;
         ArrayList<Item> newInventory = new ArrayList<Item>();
         for(int i = 0 ; i < inventory.size();++i) {
-            Item item = new Item(map.getFloat(5+(i*3),column),map.getInt(6+(i*3),column),map.getString(4+(i*3),column),"");
+            //map.getFloat(5+(i*3),column),map.getInt(6+(i*3),column),map.getString(4+(i*3),column),""
+            float value = map.getFloat(5+(i*3),column);
+            int amount =  map.getInt(6+(i*3),column);
+            String name =map.getString(4+(i*3),column);
+            Item item = new Item(value,amount,name,"");
             newInventory.add(item);
         }
         boat.money = map.getFloat(1,column);
@@ -116,10 +126,16 @@ public class SaveManger {
                 System.out.println(x + " x " + y + "tile contens: " + t.Contents);
                 tileSet.add(t);}
         }
-        gb.startGame();
+        gb.numbersOfCpus = map.getInt(5,32) -1;
+        System.out.println("numbersOfCpus " + (map.getInt(5,32) ));
+        gb.startGame(gb.numbersOfCpus);
 
         loadMapToBoat(map, "Player" ,33, gb.player);
-        loadMapToBoat(map, "CPU" ,34, gb.cpu);
+        for(int i= 0; i <gb.cpuArrayList.size()-2;i++){
+            System.out.println("int i " + i + " column " +( 34 +i));
+            loadMapToBoat(map, "CPU" ,34 +i, gb.cpuArrayList.get(i));
+        }
+
 
 
     }

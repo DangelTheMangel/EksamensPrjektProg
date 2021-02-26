@@ -17,7 +17,9 @@ public class GameBoard {
     SettingMenu settingMenu;
     SaveManger saveManger;
     public Player player;
-    Cpu cpu;
+    ArrayList<Cpu>  cpuArrayList = new ArrayList<Cpu>();
+  //  Cpu cpu;
+    int numbersOfCpus = 3;
     int roundCount = 1;
     int turnCount ;
     float scaleSize = 1;
@@ -27,7 +29,7 @@ public class GameBoard {
 
         this.p = p;
         this.pauseMenu = pauseMenu;
-        startGame();
+        startGame(numbersOfCpus);
         btnMenu = new AlmindeligKnap(p,50,50,50,50,"-\n-\n-");
         pauseMenu.gb = this;
         pauseMenu.mainMenu.gb = this;
@@ -37,13 +39,21 @@ public class GameBoard {
 
     }
 
-    void startGame(){
+    void startGame(int antalCPU){
         player = new Player(p,16,16,0,1000);
-        cpu = new Cpu(p,16,15,0,1000);
-        player.generateInventory();
-        cpu.generateInventory();
+        for(int i = 0; i < antalCPU; ++i){
+            int x = (int) p.random(0,33),y= (int) p.random(0,33);
+            System.out.println("x: "+ x + " y: " + y);
+            cpuArrayList.add(new Cpu(p,x,y,0,100));
 
-        cpu.boatPic = p.loadImage("Skibet32.png");
+        }
+        for(int i = 0; i < cpuArrayList.size(); ++i){
+
+            cpuArrayList.get(i).generateInventory();
+            cpuArrayList.get(i).boatPic = p.loadImage("Skibet32.png");
+        }
+
+        player.generateInventory();
         player.boatPic = p.loadImage("Skibet32.png");
         turnCount = (int) p.random(0,7);
     }
@@ -68,13 +78,16 @@ public class GameBoard {
                         +"\n Turn: " + turnCount
                         +"\n -----------------\n"
                         +"\nCpu-Taske: "
-                        +"\nPenge"+cpu.money
-                        +"\n" +cpu.inventory.get(0).Name +cpu.inventory.get(0).ammount
-                        +"\n" + cpu.inventory.get(1).Name +cpu.inventory.get(1).ammount
-                        +"\n" + cpu.inventory.get(2).Name +cpu.inventory.get(2).ammount
+                        +"\nPenge"+ cpuArrayList.get(0).money
+                        +"\n" +cpuArrayList.get(0).inventory.get(0).Name +cpuArrayList.get(0).inventory.get(0).ammount
+                        +"\n" + cpuArrayList.get(0).inventory.get(1).Name +cpuArrayList.get(0).inventory.get(1).ammount
+                        +"\n" + cpuArrayList.get(0).inventory.get(2).Name +cpuArrayList.get(0).inventory.get(2).ammount
                 ,1030*scaleSize,120*scaleSize);
         player.fillUpShownTiles(tileSet);
-        cpu.fillUpShownTiles(tileSet);
+        for(int j = 0;j < cpuArrayList.size();++j){
+            cpuArrayList.get(j).fillUpShownTiles(tileSet);
+        }
+
 
 
         //burger menu kanp
@@ -82,10 +95,7 @@ public class GameBoard {
 
         //brætet
         if(btnMenu.klikket){
-            System.out.println("fuck!");
-            pauseMenu.visible = true;
-            visible = false;
-            btnMenu.registrerRelease();
+            aktiverPauseMenu();
         }
 
         ArrayList<Tile> showneTileSet = player.showneTileSet;
@@ -116,7 +126,10 @@ public class GameBoard {
 
             //drawing boats
             drawShips(player,i,posX,posY);
-            drawShips(cpu,i,posX,posY);
+            for(int j = 0;j < cpuArrayList.size();++j){
+                drawShips(cpuArrayList.get(j),i,posX,posY);
+            }
+
 
             //
             if(showneTileSet.get(i).cliked){
@@ -141,7 +154,10 @@ public class GameBoard {
 
         }
         if(turnEnded){
-            cpu.Turn();
+            for(int j = 0;j < cpuArrayList.size();++j){
+                cpuArrayList.get(j).Turn();
+            }
+
             ++roundCount;
             turnCount = (int) p.random(0,6);
             turnEnded = false;
@@ -162,10 +178,17 @@ public class GameBoard {
         }
     }
 
+    void aktiverPauseMenu(){
+        System.out.println("fuck!");
+        pauseMenu.visible = true;
+        visible = false;
+        btnMenu.registrerRelease();
+    }
+
     void boardmouseClicked(){
         ArrayList<Tile> showneTileSet = player.showneTileSet;
 
-        System.out.println("x: " + cpu.xPos + " y:" + cpu.yPos);
+
         btnMenu.registrerKlik(p.mouseX,p.mouseY);
         if(turnEnded == false){
            for(int i = 0;i<showneTileSet.size();++i){
