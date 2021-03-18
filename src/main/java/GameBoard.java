@@ -17,6 +17,7 @@ public class GameBoard {
     SettingMenu settingMenu;
     SaveManger saveManger;
     public Player player;
+    ArrayList<Turn> turnList = new ArrayList<Turn>();
     ArrayList<Cpu>  cpuArrayList = new ArrayList<Cpu>();
   //  Cpu cpu;
     int numbersOfCpus = 3;
@@ -45,21 +46,26 @@ public class GameBoard {
 
     void startGame(int antalCPU){
         player = new Player(p,16,16,0,1000);
+        player.generateInventory();
+        player.boatPic = p.loadImage("Skibet32.png");
+        turnList.add(new Turn(p,player));
+        turnCount = (int) p.random(0,7);
+
         for(int i = 0; i < antalCPU; ++i){
             int x = (int) p.random(0,33),y= (int) p.random(0,33);
             System.out.println("x: "+ x + " y: " + y);
             cpuArrayList.add(new Cpu(p,x,y,0,100));
 
         }
+
         for(int i = 0; i < cpuArrayList.size(); ++i){
 
             cpuArrayList.get(i).generateInventory();
             cpuArrayList.get(i).boatPic = p.loadImage("Skibet32.png");
+            turnList.add(new Turn(p,cpuArrayList.get(i)));
         }
 
-        player.generateInventory();
-        player.boatPic = p.loadImage("Skibet32.png");
-        turnCount = (int) p.random(0,7);
+
     }
 
     void drawBoard(){
@@ -138,14 +144,18 @@ public class GameBoard {
             //
             if(showneTileSet.get(i).cliked){
                 if(showneTileSet.get(i).Contents.equals("SHOP")){
+                    //klikker på shop
                     System.out.println("ShopTime");
                     showneTileSet.get(i).showShop(scaleSize);
 
                 } else if(showneTileSet.get(i).Contents.equals("BORDER")){
 
                 } else {
-                    player.xPos =showneTileSet.get(i).xPos;
+                    //klikker på vandtiels
+                   /* player.xPos =showneTileSet.get(i).xPos;
                     player.yPos =showneTileSet.get(i).yPos;
+                    */
+                    player.movePlayer(showneTileSet.get(i).xPos,showneTileSet.get(i).yPos);
                     --turnCount;
                     if(turnCount <=0){
                         turnEnded = true;
@@ -188,6 +198,8 @@ public class GameBoard {
         visible = false;
         btnMenu.registrerRelease();
     }
+
+
 
     void boardmouseClicked(){
         ArrayList<Tile> showneTileSet = player.showneTileSet;
