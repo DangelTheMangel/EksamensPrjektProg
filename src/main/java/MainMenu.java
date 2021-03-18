@@ -19,7 +19,7 @@ public class MainMenu {
         btnSettings = new AlmindeligKnap(p,640-160,220,320,50,"Indstillinger");
 
         btnHowToPlay = new AlmindeligKnap(p,640-160,280,320,50,"Hvordan man spiller");
-        btnCloseGame = new AlmindeligKnap(p,640-160,340,320,50,"luk spil");
+        btnCloseGame = new AlmindeligKnap(p,640-160,340,320,50,"Luk spil");
         chooseGameMenu = new chooseGameMenu(p,gb,this);
     }
 
