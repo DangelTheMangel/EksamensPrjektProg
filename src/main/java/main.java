@@ -23,19 +23,17 @@ import java.util.ResourceBundle;
 * map generation - casper
 * ✔️mængde af spiller i settings
 *tilføj lyd
-*Menuer i havnen påvirker i din ryk???
+*Menuer i havnen påvirker i din ryk??? - Christian
 *✔️ esc for at få menuen frem
-*Når man vælger en tile på kortet vælger spillet automatisk ruten derhen
-* gøre ui pænere
-* lav tur liste
+*Når man vælger en tile på kortet vælger spillet automatisk ruten derhen - Christian
+* gøre ui pænere - laura/ casper
+
 * */
 
 public class main extends PApplet {
     public static void main(String[] args) {
 
         PApplet.main("main");
-
-
     }
 
 

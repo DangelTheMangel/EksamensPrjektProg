@@ -155,6 +155,11 @@ public class GameBoard {
                    /* player.xPos =showneTileSet.get(i).xPos;
                     player.yPos =showneTileSet.get(i).yPos;
                     */
+                    showneTileSet.get(i).selectedTile = true;
+                    if(showneTileSet.get(i).selectedTile) {
+                        ArrayList<PVector> h = player.findPath(showneTileSet.get(i), showneTileSet.get(12), tileSet);
+                    }
+
                     player.movePlayer(showneTileSet.get(i).xPos,showneTileSet.get(i).yPos);
                     --turnCount;
                     if(turnCount <=0){
