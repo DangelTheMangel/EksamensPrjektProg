@@ -2,6 +2,8 @@ import processing.core.PApplet;
 
 public abstract class Tile {
     float strong = 0;
+    int path = -1;
+    Boolean selectedTile = false;
     PApplet p;
     String Contents; //Contents kan være "Vand", "Land", "Skattekiste", "Havn" osv.
     int xPos;
@@ -65,7 +67,14 @@ public abstract class Tile {
         p.stroke(strong*255,strong*190,0);
         p.rect(0+ s*pX,0+ s*pY,s,s);
         p.fill(0);
-        p.text(xPos +"x"+ yPos + "\n C:" + Contents , s*pX, s*pY);
+        p.text(xPos +"x"+ yPos + "\n C:" + Contents + "\n          " + path , s*pX, s*pY);
+        if(selectedTile){
+            p.fill(200,200,200,200);
+            p.strokeWeight(10);
+            p.stroke(strong*255,strong*190,0);
+            p.rect(0+ s*pX,0+ s*pY,s,s);
+
+        }
 
 
 

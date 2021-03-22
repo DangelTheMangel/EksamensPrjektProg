@@ -155,17 +155,29 @@ public class SaveManger {
             int py = (int) p.random(1,33);
             shopLoc[i] = new PVector(px,py);
         }*/
-
+        float increment = (float) 0.09;
+        int antalSand = 0;
+        int antalVand = 0;
+        float xoff =  0.0f; // Start xoff at 0
 
         for(int x = -1;x<numberOfTiles+3;++x) {
+            xoff += increment;   // Increment xoff
+            float yoff = 0.0f;   // For every xoff, start yoff at 0
             for (int j = -1; j < numberOfTiles+3; ++j){
+                yoff += increment; // Increment yoff
+
+                // Calculate noise and scale by 255
+                float bright = p.noise(xoff, yoff) * 255;
+
                 Tile t = new TerrainTile(p,"",x ,j );
                 if((x <= 0 || j<= 0)||(33 <= x || 33<= j)){
                     t.Contents = "BORDER";
                 }else{
-                    if(Math.random() > 0.3){
+                    if(bright > 100){
+                        antalVand +=1;
                         t.Contents ="WATER";
                     }else{
+                        antalSand +=1;
                         t.Contents ="SAND";
                     }
                 }
@@ -180,6 +192,11 @@ public class SaveManger {
                 System.out.println(x + " x " + j + "tile contens: " + t.Contents);
               tileSet.add(t);}
         }
+        System.out.println("vand: " + antalVand + " Sand: " + antalSand);
+        /*if(antalVand< antalSand){
+            tileSet.clear();
+            generateGame(numberOfTiles,  tileSet);
+        }*/
 
     }
     }
