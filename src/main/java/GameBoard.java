@@ -10,7 +10,7 @@ public class GameBoard {
 
     //til bord klassen
     ArrayList<Tile> tileSet = new ArrayList<Tile>();
-   // ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
+    //ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
     PImage playerPic;
     AlmindeligKnap btnMenu;
     public PauseMenu pauseMenu;
@@ -179,6 +179,7 @@ public class GameBoard {
 
             ++roundCount;
             turnCount = (int) p.random(0,6);
+            Rul();
             turnEnded = false;
 
         }
@@ -238,6 +239,11 @@ public class GameBoard {
 
         }
     }
+    }
+
+    void Rul(){
+        float terningTal = p.random(1,6);
+        p.text("Du rullede" + terningTal,p.width/2,p.height/2);
     }
 
 }
