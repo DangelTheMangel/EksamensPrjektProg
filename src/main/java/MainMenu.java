@@ -20,6 +20,7 @@ public class MainMenu {
         btnHowToPlay = new AlmindeligKnap(p,640-160,280,320,50,"Hvordan man spiller");
         btnCloseGame = new AlmindeligKnap(p,640-160,340,320,50,"luk spil");
 
+
     }
 
     void drawMenu(){
