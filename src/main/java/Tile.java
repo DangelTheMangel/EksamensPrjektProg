@@ -6,6 +6,7 @@ import java.awt.*;
 public abstract class Tile {
     float strong = 0;
     int path = -1;
+    PImage tileImage ;
 
 
     Boolean selectedTile = false;
@@ -68,6 +69,9 @@ public abstract class Tile {
             p.fill(190, 181, 115);
             tilephoto = main.sandTiles.get((int) main.sandAnimeNumber);
         }else {
+            if(tileImage != null){
+                tilephoto = tileImage;
+            }
             p.fill(200);
         }
 

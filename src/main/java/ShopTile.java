@@ -9,6 +9,7 @@ public class ShopTile extends Tile {
         super(p, C, x, y);
         Contents = "SHOP";
         shopMenu = new ShopMenu(p);
+        tileImage = p.loadImage("shop.png");
     }
 
     public void drawShopMenu(Player player,float s){
