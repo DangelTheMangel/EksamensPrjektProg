@@ -21,7 +21,7 @@ public class SettingMenu {
     GameBoard gb;
     SettingMenu(PApplet p){
         this.p =p;
-
+        //sds
         ResLeft = new AlmindeligKnap(p,200,200,50,50,"<");
         ResRight = new AlmindeligKnap(p,650,200,50,50,">");
         tfNumbersOfPlayers = new TextFlet(p,200,400,200,50,"Antal af modspiller");
