@@ -24,9 +24,9 @@ import java.util.ResourceBundle;
 * map generation - Christian
 * ✔️mængde af spiller i settings
 *tilføj lyd
-*Menuer i havnen påvirker i din ryk??? - Christian
+*✔️Menuer i havnen påvirker i din ryk??? - Christian
 *✔️ esc for at få menuen frem
-*Når man vælger en tile på kortet vælger spillet automatisk ruten derhen - Christian
+*✔️Når man vælger en tile på kortet vælger spillet automatisk ruten derhen - Christian
 * gøre ui pænere - laura/ casper
 
 * */
@@ -58,6 +58,7 @@ public class main extends PApplet {
     @Override
     public void setup() {
 //cunt
+        //dette tager tid
         for(int i = 1 ;i<15;++i){
             PImage photo = loadImage("w"+i+".png");
             waterTiles.add(photo);
@@ -66,19 +67,20 @@ public class main extends PApplet {
             PImage photo = loadImage("s"+i+".png");
             sandTiles.add(photo);
         }
+
         settingMenu = new SettingMenu(this);
         mainMenu = new MainMenu(this);
         pauseMenu = new PauseMenu(this,settingMenu,mainMenu);
         gb = new GameBoard(this,pauseMenu);
-        gb.saveManger = new SaveManger(this);
+
         gb.visible = true;
 
 
-        gb.saveManger.generateGame(32, gb.tileSet);
-        gb.saveManger.gb = gb;
 
 
 
+        textSize(12);
+        text("Loading",width/2 - textWidth("Loading")/2,height/2);
 
 
 
@@ -116,10 +118,12 @@ public class main extends PApplet {
     @Override
     public void draw() {
 
+
         waterAnimeNumber = animeTiles(waterAnimeNumber,waterTiles);
         sandAnimeNumber = animeTiles(sandAnimeNumber,sandTiles);
         clear();
         background(200);
+
         if(settingMenu.visible){
             settingMenu.drawMenu();
         }
@@ -165,6 +169,7 @@ public class main extends PApplet {
 
     @Override
     public void keyPressed() {
+
         if (key == ESC) {
             key = 0;
             if(gb.pauseMenu.visible){
@@ -172,12 +177,19 @@ public class main extends PApplet {
             }else if(gb.visible){
                 gb.aktiverPauseMenu();
             }
+
         }
+
+        if (keyCode == 0){
+            gb.akitverDevconsole();
+        }
+
     }
 
     public void keyTyped() {
 
         settingMenu.menuKeyTyped();
+        gb.keyTyped();
     }
 
 

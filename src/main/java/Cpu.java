@@ -99,8 +99,8 @@ public class Cpu extends Boat {
     }
 
     void Move(){
-       /* int xMove =(int) p.random(-7,7);
-        int yMove =(int) p.random(-7,7);
+        int xMove =(int) p.random(-3,3);
+        int yMove =(int) p.random(-3,3);
         float newX = (int) (xPos +xMove);
         float newY = (int) (yPos +yMove);
         boolean haveFoundMove = false;
@@ -134,6 +134,6 @@ public class Cpu extends Boat {
         if(haveFoundMove == false){
             Move();
         }
-*/
+
     }
 }

@@ -5,7 +5,7 @@ import java.awt.*;
 
 public abstract class Tile {
     float strong = 0;
-    int path = -1;
+    int path = 10000;
     PImage tileImage ;
 
 
@@ -59,31 +59,42 @@ public abstract class Tile {
 
     //----------METHODS----------
     //Idk, vi skal måske have noget der displayer den. Når man hover over den bliver den mørkere
-    void Display(int pX, int pY,int s){
+    void Display(int pX, int pY,int s, Boolean pic){
 
         PImage tilephoto = null;
         if(Contents.equals("WATER")){
             p.fill(60, 100, 200);
-            tilephoto = main.waterTiles.get((int) main.waterAnimeNumber);
+            if(pic)
+             tilephoto = main.waterTiles.get((int) main.waterAnimeNumber);
         }else if(Contents.equals("SAND")) {
             p.fill(190, 181, 115);
+            if(pic)
             tilephoto = main.sandTiles.get((int) main.sandAnimeNumber);
         }else {
             if(tileImage != null){
+                if(pic)
                 tilephoto = tileImage;
             }
-            p.fill(200);
+            if(Contents.equals("GRASS")){
+                p.fill(84, 201, 71);
+            }else if(Contents.equals("SHOP")){
+                p.fill(201, 0, 191);
+            }else {
+                p.fill(200);
+            }
         }
 
         p.strokeWeight(5);
         p.stroke(strong*255,strong*190,0);
-        p.rect(0+ s*pX,0+ s*pY,s,s);
-        if (tilephoto != null){
+        p.rect( s*pX, s*pY,s,s);
+        if (tilephoto != null&& pic){
            p.image(tilephoto,0+ s*pX,0+ s*pY,s,s) ;
+            p.fill(0);
+            String tileInfo = xPos +"x"+ yPos  ;
+            p.text( tileInfo , s*pX+ s/2- p.textWidth(tileInfo)/2, s*pY + s/2);
         }
-        p.fill(0);
-        String tileInfo = xPos +"x"+ yPos + "\np: " + path + "\nc: " + Contents;
-        p.text( tileInfo , s*pX+ s/2- p.textWidth(tileInfo)/2, s*pY + s/2);
+
+
         if(selectedTile){
             p.fill(200,200,200,200);
             p.strokeWeight(10);

@@ -14,7 +14,7 @@ public class SettingMenu {
     PVector[] displayResolution = {new PVector(640,360,0.5f),new PVector(1280,720,1),new PVector(1600,900,1.25f),new PVector(1920,1080,1.5f )};
     // Res  = Resolution
     PauseMenu pauseMenu;
-    TextFlet tfNumbersOfPlayers;
+    Textfeld tfNumbersOfPlayers;
     boolean backToMainMenu = true;
     AlmindeligKnap ResLeft, ResRight, backToMain;
     int screenWidth, screenHeight;
@@ -24,7 +24,7 @@ public class SettingMenu {
         //sds
         ResLeft = new AlmindeligKnap(p,200,200,50,50,"<");
         ResRight = new AlmindeligKnap(p,650,200,50,50,">");
-        tfNumbersOfPlayers = new TextFlet(p,200,400,200,50,"Antal af modspiller");
+        tfNumbersOfPlayers = new Textfeld(p,200,400,200,50,"Antal af modspiller");
         tfNumbersOfPlayers.acceptLetters = false;
 
         backToMain = new AlmindeligKnap(p,540,600,200,50,"Back to Menu");
@@ -139,7 +139,7 @@ public class SettingMenu {
 
     }
 
-    public void reSizeFT(float s, TextFlet tf){
+    public void reSizeFT(float s, Textfeld tf){
         tf.size = s;
 
     }

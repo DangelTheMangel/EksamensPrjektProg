@@ -44,6 +44,40 @@ public class Boat {
     void displayBoat(int pX, int pY,int s){
         if(boatPic != null)
         p.image(boatPic,s*pX,s*pY,s,s);
+
+
+        for(int i = 0; i < showneTileSet.size();++i){
+            Tile tile = showneTileSet.get(i);
+            if(xPos == tile.xPos && yPos == tile.yPos){
+                if(!tile.Contents.equals("WATER")){
+                    moveBoatToWater();
+                }
+
+            }
+        }
+    }
+
+    void moveBoatToWater(){
+        boolean didFindWaterTile = false;
+        for(int i = 0; i < showneTileSet.size();++i){
+            Tile tile = showneTileSet.get(i);
+
+                if(tile.Contents.equals("WATER")){
+                    xPos = tile.yPos ;
+                    yPos = tile.yPos;
+                    didFindWaterTile = true;
+                    break;
+                }
+
+
+            }
+        if(!didFindWaterTile){
+            int ran = (int) p.random(0,showneTileSet.size());
+            xPos =showneTileSet.get(ran).xPos;
+            yPos =showneTileSet.get(ran).yPos;
+            moveBoatToWater();
+        }
+
     }
 
     void fillUpShownTiles(ArrayList<Tile> tileSet){

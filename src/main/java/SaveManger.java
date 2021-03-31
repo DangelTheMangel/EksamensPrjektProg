@@ -1,8 +1,11 @@
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 import processing.data.Table;
 
+import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 public class SaveManger {
@@ -42,6 +45,8 @@ public class SaveManger {
          } else if(contens.equals("SHOP")){
              map.setString(xPos,yPos,"S");
 
+         }else if (contens.equals("GRASS")){
+             map.setString(xPos,yPos,"G");
          }
 
         }
@@ -57,9 +62,14 @@ public class SaveManger {
             loadBoatToString(map,"CPU",34+i,gb.cpuArrayList.get(i));
         }
 
+        JFileChooser f = new JFileChooser();
+        f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        f.showSaveDialog(null);
 
-        p.saveTable(map,"F:\\new.csv");
-        System.out.println("Done!");
+        System.out.println(f.getCurrentDirectory());
+
+        p.saveTable(map,f.getCurrentDirectory() + "\\GameSave" + p.day()+"d"+ p.month() +"m"+ p.year() +"y" +".csv");
+
     }
 
     void loadBoatToString(Table map, String titel , int column, Boat boat){
@@ -76,11 +86,7 @@ public class SaveManger {
             map.setFloat(5+(i*3),column, value);
             map.setInt(6+(i*3),column, amount);
 
-            System.out.println("Name: "+map.getString(2+i,column) +  " Value: "+map.getString(3+i,column)+
-                    " Amount: "+map.getString(4+i,column)
-                    + "\n row:" +(4+(i*3))
-                    + "\n row:" +(5+(i*3))
-                    + "\n row:" +(6+(i*3)));
+
         }
 
     }
@@ -104,7 +110,7 @@ public class SaveManger {
         gb.turnCount = map.getInt(3,32);
         boat.xPos = map.getInt(2,column);
         boat.yPos = map.getInt(3,column);
-        System.out.println("Boat " + titel + "have been loaded");
+
 
 
     }
@@ -118,6 +124,7 @@ public class SaveManger {
                 Tile t = new TerrainTile(p,"",x ,y );
                 if((x <= 0 || y<= 0)||(33 <= x || 33<= y)){
                     t.Contents = "BORDER";
+                    t.tileImage = p.loadImage("border.png");
                 }else{
                     int xPos = x-1;
                     int yPos = y-1;
@@ -130,11 +137,14 @@ public class SaveManger {
                     }else if(contens.equals("S")){
                         contens = "SHOP";
                         t = new ShopTile(p,contens,xPos+1,yPos+1);
+                    }else if(contens.equals("G")){
+                        contens = "GRASS";
+                        //skriv noget med den vælger billede
                     }
                     t.Contents = contens;
 
                 }
-                System.out.println(x + " x " + y + "tile contens: " + t.Contents+"\n" );
+
                 tileSet.add(t);
 
             }
@@ -145,7 +155,7 @@ public class SaveManger {
 
         loadMapToBoat(map, "Player" ,33, gb.player);
         for(int i= 0; i <gb.cpuArrayList.size()-2;i++){
-            System.out.println("int i " + i + " column " +( 34 +i));
+
             loadMapToBoat(map, "CPU" ,34 +i, gb.cpuArrayList.get(i));
         }
 
@@ -154,37 +164,35 @@ public class SaveManger {
     }
 
     void addShopANdPlayLocation(int numberOfTiles, ArrayList<Tile> tileSet, ArrayList<Integer> sandTiles,int numREmaningShops){
-        ArrayList<Tile> possiableLocations = new ArrayList<>();
-        int extra = 3;
-        int ypos = 0 , xPos = 0;
+
+
+        int ypos = -1 , xPos = -1;
         for(int i = 0; i<tileSet.size();++i){
             Tile tile = tileSet.get(i);
             for (int j = 0; j < sandTiles.size();++j){
 
                 if(sandTiles.get(j) == i){
-                    // kode stas
+
                     if(numREmaningShops < 0){
                         addShopANdPlayLocation(numberOfTiles,tileSet,sandTiles,numREmaningShops);
                         break;
 
                     }
+
                     if(tile.xPos > 2 && tile.xPos <30 && tile.yPos > 2 && tile.yPos <30 ){
                         int numbersOfWaterTiles = 0;
-                        if(tileSet.get(i-1).Contents.equals("WATER") && tileSet.get(i-2).Contents.equals("WATER")){
-                            numbersOfWaterTiles++;
-                        }
-                        if(tileSet.get(i+1).Contents.equals("WATER") && tileSet.get(i+2).Contents.equals("WATER")){
-                            numbersOfWaterTiles++;
-                        }
-                        if(tileSet.get(i+numberOfTiles+extra).Contents.equals("WATER") && tileSet.get(i+(numberOfTiles+extra)*2).Contents.equals("WATER")){
-                            numbersOfWaterTiles++;
-                        }
-                        if(tileSet.get(i-(numberOfTiles+extra)).Contents.equals("WATER") && tileSet.get(i-(numberOfTiles+extra)*2).Contents.equals("WATER")){
-                            numbersOfWaterTiles++;
-                        }
-
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+1);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+35);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+36);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+37);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-1);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-35);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-36);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-37);
                         if(numberOfTiles > 1){
-                            if(p.random(0,1) > 0.5 && numREmaningShops > 0 && ypos< tileSet.get(i).yPos && xPos != tileSet.get(i).xPos ){
+                            if(numberOfTiles> 1&&
+                                    numREmaningShops != 0
+                                    && (ypos+2 > tileSet.get(i).yPos && tileSet.get(i).xPos > xPos+2)  ){
                                 System.out.println("Shops X:" + tileSet.get(i).xPos + " Y:" + tileSet.get(i).yPos);
                                 Tile t = new ShopTile(p,"SHOP",tileSet.get(i).xPos ,tileSet.get(i).yPos);
                                 tileSet.set(i,t);
@@ -204,11 +212,55 @@ public class SaveManger {
             }
         }
 
+        if(numREmaningShops != 0 ){
+            System.out.println("rs: " + numREmaningShops);
+            for(int j = 0; j<tileSet.size();++j){
+                if(numREmaningShops == 0){
+                    break;
+                }
+                int i = (int) p.random(64,tileSet.size());
+                int numbersOfWaterTiles = 0;
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+1);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+35);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+36);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+37);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-1);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-35);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-36);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-37);
+                if(numbersOfWaterTiles > 1 && !tileSet.get(i).Contents.equals("BORDER") ){
+                    System.out.println("Shops X:" + tileSet.get(i).xPos + " Y:" + tileSet.get(i).yPos);
+                    Tile t = new ShopTile(p,"SHOP",tileSet.get(i).xPos ,tileSet.get(i).yPos);
+                    tileSet.set(i,t);
+                    numREmaningShops -= 1;
+                    System.out.println("rs: " + numREmaningShops);
+
+                }else {
+
+                }
+
+            }
+        }
+        System.out.println("rs: " + numREmaningShops);
+
+    }
+
+    int checkIfLoactionHaveWater(ArrayList<Tile> tileSet,int j ){
+        if(j < tileSet.size() && j>0){
+            if(tileSet.get(j).Contents.equals("WATER") ){
+                return 1;
+            }else {
+                return 0;
+            }
+        }else {
+            return  0;
+        }
     }
 
     void generateGame(int numberOfTiles, ArrayList<Tile> tileSet){
 
         ArrayList<Integer> sandTiles = new ArrayList<>();
+        ArrayList<PVector> waterTiles = new ArrayList<>();
         int in = 0;
 
         float increment = (float) 0.09;
@@ -227,17 +279,34 @@ public class SaveManger {
 
                 Tile t = new TerrainTile(p,"",x ,j );
                 if((x <= 0 || j<= 0)||(33 <= x || 33<= j)){
+                    t.tileImage = p.loadImage("border.png");
                     t.Contents = "BORDER";
                 }else{
-                    if(bright > 100){
+                    if(bright > 99){
                         antalVand +=1;
+                        waterTiles.add(new PVector(x,j));
                         t.Contents ="WATER";
-                    }else{
+                    }else if (bright > 85){
                         antalSand +=1;
                         sandTiles.add(in);
                        t.Contents ="SAND";
                         //t.Contents ="WATER";
 
+                    }else{
+                        PImage tile;
+                        if(Math.random() > 0.5){
+                            if(Math.random() > 0.5){
+                                tile = p.loadImage("g1.png");
+                            }else{
+                                tile = p.loadImage("g2.png");
+                            }
+                        }else if(Math.random() > 0.6){
+                            tile = p.loadImage("g3.png");
+                        }else{
+                            tile = p.loadImage("g4.png");
+                        }
+                        t.tileImage = tile;
+                        t.Contents ="GRASS";
                     }
                 }
                 /*for(int e=0; e<3;++e){
@@ -248,7 +317,7 @@ public class SaveManger {
                     }
                 }*/
 
-                System.out.println(x + " x " + j + "tile contens: " + t.Contents);
+
               tileSet.add(t);
                 in++;
             }
@@ -257,6 +326,11 @@ public class SaveManger {
         System.out.println("vand: " + antalVand + " Sand: " + antalSand +"\n " + in);
 
         addShopANdPlayLocation(numberOfTiles,tileSet,sandTiles,3);
+        if(gb.cpuPos != null)
+            gb.cpuPos.clear();
+
+        gb.cpuPos = waterTiles;
+
         /*if(antalVand< antalSand){
             tileSet.clear();
             generateGame(numberOfTiles,  tileSet);
