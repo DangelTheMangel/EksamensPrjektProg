@@ -5,11 +5,13 @@ import java.util.ArrayList;
 public class ShopMenu {
     PApplet p;
     Boolean visible = false;
+
     ArrayList<Item> StockInventory = new ArrayList<Item>();
     AlmindeligKnap btnBuyBa,btnBuyRum,btnBuyEye, btnSellBa, btnSellRum,btnSellEye,btnCloseShop;
     float bananPrices, eyepachPrices, rumPrices;
     ShopMenu(PApplet p){
         this.p = p;
+        int xpos =  830, ypos=150;
         Item Banana = new Item(10,(int) p.random(0,100),"Banana","idk");
         Item Rum = new Item(50,(int) p.random(0,100),"Rum","idk");
         Item Eyepatch = new Item(30,(int) p.random(0,100),"Eyepatch","idk");
@@ -17,15 +19,16 @@ public class ShopMenu {
         StockInventory.add(Banana);
         StockInventory.add(Rum);
         StockInventory.add(Eyepatch);
-        btnBuyBa = new AlmindeligKnap(p,630,210,160,50,"Køb en Banan");
-        btnBuyEye =new AlmindeligKnap(p,630,270,160,50,"Køb en klap");
-        btnBuyRum = new AlmindeligKnap(p,630,330,160,50,"Køb en rom");
 
-        btnSellBa = new AlmindeligKnap(p,830,210,160,50,"sælg en Banan");
-        btnSellEye =new AlmindeligKnap(p,830,270,160,50,"sælg en klap");
-        btnSellRum = new AlmindeligKnap(p,830,330,160,50,"slæg en rom");
+        btnBuyEye =new AlmindeligKnap(p,xpos + 20,270,160,50,"Køb en klap");
+        btnBuyRum = new AlmindeligKnap(p,xpos + 20,360,160,50,"Køb en rom");
+        btnBuyBa = new AlmindeligKnap(p,xpos + 20,460,160,50,"Køb en Banan");
 
-        btnCloseShop = new AlmindeligKnap(p,630,500,360,50,"luk butik");
+        btnSellEye =new AlmindeligKnap(p,xpos + 400-180,270,160,50,"sælg en klap");
+        btnSellRum = new AlmindeligKnap(p,xpos + 400-180,360,160,50,"slæg en rom");
+        btnSellBa = new AlmindeligKnap(p,xpos + 400-180,460,160,50,"sælg en Banan");
+
+        btnCloseShop = new AlmindeligKnap(p,xpos+20,580,360,50,"luk butik");
         bananPrices=determinePrice(StockInventory.get(0));
         rumPrices = determinePrice(StockInventory.get(1));
         eyepachPrices=determinePrice(StockInventory.get(2));
@@ -42,37 +45,27 @@ public class ShopMenu {
     }
 
     void drawMenu(Player player,float s){
-        p.fill(200);
-        p.rect(s*610,s*100,s*400,s*500);
+        //880*scaleSize,150*scaleSize
+        float xpos =  830*s, ypos=150*s;
+        p.fill(209,166,96,255);
+        p.rect(s*xpos,s*ypos,s*400,s*500);
         p.fill(0);
         p.textSize(32);
-        p.text("Shop",s*810 - p.textWidth("Shop")/2,s*150);
-        p.textSize(10);
+        p.text("Shop",xpos+200*s - p.textWidth("Shop")/2,ypos+50*s);
+        p.textSize(16);
         ArrayList<Item> t = StockInventory ;
 
-        p.text("Taske: " +"\n" +t.get(0).Name +t.get(0).ammount +"\n" + t.get(1).Name +t.get(1).ammount +"\n" + t.get(2).Name +t.get(2).ammount,s*850 ,s*150);
+       // p.text("Taske: " +"\n" +t.get(0).Name +t.get(0).ammount +"\n" + t.get(1).Name +t.get(1).ammount +"\n" + t.get(2).Name +t.get(2).ammount,s*850 ,s*150);
+
 
 
         //buy
+        p.text(t.get(2).Name +": "+t.get(2).ammount , xpos+20*s,ypos+100*s);
         btnBuyEye.tegnKnap();
         if(btnBuyEye.klikket){
             buyItem((Item) StockInventory.get(2),player,btnBuyEye,eyepachPrices);
             btnBuyEye.registrerRelease();
         }
-
-        btnBuyRum.tegnKnap();
-        if(btnBuyRum.klikket){
-            buyItem((Item) StockInventory.get(1),player,btnBuyRum,rumPrices);
-            btnBuyRum.registrerRelease();
-        }
-
-        btnBuyBa.tegnKnap();
-        if(btnBuyBa.klikket){
-            buyItem((Item) StockInventory.get(0),player,btnBuyBa,bananPrices);
-            btnBuyBa.registrerRelease();
-        }
-
-
 
         //sell
         btnSellEye.tegnKnap();
@@ -81,10 +74,24 @@ public class ShopMenu {
             btnSellEye.registrerRelease();
         }
 
+        p.text(t.get(1).Name +": "+t.get(1).ammount , xpos+20*s,ypos+200*s);
+        btnBuyRum.tegnKnap();
+        if(btnBuyRum.klikket){
+            buyItem((Item) StockInventory.get(1),player,btnBuyRum,rumPrices);
+            btnBuyRum.registrerRelease();
+        }
+
         btnSellRum.tegnKnap();
         if(btnSellRum.klikket){
             SellItem((Item) player.inventory.get(1),player,btnSellRum,1,rumPrices);
             btnSellRum.registrerRelease();
+        }
+
+        p.text(t.get(0).Name +": "+t.get(0).ammount , xpos+20*s,ypos+300*s);
+        btnBuyBa.tegnKnap();
+        if(btnBuyBa.klikket){
+            buyItem((Item) StockInventory.get(0),player,btnBuyBa,bananPrices);
+            btnBuyBa.registrerRelease();
         }
 
         btnSellBa.tegnKnap();

@@ -14,7 +14,7 @@ public class SettingMenu {
     PVector[] displayResolution = {new PVector(640,360,0.5f),new PVector(1280,720,1),new PVector(1600,900,1.25f),new PVector(1920,1080,1.5f )};
     // Res  = Resolution
     PauseMenu pauseMenu;
-    Textfeld tfNumbersOfPlayers;
+    Textfeld tfNumbersOfPlayers, tfMaxRound;
     boolean backToMainMenu = true;
     AlmindeligKnap ResLeft, ResRight, backToMain;
     int screenWidth, screenHeight;
@@ -26,6 +26,9 @@ public class SettingMenu {
         ResRight = new AlmindeligKnap(p,650,200,50,50,">");
         tfNumbersOfPlayers = new Textfeld(p,200,400,200,50,"Antal af modspiller");
         tfNumbersOfPlayers.acceptLetters = false;
+
+        tfMaxRound = new Textfeld(p,200,500,200,50,"Antal Rundter");
+        tfMaxRound.acceptLetters = false;
 
         backToMain = new AlmindeligKnap(p,540,600,200,50,"Back to Menu");
     }
@@ -47,6 +50,7 @@ public class SettingMenu {
             backToMain.tegnKnap();
             ResLeft.tegnKnap();
             ResRight.tegnKnap();
+            tfMaxRound.tegnTextFlet();
             tfNumbersOfPlayers.tegnTextFlet();
             screenResManger();
 
@@ -132,6 +136,8 @@ public class SettingMenu {
         reSizeBtn(s,ResRight);
         reSizeBtn(s,backToMain);
         reSizeFT(s,tfNumbersOfPlayers);
+        reSizeFT(s,tfMaxRound);
+
     }
 
     public void reSizeBtn(float s, Knap btn){
@@ -152,14 +158,19 @@ public class SettingMenu {
             ResRight.registrerKlik(p.mouseX,p.mouseY);
             backToMain.registrerKlik(p.mouseX,p.mouseY);
             tfNumbersOfPlayers.KlikTjek(p.mouseX,p.mouseY);
+            tfMaxRound.KlikTjek(p.mouseX,p.mouseY);
         }
     }
 
     void menuKeyTyped(){
         if(visible){
            tfNumbersOfPlayers.keyindput(p.key);
+           tfMaxRound.keyindput(p.key);
             if (tfNumbersOfPlayers.indput.length() > 0){
                 gb.numbersOfCpus = Integer.valueOf(tfNumbersOfPlayers.indput);
+            }
+            if (tfMaxRound.indput.length() > 0){
+                gb.maxRounds = Integer.valueOf(tfMaxRound.indput);
             }
 
         }

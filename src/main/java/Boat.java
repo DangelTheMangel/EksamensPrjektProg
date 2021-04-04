@@ -41,7 +41,7 @@ public class Boat {
     }
 
     //----------METHODS----------
-    void displayBoat(int pX, int pY,int s){
+    void displayBoat(float pX, float pY, int s){
         if(boatPic != null)
         p.image(boatPic,s*pX,s*pY,s,s);
 

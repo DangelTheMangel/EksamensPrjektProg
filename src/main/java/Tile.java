@@ -1,8 +1,6 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 
-import java.awt.*;
-
 public abstract class Tile {
     float strong = 0;
     int path = 10000;
@@ -42,9 +40,9 @@ public abstract class Tile {
         }
     }
 
-    void checkIfMouseOver(int pX, int pY,int s){
-        int positionX =0+ s*pX;
-        int positionY =0+ s*pY;
+    void checkIfMouseOver(float pX, float pY, int s){
+        int positionX = (int) (0+ s*pX);
+        int positionY = (int) (0+ s*pY);
         if (p.mouseX > positionX &&
                 p.mouseX < positionX + s &&
                 p.mouseY > positionY &&
@@ -59,7 +57,7 @@ public abstract class Tile {
 
     //----------METHODS----------
     //Idk, vi skal måske have noget der displayer den. Når man hover over den bliver den mørkere
-    void Display(int pX, int pY,int s, Boolean pic){
+    void Display(float pX, float pY, int s, Boolean pic,float strokeSize){
 
         PImage tilephoto = null;
         if(Contents.equals("WATER")){
@@ -84,8 +82,8 @@ public abstract class Tile {
             }
         }
 
-        p.strokeWeight(5);
-        p.stroke(strong*255,strong*190,0);
+        p.strokeWeight(strokeSize*2);
+        p.stroke((strong*255),strong*190,0);
         p.rect( s*pX, s*pY,s,s);
         if (tilephoto != null&& pic){
            p.image(tilephoto,0+ s*pX,0+ s*pY,s,s) ;

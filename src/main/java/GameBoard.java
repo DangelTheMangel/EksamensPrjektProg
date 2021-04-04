@@ -22,6 +22,7 @@ public class GameBoard {
   //  ArrayList<Turn> turnList = new ArrayList<Turn>();
     ArrayList<Cpu>  cpuArrayList = new ArrayList<Cpu>();
   //  Cpu cpu;
+    int maxRounds = 500;
     int numbersOfCpus = 3;
     int roundCount = 1;
     int turnCount ;
@@ -29,9 +30,11 @@ public class GameBoard {
     Boolean visible = false;
     Boolean turnEnded = false;
     ArrayList<PVector> cpuPos = new ArrayList<>();
+    PImage bg;
     GameBoard(PApplet p, PauseMenu pauseMenu){
 
         this.p = p;
+        bg = p.loadImage("bgofgame.png");
 
         saveManger = new SaveManger(p);
         saveManger.gb = this;
@@ -40,8 +43,8 @@ public class GameBoard {
 
         this.pauseMenu = pauseMenu;
         startGame(numbersOfCpus,cpuPos);
-        btnMenu = new AlmindeligKnap(p,50,50,50,50,"-\n-\n-");
-        btnMap = new AlmindeligKnap(p,100,600,500,50,"map");
+        btnMenu = new AlmindeligKnap(p,p.width-60,0,60,60,"-\n-\n-");
+        btnMap = new AlmindeligKnap(p,270,650,450,50,"map");
         pauseMenu.gb = this;
         pauseMenu.mainMenu.gb = this;
         pauseMenu.mainMenu.chooseGameMenu.gb = this;
@@ -49,6 +52,7 @@ public class GameBoard {
         settingMenu = pauseMenu.settingMenu;
         settingMenu.gb = this;
         settingMenu.tfNumbersOfPlayers.indput = ""+ numbersOfCpus;
+        settingMenu.tfMaxRound.indput = ""+ maxRounds;
         devConsole = new DevConsole(p,this);
 
 
@@ -88,18 +92,32 @@ public class GameBoard {
         if(visible && !devConsole.visibale){
         //    System.out.println("cpu: " + cpu.inventory.get(0) + "player: " + player.inventory.get(0));
         p.clear();
-        p.background(200);
+        //p.background(200);
+        p.image(bg,0,0,p.width,p.height);
         //ui
+        p.textSize(16*scaleSize);
+        p.fill(200);
+        p.rect(0,0,p.width,60*scaleSize);
+        String info = "Round: " + roundCount + "/" + maxRounds +"\nTurn: " + turnCount;
+        p.fill(0);
+        p.text(info,(p.width/2-p.textWidth(info)/2),30*scaleSize);
         ArrayList<Item> t = player.inventory;
         p.fill(200);
-        p.rect(1020*scaleSize,100*scaleSize,400*scaleSize,500*scaleSize);
+
         p.fill(0);
         p.text(     "\nTaske: " +"\nPenge"+player.money
                         +"\n" +t.get(0).Name +t.get(0).ammount
                         +"\n" + t.get(1).Name +t.get(1).ammount
                         +"\n" + t.get(2).Name +t.get(2).ammount
                         +"\n -----------------\n"
-                        +"\n Round: " + roundCount
+
+                ,880*scaleSize,150*scaleSize);
+        player.fillUpShownTiles(tileSet);
+        for(int j = 0;j < cpuArrayList.size();++j){
+            cpuArrayList.get(j).fillUpShownTiles(tileSet);
+        }
+        /*
+        * +"\n Round: " + roundCount
                         +"\n Turn: " + turnCount
                         +"\n -----------------\n"
                         +"\nCpu-Taske: "
@@ -107,12 +125,7 @@ public class GameBoard {
                         +"\n" +cpuArrayList.get(0).inventory.get(0).Name +cpuArrayList.get(0).inventory.get(0).ammount
                         +"\n" + cpuArrayList.get(0).inventory.get(1).Name +cpuArrayList.get(0).inventory.get(1).ammount
                         +"\n" + cpuArrayList.get(0).inventory.get(2).Name +cpuArrayList.get(0).inventory.get(2).ammount
-                ,1030*scaleSize,120*scaleSize);
-        player.fillUpShownTiles(tileSet);
-        for(int j = 0;j < cpuArrayList.size();++j){
-            cpuArrayList.get(j).fillUpShownTiles(tileSet);
-        }
-
+        * */
 
 
         //burger menu kanp
@@ -132,35 +145,39 @@ public class GameBoard {
         ArrayList<Tile> showneTileSet = player.showneTileSet;
         if(!drawmap){
         for(int i = 0;i<showneTileSet.size();++i){
-            int posX = showneTileSet.get(i).xPos;
-            int posY = showneTileSet.get(i).yPos;
+            p.pushMatrix();
+            float posX = showneTileSet.get(i).xPos;
+            float posY = showneTileSet.get(i).yPos;
 
             if(i<5){
-                posX = 1;
-                posY = i+1;
+
+                //225*scaleSize
+                posX = 2.5f;
+                posY = i+1.5f;
             }else if(i<10) {
-                posX = 2;
-                posY = i-4;
+                posX = 3.5f;
+                posY = i-3.5f;
             }else if(i<15){
-                posX = 3;
-                posY = i-9;
+                posX = 4.5f;
+                posY = i-8.5f;
             }else if(i<20){
-                posX = 4;
-                posY = i-14;
+                posX = 5.5f;
+                posY = i-13.5f;
             }else{
-                posX = 5;
-                posY = i-19;
+                posX = 6.5f;
+                posY = i-18.5f;
             }
             //drawing bord
-            showneTileSet.get(i).Display(posX,posY,(int) (100*scaleSize), true);
+            showneTileSet.get(i).Display(posX,posY,(int) (85*scaleSize), true,scaleSize);
             showneTileSet.get(i).drawShopMenu(player,scaleSize);
-            showneTileSet.get(i).checkIfMouseOver(posX,posY, (int) (100*scaleSize));
+            showneTileSet.get(i).checkIfMouseOver(posX,posY, (int) (85*scaleSize));
 
             //drawing boats
             drawShips(player,i,posX,posY);
             for(int j = 0;j < cpuArrayList.size();++j){
                 drawShips(cpuArrayList.get(j),i,posX,posY);
             }
+            p.popMatrix();
 
 
             //
@@ -205,13 +222,13 @@ public class GameBoard {
 
                 for(int i = 0;i<tileSet.size();++i){
                     p.pushMatrix();
-                    p.translate(114*scaleSize, 100*scaleSize);
+                    p.translate(225*scaleSize, 140*scaleSize);
                     Tile tile = tileSet.get(i);
-                    tile.Display(tile.xPos,tile.yPos,(int) (14*scaleSize) , false);
+                    tile.Display(tile.xPos,tile.yPos,(int) (12*scaleSize) , false,scaleSize);
                     p.fill(201, 0, 0);
                     if(tile.xPos == player.xPos && tile.yPos == player.yPos){
 
-                        float s = (int) (14*scaleSize);
+                        float s = (int) (12*scaleSize);
                         p.rect( s*tile.xPos, s*tile.yPos,s,s);
                     }
                     p.popMatrix();
@@ -238,14 +255,15 @@ public class GameBoard {
     }
     void reSizeGamebord(){
         settingMenu.reSizeBtn(scaleSize,btnMenu);
+        settingMenu.reSizeBtn(scaleSize,btnMap);
 
     }
 
-    void drawShips(Boat boat,int i,int posX,int posY){
+    void drawShips(Boat boat, int i, float posX, float posY){
         ArrayList<Tile> showneTileSet = player.showneTileSet;
         if(boat.xPos == showneTileSet.get(i).xPos && boat.yPos == showneTileSet.get(i).yPos){
             //p.ellipse(100*posX + 50,100*posY+ 50,100,100);
-            boat.displayBoat(posX,posY, (int) (100*scaleSize));
+            boat.displayBoat(posX,posY, (int) (85*scaleSize));
         }
     }
 
@@ -272,28 +290,30 @@ public class GameBoard {
         if(!drawmap)
         if(turnEnded == false){
            for(int i = 0;i<showneTileSet.size();++i){
-            int posX = showneTileSet.get(i).xPos;
-            int posY = showneTileSet.get(i).yPos;
+            float posX = showneTileSet.get(i).xPos;
+            float posY = showneTileSet.get(i).yPos;
 
                if(i<5){
-                   posX = 1;
-                   posY = i+1;
+
+                   //225*scaleSize
+                   posX = 2.5f;
+                   posY = i+1.5f;
                }else if(i<10) {
-                   posX = 2;
-                   posY = i-4;
+                   posX = 3.5f;
+                   posY = i-3.5f;
                }else if(i<15){
-                   posX = 3;
-                   posY = i-9;
+                   posX = 4.5f;
+                   posY = i-8.5f;
                }else if(i<20){
-                   posX = 4;
-                   posY = i-14;
+                   posX = 5.5f;
+                   posY = i-13.5f;
                }else{
-                   posX = 5;
-                   posY = i-19;
+                   posX = 6.5f;
+                   posY = i-18.5f;
                }/**/
 
             showneTileSet.get(i).clickShop();
-            showneTileSet.get(i).checkIfCliked(posX,posY,(int) (100*scaleSize));
+            showneTileSet.get(i).checkIfCliked((int)posX,(int)posY,(int) (100*scaleSize));
 
         }
     }

@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 /*
 * så man kan se et terning kast-casper
-* map generation - Christian
+* ✔️map generation - Christian
 * ✔️mængde af spiller i settings
 *tilføj lyd
 *✔️Menuer i havnen påvirker i din ryk??? - Christian
