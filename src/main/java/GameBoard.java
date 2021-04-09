@@ -31,6 +31,7 @@ public class GameBoard {
     Boolean turnEnded = false;
     ArrayList<PVector> cpuPos = new ArrayList<>();
     PImage bg;
+    int rulleAnimation = 0;
     GameBoard(PApplet p, PauseMenu pauseMenu){
 
         this.p = p;
@@ -113,8 +114,15 @@ public class GameBoard {
 
                 ,880*scaleSize,150*scaleSize);
         player.fillUpShownTiles(tileSet);
+
         for(int j = 0;j < cpuArrayList.size();++j){
             cpuArrayList.get(j).fillUpShownTiles(tileSet);
+
+        if(rulleAnimation>0){
+            //disable input eller noget
+            Rul();
+            rulleAnimation--;
+        }
         }
         /*
         * +"\n Round: " + roundCount
@@ -321,7 +329,9 @@ public class GameBoard {
 
     void Rul(){
         float terningTal = p.random(1,6);
-        p.text("Du rullede" + terningTal,p.width/2,p.height/2);
+        p.fill(0,0,0);
+        //textSize ting her...
+        p.text(terningTal.toString(),p.width/2,p.height/2);
     }
 
     void keyTyped(){
