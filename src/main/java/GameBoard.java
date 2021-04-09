@@ -332,6 +332,9 @@ public class GameBoard {
         p.fill(0,0,0);
         //textSize ting her...
         p.text(terningTal.toString(),p.width/2,p.height/2);
+        if(rulleAnimation=0){
+            //spillerens ture tilbage = terningTal;
+        }
     }
 
     void keyTyped(){
