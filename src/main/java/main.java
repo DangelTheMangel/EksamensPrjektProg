@@ -38,15 +38,13 @@ public class main extends PApplet {
     }
 
 
+
     public PauseMenu pauseMenu;
     public SettingMenu settingMenu;
     public static MainMenu mainMenu;
 
     public GameBoard gb ;
-    public static ArrayList<PImage> waterTiles = new ArrayList<>();
-    public static float waterAnimeNumber = 0;
-    public static ArrayList<PImage> sandTiles = new ArrayList<>();
-    public static float sandAnimeNumber = 0;
+
     boolean forward = true;
     @Override
     public void settings() {
@@ -59,14 +57,7 @@ public class main extends PApplet {
     public void setup() {
 //cunt
         //dette tager tid
-        for(int i = 1 ;i<15;++i){
-            PImage photo = loadImage("w"+i+".png");
-            waterTiles.add(photo);
-        }
-        for(int i = 1 ;i<6;++i){
-            PImage photo = loadImage("s"+i+".png");
-            sandTiles.add(photo);
-        }
+
 
         settingMenu = new SettingMenu(this);
         mainMenu = new MainMenu(this);
@@ -101,26 +92,12 @@ public class main extends PApplet {
         }
     }
 
-    float animeTiles(float animNum, ArrayList<PImage> tiles){
-        if(animNum >= tiles.size()-1 ){
 
-            animNum = 0;
-
-
-        }else{
-
-            animNum += 0.025;
-
-
-        }
-        return animNum;
-    }
     @Override
     public void draw() {
 
 
-        waterAnimeNumber = animeTiles(waterAnimeNumber,waterTiles);
-        sandAnimeNumber = animeTiles(sandAnimeNumber,sandTiles);
+
         clear();
         background(200);
 

@@ -262,7 +262,8 @@ public class SaveManger {
         ArrayList<Integer> sandTiles = new ArrayList<>();
         ArrayList<PVector> waterTiles = new ArrayList<>();
         int in = 0;
-
+        PImage sandtile = p.loadImage("s1.png");
+        PImage watertile = p.loadImage("w1.png");
         float increment = (float) 0.09;
         int antalSand = 0;
         int antalVand = 0;
@@ -282,17 +283,26 @@ public class SaveManger {
                     t.tileImage = p.loadImage("border.png");
                     t.Contents = "BORDER";
                 }else{
+                    //water tile
                     if(bright > 99){
+                        //PImage tile = p.loadImage("w1.png");
                         antalVand +=1;
                         waterTiles.add(new PVector(x,j));
                         t.Contents ="WATER";
+                        t.tileImage = watertile;
+
                     }else if (bright > 85){
+                        //sandtile
+
                         antalSand +=1;
                         sandTiles.add(in);
                        t.Contents ="SAND";
-                        //t.Contents ="WATER";
+                       t.tileImage = sandtile;
+
+
 
                     }else{
+                        //grass tile
                         PImage tile;
                         if(Math.random() > 0.5){
                             if(Math.random() > 0.5){

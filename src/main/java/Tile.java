@@ -62,17 +62,12 @@ public abstract class Tile {
         PImage tilephoto = null;
         if(Contents.equals("WATER")){
             p.fill(60, 100, 200);
-            if(pic)
-             tilephoto = main.waterTiles.get((int) main.waterAnimeNumber);
+
         }else if(Contents.equals("SAND")) {
             p.fill(190, 181, 115);
-            if(pic)
-            tilephoto = main.sandTiles.get((int) main.sandAnimeNumber);
+
         }else {
-            if(tileImage != null){
-                if(pic)
-                tilephoto = tileImage;
-            }
+
             if(Contents.equals("GRASS")){
                 p.fill(84, 201, 71);
             }else if(Contents.equals("SHOP")){
@@ -80,6 +75,10 @@ public abstract class Tile {
             }else {
                 p.fill(200);
             }
+        }
+        if(tileImage != null){
+            if(pic)
+                tilephoto = tileImage;
         }
 
         p.strokeWeight(strokeSize*2);
