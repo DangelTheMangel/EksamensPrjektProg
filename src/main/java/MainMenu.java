@@ -1,7 +1,5 @@
 import processing.core.PApplet;
 
-import java.io.File;
-
 public class MainMenu {
     PApplet p;
     GameBoard gb;
@@ -10,25 +8,26 @@ public class MainMenu {
     SettingMenu settingMenu;
     Boolean visible = false;
     float scaleSize = 1;
-    AlmindeligKnap btnPlay, btnSettings,btnHowToPlay, btnLoadGame,btnCloseGame;
-    MainMenu(PApplet p){
-        this.p =p;
+    AlmindeligKnap btnPlay, btnSettings, btnHowToPlay, btnLoadGame, btnCloseGame;
 
-        btnPlay = new AlmindeligKnap(p,640-160,100,320,50,"Spil");
-        btnLoadGame = new AlmindeligKnap(p,640-160,160,320,50,"Indlæs Spil");
-        btnSettings = new AlmindeligKnap(p,640-160,220,320,50,"Indstillinger");
+    MainMenu(PApplet p) {
+        this.p = p;
 
-        btnHowToPlay = new AlmindeligKnap(p,640-160,280,320,50,"Hvordan man spiller");
-        btnCloseGame = new AlmindeligKnap(p,640-160,340,320,50,"luk spil");
-        chooseGameMenu = new chooseGameMenu(p,gb,this);
+        btnPlay = new AlmindeligKnap(p, 640 - 160, 100, 320, 50, "Spil");
+        btnLoadGame = new AlmindeligKnap(p, 640 - 160, 160, 320, 50, "Indlæs Spil");
+        btnSettings = new AlmindeligKnap(p, 640 - 160, 220, 320, 50, "Indstillinger");
+
+        btnHowToPlay = new AlmindeligKnap(p, 640 - 160, 280, 320, 50, "Hvordan man spiller");
+        btnCloseGame = new AlmindeligKnap(p, 640 - 160, 340, 320, 50, "luk spil");
+        chooseGameMenu = new chooseGameMenu(p, gb, this);
     }
 
-    void drawMenu(){
-        if(chooseGameMenu.visible){
+    void drawMenu() {
+        if (chooseGameMenu.visible) {
             chooseGameMenu.drawMenu();
         }
 
-        if(!chooseGameMenu.visible) {
+        if (!chooseGameMenu.visible) {
             p.clear();
             p.background(200);
             btnPlay.tegnKnap();
@@ -74,42 +73,40 @@ public class MainMenu {
         }
 
 
-
     }
 
 
+    void reSizeMainMenu() {
 
-    void reSizeMainMenu(){
+        settingMenu.reSizeBtn(scaleSize, btnPlay);
+        settingMenu.reSizeBtn(scaleSize, btnSettings);
+        settingMenu.reSizeBtn(scaleSize, btnLoadGame);
+        settingMenu.reSizeBtn(scaleSize, btnHowToPlay);
+        settingMenu.reSizeBtn(scaleSize, btnCloseGame);
 
-        settingMenu.reSizeBtn(scaleSize,btnPlay);
-        settingMenu.reSizeBtn(scaleSize,btnSettings);
-        settingMenu.reSizeBtn(scaleSize,btnLoadGame);
-        settingMenu.reSizeBtn(scaleSize,btnHowToPlay);
-        settingMenu.reSizeBtn(scaleSize,btnCloseGame);
-
-        settingMenu.reSizeBtn(scaleSize,chooseGameMenu.btnBackToMenu);
-        settingMenu.reSizeBtn(scaleSize,chooseGameMenu.btnLoadGame);
-        settingMenu.reSizeBtn(scaleSize,chooseGameMenu.btnNewGame);
-        settingMenu.reSizeBtn(scaleSize,chooseGameMenu.btnPlay);
+        settingMenu.reSizeBtn(scaleSize, chooseGameMenu.btnBackToMenu);
+        settingMenu.reSizeBtn(scaleSize, chooseGameMenu.btnLoadGame);
+        settingMenu.reSizeBtn(scaleSize, chooseGameMenu.btnNewGame);
+        settingMenu.reSizeBtn(scaleSize, chooseGameMenu.btnPlay);
     }
 
-    void menuMouseClick(float mx,float my){
-        if(!chooseGameMenu.visible){
-            btnPlay.registrerKlik(mx,my);
-            btnSettings.registrerKlik(mx,my);
-            btnLoadGame.registrerKlik(mx,my);
-            btnHowToPlay.registrerKlik(mx,my);
-            btnCloseGame.registrerKlik(mx,my);
-        }else{
-            chooseGameMenu.btnPlay.registrerKlik(mx,my);
-            chooseGameMenu.btnLoadGame.registrerKlik(mx,my);
-            chooseGameMenu.btnBackToMenu.registrerKlik(mx,my);
-            chooseGameMenu.btnNewGame.registrerKlik(mx,my);
+    void menuMouseClick(float mx, float my) {
+        if (!chooseGameMenu.visible) {
+            btnPlay.registrerKlik(mx, my);
+            btnSettings.registrerKlik(mx, my);
+            btnLoadGame.registrerKlik(mx, my);
+            btnHowToPlay.registrerKlik(mx, my);
+            btnCloseGame.registrerKlik(mx, my);
+        } else {
+            chooseGameMenu.btnPlay.registrerKlik(mx, my);
+            chooseGameMenu.btnLoadGame.registrerKlik(mx, my);
+            chooseGameMenu.btnBackToMenu.registrerKlik(mx, my);
+            chooseGameMenu.btnNewGame.registrerKlik(mx, my);
         }
 
     }
 
-    void menuKeyTyped(){
+    void menuKeyTyped() {
 
     }
 

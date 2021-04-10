@@ -6,12 +6,11 @@ public class SettingMenu {
     PApplet p;
 
 
-
     Boolean visible = false;
     int displayResolutionInt = 1;
     int lastDisplayResolutionInt = 1;
     public float size = 1;
-    PVector[] displayResolution = {new PVector(640,360,0.5f),new PVector(1280,720,1),new PVector(1600,900,1.25f),new PVector(1920,1080,1.5f )};
+    PVector[] displayResolution = {new PVector(640, 360, 0.5f), new PVector(1280, 720, 1), new PVector(1600, 900, 1.25f), new PVector(1920, 1080, 1.5f)};
     // Res  = Resolution
     PauseMenu pauseMenu;
     Textfeld tfNumbersOfPlayers, tfMaxRound;
@@ -19,33 +18,34 @@ public class SettingMenu {
     AlmindeligKnap ResLeft, ResRight, backToMain;
     int screenWidth, screenHeight;
     GameBoard gb;
-    SettingMenu(PApplet p){
-        this.p =p;
+
+    SettingMenu(PApplet p) {
+        this.p = p;
         //sds
-        ResLeft = new AlmindeligKnap(p,200,200,50,50,"<");
-        ResRight = new AlmindeligKnap(p,650,200,50,50,">");
-        tfNumbersOfPlayers = new Textfeld(p,200,400,200,50,"Antal af modspiller");
+        ResLeft = new AlmindeligKnap(p, 200, 200, 50, 50, "<");
+        ResRight = new AlmindeligKnap(p, 650, 200, 50, 50, ">");
+        tfNumbersOfPlayers = new Textfeld(p, 200, 400, 200, 50, "Antal af modspiller");
         tfNumbersOfPlayers.acceptLetters = false;
 
-        tfMaxRound = new Textfeld(p,200,500,200,50,"Antal Rundter");
+        tfMaxRound = new Textfeld(p, 200, 500, 200, 50, "Antal Rundter");
         tfMaxRound.acceptLetters = false;
 
-        backToMain = new AlmindeligKnap(p,540,600,200,50,"Back to Menu");
+        backToMain = new AlmindeligKnap(p, 540, 600, 200, 50, "Back to Menu");
     }
 
-    void drawMenu(){
+    void drawMenu() {
 
 
-        p.textSize(16*size);
-        if(visible){
+        p.textSize(16 * size);
+        if (visible) {
 
             p.background(200);
 
-            p.text("mx: " + p.mouseX + " my: " + p.mouseY, p.mouseX,p.mouseY);
+            p.text("mx: " + p.mouseX + " my: " + p.mouseY, p.mouseX, p.mouseY);
 
-            String displayInfo = (int)displayResolution[displayResolutionInt].x + " X " + (int)displayResolution[displayResolutionInt].y;
+            String displayInfo = (int) displayResolution[displayResolutionInt].x + " X " + (int) displayResolution[displayResolutionInt].y;
             p.text(displayInfo,
-                    (450 - p.textWidth(displayInfo)/2) * size,(230)*size);
+                    (450 - p.textWidth(displayInfo) / 2) * size, (230) * size);
 
             backToMain.tegnKnap();
             ResLeft.tegnKnap();
@@ -57,13 +57,13 @@ public class SettingMenu {
         }
     }
 
-    void btnChangeScreen(MainMenu mm,GameBoard gb){
-        if(backToMain.klikket){
+    void btnChangeScreen(MainMenu mm, GameBoard gb) {
+        if (backToMain.klikket) {
 
-            if(backToMainMenu ) {
+            if (backToMainMenu) {
                 mm.reSizeMainMenu();
                 mm.visible = true;
-            }else {
+            } else {
                 pauseMenu.reSizePauseMenu();
                 pauseMenu.visible = true;
             }
@@ -71,8 +71,9 @@ public class SettingMenu {
             backToMain.registrerRelease();
         }
     }
-    void screenResManger(){
-        if(visible) {
+
+    void screenResManger() {
+        if (visible) {
             if (ResLeft.erKlikket()) {
                 lastDisplayResolutionInt = displayResolutionInt;
                 displayResolutionInt--;
@@ -124,52 +125,52 @@ public class SettingMenu {
             }
         }
     }
-    
+
     public static final javax.swing.JFrame getJFrame(final PSurface surface) {
-        return (javax.swing.JFrame) ( (processing.awt.PSurfaceAWT.SmoothCanvas) surface.getNative()).getFrame();
+        return (javax.swing.JFrame) ((processing.awt.PSurfaceAWT.SmoothCanvas) surface.getNative()).getFrame();
     }
 
-    void reSizeMenu(float s){
+    void reSizeMenu(float s) {
         pauseMenu.gb.scaleSize = s;
         pauseMenu.mainMenu.scaleSize = s;
-        reSizeBtn(s,ResLeft);
-        reSizeBtn(s,ResRight);
-        reSizeBtn(s,backToMain);
-        reSizeFT(s,tfNumbersOfPlayers);
-        reSizeFT(s,tfMaxRound);
+        reSizeBtn(s, ResLeft);
+        reSizeBtn(s, ResRight);
+        reSizeBtn(s, backToMain);
+        reSizeFT(s, tfNumbersOfPlayers);
+        reSizeFT(s, tfMaxRound);
 
     }
 
-    public void reSizeBtn(float s, Knap btn){
+    public void reSizeBtn(float s, Knap btn) {
         btn.size = s;
 
     }
 
-    public void reSizeFT(float s, Textfeld tf){
+    public void reSizeFT(float s, Textfeld tf) {
         tf.size = s;
 
     }
 
 
-    void menuMouseClick(){
-        if(visible){
+    void menuMouseClick() {
+        if (visible) {
 
-            ResLeft.registrerKlik(p.mouseX,p.mouseY);
-            ResRight.registrerKlik(p.mouseX,p.mouseY);
-            backToMain.registrerKlik(p.mouseX,p.mouseY);
-            tfNumbersOfPlayers.KlikTjek(p.mouseX,p.mouseY);
-            tfMaxRound.KlikTjek(p.mouseX,p.mouseY);
+            ResLeft.registrerKlik(p.mouseX, p.mouseY);
+            ResRight.registrerKlik(p.mouseX, p.mouseY);
+            backToMain.registrerKlik(p.mouseX, p.mouseY);
+            tfNumbersOfPlayers.KlikTjek(p.mouseX, p.mouseY);
+            tfMaxRound.KlikTjek(p.mouseX, p.mouseY);
         }
     }
 
-    void menuKeyTyped(){
-        if(visible){
-           tfNumbersOfPlayers.keyindput(p.key);
-           tfMaxRound.keyindput(p.key);
-            if (tfNumbersOfPlayers.indput.length() > 0){
+    void menuKeyTyped() {
+        if (visible) {
+            tfNumbersOfPlayers.keyindput(p.key);
+            tfMaxRound.keyindput(p.key);
+            if (tfNumbersOfPlayers.indput.length() > 0) {
                 gb.numbersOfCpus = Integer.valueOf(tfNumbersOfPlayers.indput);
             }
-            if (tfMaxRound.indput.length() > 0){
+            if (tfMaxRound.indput.length() > 0) {
                 gb.maxRounds = Integer.valueOf(tfMaxRound.indput);
             }
 

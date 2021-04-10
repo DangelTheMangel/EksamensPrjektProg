@@ -1,65 +1,63 @@
 import processing.core.PApplet;
-import processing.core.PImage;
 import processing.core.PVector;
 import processing.data.Table;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Random;
 
 public class SaveManger {
     PApplet p;
     GameBoard gb;
     ArrayList<PVector> cpuPos = new ArrayList<>();
-    SaveManger(PApplet p){
+
+    SaveManger(PApplet p) {
         this.p = p;
-        for (int i = 0; i<4; ++i ){
-            int x = (int) p.random(0,33),y= (int) p.random(0,33);
-            PVector pos = new PVector(x,y);
+        for (int i = 0; i < 4; ++i) {
+            int x = (int) p.random(0, 33), y = (int) p.random(0, 33);
+            PVector pos = new PVector(x, y);
             cpuPos.add(pos);
         }
     }
 
-    void saveGame(int numberOfTiles, ArrayList<Tile> tileSet){
+    void saveGame(int numberOfTiles, ArrayList<Tile> tileSet) {
 
 
         ArrayList<Tile> mapTiles = new ArrayList<Tile>();
-        for(int i = 0; i<tileSet.size();++i){
+        for (int i = 0; i < tileSet.size(); ++i) {
             String contents = tileSet.get(i).Contents;
-            if(!contents.equalsIgnoreCase("BORDER")) {
+            if (!contents.equalsIgnoreCase("BORDER")) {
                 mapTiles.add(tileSet.get(i));
             }
         }
         Table map = new Table();
         map.addColumn();
 
-        for(int i = 0; i<mapTiles.size();++i){
-         int xPos = mapTiles.get(i).xPos -1;
-         int yPos = mapTiles.get(i).yPos -1;
-         String contens = mapTiles.get(i).Contents;
-         if(contens.equals("SAND")){
-             map.setString(xPos,yPos,"B");
-         } else if(contens.equals("WATER")){
-             map.setString(xPos,yPos,"W");
-         } else if(contens.equals("SHOP")){
-             map.setString(xPos,yPos,"S");
+        for (int i = 0; i < mapTiles.size(); ++i) {
+            int xPos = mapTiles.get(i).xPos - 1;
+            int yPos = mapTiles.get(i).yPos - 1;
+            String contens = mapTiles.get(i).Contents;
+            if (contens.equals("SAND")) {
+                map.setString(xPos, yPos, "B");
+            } else if (contens.equals("WATER")) {
+                map.setString(xPos, yPos, "W");
+            } else if (contens.equals("SHOP")) {
+                map.setString(xPos, yPos, "S");
 
-         }else if (contens.equals("GRASS")){
-             map.setString(xPos,yPos,"G");
-         }
+            } else if (contens.equals("GRASS")) {
+                map.setString(xPos, yPos, "G");
+            }
 
         }
-        map.setString(0,32,"Round");
-        map.setString(2,32,"Turn");
-        map.setString(4,32,"Numbers of CPU's");
-        map.setInt(1,32,gb.roundCount);
-        map.setInt(3,32,gb.turnCount);
-        map.setInt(5,32,gb.numbersOfCpus);
-        loadBoatToString(map,"Player",33,gb.player);
+        map.setString(0, 32, "Round");
+        map.setString(2, 32, "Turn");
+        map.setString(4, 32, "Numbers of CPU's");
+        map.setInt(1, 32, gb.roundCount);
+        map.setInt(3, 32, gb.turnCount);
+        map.setInt(5, 32, gb.numbersOfCpus);
+        loadBoatToString(map, "Player", 33, gb.player);
 
-        for(int i = 0; i< gb.cpuArrayList.size();++i){
-            loadBoatToString(map,"CPU",34+i,gb.cpuArrayList.get(i));
+        for (int i = 0; i < gb.cpuArrayList.size(); ++i) {
+            loadBoatToString(map, "CPU", 34 + i, gb.cpuArrayList.get(i));
         }
 
         JFileChooser f = new JFileChooser();
@@ -68,76 +66,75 @@ public class SaveManger {
 
         System.out.println(f.getCurrentDirectory());
 
-        p.saveTable(map,f.getCurrentDirectory() + "\\GameSave" + p.day()+"d"+ p.month() +"m"+ p.year() +"y" +".csv");
+        p.saveTable(map, f.getCurrentDirectory() + "\\GameSave" + PApplet.day() + "d" + PApplet.month() + "m" + PApplet.year() + "y" + ".csv");
 
     }
 
-    void loadBoatToString(Table map, String titel , int column, Boat boat){
-        map.setString(0,column,titel);
-        map.setString(1,column, String.valueOf(gb.player.money));
-        map.setInt(2,column,(int)boat.xPos);
-        map.setInt(3,column,(int)boat.yPos);
+    void loadBoatToString(Table map, String titel, int column, Boat boat) {
+        map.setString(0, column, titel);
+        map.setString(1, column, String.valueOf(gb.player.money));
+        map.setInt(2, column, (int) boat.xPos);
+        map.setInt(3, column, (int) boat.yPos);
         ArrayList<Item> inventory = boat.inventory;
-        for(int i = 0 ; i < inventory.size();++i){
+        for (int i = 0; i < inventory.size(); ++i) {
             String name = inventory.get(i).Name;
             float value = inventory.get(i).value;
             int amount = inventory.get(i).ammount;
-            map.setString(4+(i*3),column, name);
-            map.setFloat(5+(i*3),column, value);
-            map.setInt(6+(i*3),column, amount);
+            map.setString(4 + (i * 3), column, name);
+            map.setFloat(5 + (i * 3), column, value);
+            map.setInt(6 + (i * 3), column, amount);
 
 
         }
 
     }
 
-    void loadMapToBoat(Table map, String titel , int column, Boat boat){
+    void loadMapToBoat(Table map, String titel, int column, Boat boat) {
 
         ArrayList<Item> inventory = boat.inventory;
         ArrayList<Item> newInventory = new ArrayList<Item>();
-        for(int i = 0 ; i < inventory.size();++i) {
+        for (int i = 0; i < inventory.size(); ++i) {
             //map.getFloat(5+(i*3),column),map.getInt(6+(i*3),column),map.getString(4+(i*3),column),""
-            float value = map.getFloat(5+(i*3),column);
-            int amount =  map.getInt(6+(i*3),column);
-            String name =map.getString(4+(i*3),column);
-            Item item = new Item(value,amount,name,"");
+            float value = map.getFloat(5 + (i * 3), column);
+            int amount = map.getInt(6 + (i * 3), column);
+            String name = map.getString(4 + (i * 3), column);
+            Item item = new Item(value, amount, name, "");
             newInventory.add(item);
         }
-        boat.money = map.getFloat(1,column);
+        boat.money = map.getFloat(1, column);
         boat.inventory = newInventory;
 
-        gb.roundCount = map.getInt(1,32);
-        gb.turnCount = map.getInt(3,32);
-        boat.xPos = map.getInt(2,column);
-        boat.yPos = map.getInt(3,column);
-
+        gb.roundCount = map.getInt(1, 32);
+        gb.turnCount = map.getInt(3, 32);
+        boat.xPos = map.getInt(2, column);
+        boat.yPos = map.getInt(3, column);
 
 
     }
 
 
-    void loadGame(int NumberoFTiles, Table map,ArrayList<Tile> tileSet){
+    void loadGame(int NumberoFTiles, Table map, ArrayList<Tile> tileSet) {
         tileSet.clear();
 
-        for(int x = -1;x<NumberoFTiles+3;++x) {
-            for (int y = -1; y < NumberoFTiles+3; ++y){
-                Tile t = new TerrainTile(p,"",x ,y );
-                if((x <= 0 || y<= 0)||(33 <= x || 33<= y)){
+        for (int x = -1; x < NumberoFTiles + 3; ++x) {
+            for (int y = -1; y < NumberoFTiles + 3; ++y) {
+                Tile t = new TerrainTile(p, "", x, y);
+                if ((x <= 0 || y <= 0) || (33 <= x || 33 <= y)) {
                     t.Contents = "BORDER";
                     t.tileImage = p.loadImage("border.png");
-                }else{
-                    int xPos = x-1;
-                    int yPos = y-1;
-                    String contens = map.getString(xPos,yPos);
-                    if(contens.equals("W")){
+                } else {
+                    int xPos = x - 1;
+                    int yPos = y - 1;
+                    String contens = map.getString(xPos, yPos);
+                    if (contens.equals("W")) {
                         contens = "WATER";
-                    }else if(contens.equals("B")){
+                    } else if (contens.equals("B")) {
                         contens = "SAND";
 
-                    }else if(contens.equals("S")){
+                    } else if (contens.equals("S")) {
                         contens = "SHOP";
-                        t = new ShopTile(p,contens,xPos+1,yPos+1);
-                    }else if(contens.equals("G")){
+                        t = new ShopTile(p, contens, xPos + 1, yPos + 1);
+                    } else if (contens.equals("G")) {
                         contens = "GRASS";
                         //skriv noget med den vælger billede
                     }
@@ -149,58 +146,57 @@ public class SaveManger {
 
             }
         }
-        gb.numbersOfCpus = map.getInt(5,32) -1;
-        System.out.println("numbersOfCpus " + (map.getInt(5,32) ));
+        gb.numbersOfCpus = map.getInt(5, 32) - 1;
+        System.out.println("numbersOfCpus " + (map.getInt(5, 32)));
         gb.startGame(gb.numbersOfCpus, cpuPos);
 
-        loadMapToBoat(map, "Player" ,33, gb.player);
-        for(int i= 0; i <gb.cpuArrayList.size()-2;i++){
+        loadMapToBoat(map, "Player", 33, gb.player);
+        for (int i = 0; i < gb.cpuArrayList.size() - 2; i++) {
 
-            loadMapToBoat(map, "CPU" ,34 +i, gb.cpuArrayList.get(i));
+            loadMapToBoat(map, "CPU", 34 + i, gb.cpuArrayList.get(i));
         }
-
 
 
     }
 
-    void addShopANdPlayLocation(int numberOfTiles, ArrayList<Tile> tileSet, ArrayList<Integer> sandTiles,int numREmaningShops){
+    void addShopANdPlayLocation(int numberOfTiles, ArrayList<Tile> tileSet, ArrayList<Integer> sandTiles, int numREmaningShops) {
 
 
-        int ypos = -1 , xPos = -1;
-        for(int i = 0; i<tileSet.size();++i){
+        int ypos = -1, xPos = -1;
+        for (int i = 0; i < tileSet.size(); ++i) {
             Tile tile = tileSet.get(i);
-            for (int j = 0; j < sandTiles.size();++j){
+            for (int j = 0; j < sandTiles.size(); ++j) {
 
-                if(sandTiles.get(j) == i){
+                if (sandTiles.get(j) == i) {
 
-                    if(numREmaningShops < 0){
-                        addShopANdPlayLocation(numberOfTiles,tileSet,sandTiles,numREmaningShops);
+                    if (numREmaningShops < 0) {
+                        addShopANdPlayLocation(numberOfTiles, tileSet, sandTiles, numREmaningShops);
                         break;
 
                     }
 
-                    if(tile.xPos > 2 && tile.xPos <30 && tile.yPos > 2 && tile.yPos <30 ){
+                    if (tile.xPos > 2 && tile.xPos < 30 && tile.yPos > 2 && tile.yPos < 30) {
                         int numbersOfWaterTiles = 0;
-                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+1);
-                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+35);
-                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+36);
-                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+37);
-                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-1);
-                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-35);
-                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-36);
-                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-37);
-                        if(numberOfTiles > 1){
-                            if(numberOfTiles> 1&&
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i + 1);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i + 35);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i + 36);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i + 37);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i - 1);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i - 35);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i - 36);
+                        numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i - 37);
+                        if (numberOfTiles > 1) {
+                            if (numberOfTiles > 1 &&
                                     numREmaningShops != 0
-                                    && (ypos+2 > tileSet.get(i).yPos && tileSet.get(i).xPos > xPos+2)  ){
+                                    && (ypos + 2 > tileSet.get(i).yPos && tileSet.get(i).xPos > xPos + 2)) {
                                 System.out.println("Shops X:" + tileSet.get(i).xPos + " Y:" + tileSet.get(i).yPos);
-                                Tile t = new ShopTile(p,"SHOP",tileSet.get(i).xPos ,tileSet.get(i).yPos);
-                                tileSet.set(i,t);
+                                Tile t = new ShopTile(p, "SHOP", tileSet.get(i).xPos, tileSet.get(i).yPos);
+                                tileSet.set(i, t);
                                 ypos = tileSet.get(i).yPos;
                                 xPos = tileSet.get(i).xPos;
-                                numREmaningShops --;
-                            }else {
-                                cpuPos.add(new PVector(tileSet.get(i).xPos,tileSet.get(i).yPos));
+                                numREmaningShops--;
+                            } else {
+                                cpuPos.add(new PVector(tileSet.get(i).xPos, tileSet.get(i).yPos));
                             }
 
                         }
@@ -212,30 +208,30 @@ public class SaveManger {
             }
         }
 
-        if(numREmaningShops != 0 ){
+        if (numREmaningShops != 0) {
             System.out.println("rs: " + numREmaningShops);
-            for(int j = 0; j<tileSet.size();++j){
-                if(numREmaningShops == 0){
+            for (int j = 0; j < tileSet.size(); ++j) {
+                if (numREmaningShops == 0) {
                     break;
                 }
-                int i = (int) p.random(64,tileSet.size());
+                int i = (int) p.random(64, tileSet.size());
                 int numbersOfWaterTiles = 0;
-                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+1);
-                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+35);
-                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+36);
-                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i+37);
-                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-1);
-                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-35);
-                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-36);
-                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet,i-37);
-                if(numbersOfWaterTiles > 1 && !tileSet.get(i).Contents.equals("BORDER") ){
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i + 1);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i + 35);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i + 36);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i + 37);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i - 1);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i - 35);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i - 36);
+                numbersOfWaterTiles += checkIfLoactionHaveWater(tileSet, i - 37);
+                if (numbersOfWaterTiles > 1 && !tileSet.get(i).Contents.equals("BORDER")) {
                     System.out.println("Shops X:" + tileSet.get(i).xPos + " Y:" + tileSet.get(i).yPos);
-                    Tile t = new ShopTile(p,"SHOP",tileSet.get(i).xPos ,tileSet.get(i).yPos);
-                    tileSet.set(i,t);
+                    Tile t = new ShopTile(p, "SHOP", tileSet.get(i).xPos, tileSet.get(i).yPos);
+                    tileSet.set(i, t);
                     numREmaningShops -= 1;
                     System.out.println("rs: " + numREmaningShops);
 
-                }else {
+                } else {
 
                 }
 
@@ -245,78 +241,63 @@ public class SaveManger {
 
     }
 
-    int checkIfLoactionHaveWater(ArrayList<Tile> tileSet,int j ){
-        if(j < tileSet.size() && j>0){
-            if(tileSet.get(j).Contents.equals("WATER") ){
+    int checkIfLoactionHaveWater(ArrayList<Tile> tileSet, int j) {
+        if (j < tileSet.size() && j > 0) {
+            if (tileSet.get(j).Contents.equals("WATER")) {
                 return 1;
-            }else {
+            } else {
                 return 0;
             }
-        }else {
-            return  0;
+        } else {
+            return 0;
         }
     }
 
-    void generateGame(int numberOfTiles, ArrayList<Tile> tileSet){
+    void generateGame(int numberOfTiles, ArrayList<Tile> tileSet) {
 
         ArrayList<Integer> sandTiles = new ArrayList<>();
         ArrayList<PVector> waterTiles = new ArrayList<>();
         int in = 0;
-        PImage sandtile = p.loadImage("s1.png");
-        PImage watertile = p.loadImage("w1.png");
+
         float increment = (float) 0.09;
         int antalSand = 0;
         int antalVand = 0;
-        float xoff =  0.0f; // Start xoff at 0
+        float xoff = 0.0f; // Start xoff at 0
 
-        for(int x = -1;x<numberOfTiles+3;++x) {
+        for (int x = -1; x < numberOfTiles + 3; ++x) {
             xoff += increment;   // Increment xoff
             float yoff = 0.0f;   // For every xoff, start yoff at 0
-            for (int j = -1; j < numberOfTiles+3; ++j){
+            for (int j = -1; j < numberOfTiles + 3; ++j) {
                 yoff += increment; // Increment yoff
 
                 // Calculate noise and scale by 255
                 float bright = p.noise(xoff, yoff) * 255;
 
-                Tile t = new TerrainTile(p,"",x ,j );
-                if((x <= 0 || j<= 0)||(33 <= x || 33<= j)){
-                    t.tileImage = p.loadImage("border.png");
-                    t.Contents = "BORDER";
-                }else{
-                    //water tile
-                    if(bright > 99){
-                        //PImage tile = p.loadImage("w1.png");
-                        antalVand +=1;
-                        waterTiles.add(new PVector(x,j));
-                        t.Contents ="WATER";
-                        t.tileImage = watertile;
+                Tile t = new TerrainTile(p, "", x, j);
+                if ((x <= 0 || j <= 0) || (33 <= x || 33 <= j)) {
 
-                    }else if (bright > 85){
+                    t.Contents = "BORDER";
+                } else {
+                    //water tile
+                    if (bright > 99) {
+                        //PImage tile = p.loadImage("w1.png");
+                        antalVand += 1;
+                        waterTiles.add(new PVector(x, j));
+                        t.Contents = "WATER";
+
+
+                    } else if (bright > 85) {
                         //sandtile
 
-                        antalSand +=1;
+                        antalSand += 1;
                         sandTiles.add(in);
-                       t.Contents ="SAND";
-                       t.tileImage = sandtile;
+                        t.Contents = "SAND";
 
 
-
-                    }else{
+                    } else {
                         //grass tile
-                        PImage tile;
-                        if(Math.random() > 0.5){
-                            if(Math.random() > 0.5){
-                                tile = p.loadImage("g1.png");
-                            }else{
-                                tile = p.loadImage("g2.png");
-                            }
-                        }else if(Math.random() > 0.6){
-                            tile = p.loadImage("g3.png");
-                        }else{
-                            tile = p.loadImage("g4.png");
-                        }
-                        t.tileImage = tile;
-                        t.Contents ="GRASS";
+
+                        t.Contents = "GRASS";
                     }
                 }
                 /*for(int e=0; e<3;++e){
@@ -328,15 +309,15 @@ public class SaveManger {
                 }*/
 
 
-              tileSet.add(t);
+                tileSet.add(t);
                 in++;
             }
         }
 
-        System.out.println("vand: " + antalVand + " Sand: " + antalSand +"\n " + in);
+        System.out.println("vand: " + antalVand + " Sand: " + antalSand + "\n " + in);
 
-        addShopANdPlayLocation(numberOfTiles,tileSet,sandTiles,3);
-        if(gb.cpuPos != null)
+        addShopANdPlayLocation(numberOfTiles, tileSet, sandTiles, 3);
+        if (gb.cpuPos != null)
             gb.cpuPos.clear();
 
         gb.cpuPos = waterTiles;
@@ -347,5 +328,5 @@ public class SaveManger {
         }*/
 
     }
-    }
+}
 

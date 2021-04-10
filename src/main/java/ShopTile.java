@@ -1,7 +1,5 @@
 import processing.core.PApplet;
 
-import java.util.ArrayList;
-
 public class ShopTile extends Tile {
     ShopMenu shopMenu;
 
@@ -9,12 +7,12 @@ public class ShopTile extends Tile {
         super(p, C, x, y);
         Contents = "SHOP";
         shopMenu = new ShopMenu(p);
-        tileImage = p.loadImage("shop.png");
+
     }
 
-    public void drawShopMenu(Player player,float s){
-        if(shopMenu.visible){
-           shopMenu.drawMenu(player,s);
+    public void drawShopMenu(Player player, float s) {
+        if (shopMenu.visible) {
+            shopMenu.drawMenu(player, s);
 
 
         }
@@ -23,13 +21,18 @@ public class ShopTile extends Tile {
     }
 
 
-    public void showShop(float s){
+    public void showShop(float s) {
         shopMenu.reSizeShopMenu(s);
         shopMenu.visible = !shopMenu.visible;
 
     }
 
-    public void clickShop(){
+    public void clickShop() {
         shopMenu.shopMenuClicked();
+    }
+
+    @Override
+    public void setTileImage() {
+        tileImage = p.loadImage("shop.png");
     }
 }
