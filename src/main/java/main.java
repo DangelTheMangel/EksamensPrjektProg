@@ -4,6 +4,7 @@ import processing.data.Table;
 import java.io.File;
 
 /*
+ * så man kan vinde
  * så man kan se et terning kast-casper
  * ✔️map generation - Christian
  * ✔️mængde af spiller i settings
