@@ -10,7 +10,7 @@ public class Cpu extends Boat {
     }
 
     void Turn() {
-        ///cpu og player deler åbenbart items så hvad du gøre ved dene ene sker der også hos den anden 
+       ///cpu og player deler åbenbart items så hvad du gøre ved dene ene sker der også hos den anden
         boolean canSeeShop = false;
         ArrayList<ShopTile> shopTileset = new ArrayList<ShopTile>();
 

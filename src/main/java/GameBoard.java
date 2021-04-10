@@ -68,8 +68,8 @@ public class GameBoard {
         player.generateInventory();
         player.boatPic = p.loadImage("Skibet32.png");
         //turnList.add(new Turn(p,player));
-        turnCount = (int) p.random(0, 7);
-
+       // turnCount = (int) p.random(0, 7);
+        turnCount = 1;
         for (int i = 0; i < antalCPU; ++i) {
             int cpurPos = (int) p.random(0, cpuPos.size());
             int x = (int) cpuPos.get(cpurPos).x, y = (int) cpuPos.get(cpurPos).y;
@@ -92,9 +92,9 @@ public class GameBoard {
     void drawBoard() {
 
         if (visible && !devConsole.visibale) {
-            //    System.out.println("cpu: " + cpu.inventory.get(0) + "player: " + player.inventory.get(0));
+
             p.clear();
-            //p.background(200);
+
             if (bg != null) {
                 p.image(bg, 0, 0, p.width, p.height);
             } else {
@@ -125,23 +125,13 @@ public class GameBoard {
             for (int j = 0; j < cpuArrayList.size(); ++j) {
                 cpuArrayList.get(j).fillUpShownTiles(tileSet);
 
+                //dette kan være med til program går unga
                 if (rulleAnimation > 0) {
                     //disable input eller noget
                     Rul();
                     rulleAnimation--;
                 }
             }
-        /*
-        * +"\n Round: " + roundCount
-                        +"\n Turn: " + turnCount
-                        +"\n -----------------\n"
-                        +"\nCpu-Taske: "
-                        +"\nPenge"+ cpuArrayList.get(0).money
-                        +"\n" +cpuArrayList.get(0).inventory.get(0).Name +cpuArrayList.get(0).inventory.get(0).ammount
-                        +"\n" + cpuArrayList.get(0).inventory.get(1).Name +cpuArrayList.get(0).inventory.get(1).ammount
-                        +"\n" + cpuArrayList.get(0).inventory.get(2).Name +cpuArrayList.get(0).inventory.get(2).ammount
-        * */
-
 
             //burger menu kanp
             btnMenu.tegnKnap();
@@ -158,6 +148,9 @@ public class GameBoard {
             }
 
             ArrayList<Tile> showneTileSet = player.showneTileSet;
+
+
+
             if (!drawmap) {
                 for (int i = 0; i < showneTileSet.size(); ++i) {
                     p.pushMatrix();
@@ -255,17 +248,27 @@ public class GameBoard {
                 }
 
             }
+
             if (turnEnded) {
+                p.textSize(60*scaleSize);
+                p.fill(200,200,200,200);
+                p.rect(0,p.height/2-60*scaleSize,p.width,80*scaleSize);
+                p.fill(0);
+                p.text("VENTER PÅ MODSPILLERNES TUR", p.width/2- p.textWidth("VENTER PÅ MODSPILLERNES TUR")/2,p.height/2);
+
                 for (int j = 0; j < cpuArrayList.size(); ++j) {
                     cpuArrayList.get(j).Turn();
+                    System.out.println("cpu number: " + j);
                 }
 
                 ++roundCount;
-                turnCount = (int) p.random(0, 6);
+
                 Rul();
                 turnEnded = false;
 
             }
+
+
         } else if (devConsole.visibale) {
             devConsole.display(scaleSize);
         }
@@ -339,9 +342,10 @@ public class GameBoard {
 
     void Rul() {
         float terningTal = p.random(1, 6);
+        turnCount = 1;
         p.fill(0, 0, 0);
         //textSize ting her...
-        p.text(terningTal, p.width / 2, p.height / 2);
+      //  p.text(terningTal, p.width / 2, p.height / 2);
         if (rulleAnimation == 0) {
             //spillerens ture tilbage = terningTal;
         }

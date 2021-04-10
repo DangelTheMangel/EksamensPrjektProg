@@ -66,7 +66,7 @@ public class Player<oldpath> extends Boat {
         posPath.add(null);
         for (int i = orginalPlayerPathNumber; i > 0; --i) {
 
-            try {
+
                 if (playerTileNum + 1 < tileSet.size() && checkNaboPath(tileSet, playerTileNum, +1)) {
                     Tile tile = getNaboTile(tileSet, playerTileNum, +1);
                     PVector pos = new PVector(tile.xPos, tile.yPos);
@@ -123,10 +123,7 @@ public class Player<oldpath> extends Boat {
                     playerTileNum -= 1;
 
                 }
-            } catch (Exception e) {
-                System.out.println(e);
-                break;
-            }
+
 
 
         }

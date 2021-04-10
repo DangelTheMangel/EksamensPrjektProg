@@ -60,7 +60,7 @@ public class ShopMenu {
 
 
         //buy
-        p.text(t.get(2).Name + ": " + t.get(2).ammount, xpos + 20 * s, ypos + 100 * s);
+        p.text(t.get(2).Name + ": " + t.get(2).ammount + " Køb/sælg for: " + eyepachPrices , xpos + 20 * s, ypos + 100 * s);
         btnBuyEye.tegnKnap();
         if (btnBuyEye.klikket) {
             buyItem(StockInventory.get(2), player, btnBuyEye, eyepachPrices);
@@ -74,7 +74,7 @@ public class ShopMenu {
             btnSellEye.registrerRelease();
         }
 
-        p.text(t.get(1).Name + ": " + t.get(1).ammount, xpos + 20 * s, ypos + 200 * s);
+        p.text(t.get(1).Name + ": " + t.get(1).ammount + " Køb/sælg for: " + eyepachPrices, xpos + 20 * s, ypos + 200 * s);
         btnBuyRum.tegnKnap();
         if (btnBuyRum.klikket) {
             buyItem(StockInventory.get(1), player, btnBuyRum, rumPrices);
@@ -87,7 +87,7 @@ public class ShopMenu {
             btnSellRum.registrerRelease();
         }
 
-        p.text(t.get(0).Name + ": " + t.get(0).ammount, xpos + 20 * s, ypos + 300 * s);
+        p.text(t.get(0).Name + ": " + t.get(0).ammount+ " Køb/sælg for: " + eyepachPrices, xpos + 20 * s, ypos + 300 * s);
         btnBuyBa.tegnKnap();
         if (btnBuyBa.klikket) {
             buyItem(StockInventory.get(0), player, btnBuyBa, bananPrices);
@@ -156,28 +156,13 @@ public class ShopMenu {
     }
 
     void SellItem(Item item, Player player, AlmindeligKnap btn, int amount, float itemPrices) {
-       /* for(int i = 0; i<player.inventory.size();++i){
-            System.out.println("itemName: " + item.Name + "|iName: " + player.inventory.get(i).Name+"|");
-            if(player.inventory.get(i).Name.equals(item.Name)){
-                if(player.inventory.get(i).ammount- 1> 0) {
-                    player.money += item.ammount- 1;
-
-                    --player.inventory.get(i).ammount;
-                    ++item.ammount;
-
-
-
-                    btn.registrerRelease();
-                    break;
-                }
-            }*/
 
         int sellAmount = item.ammount - amount;
         if (sellAmount >= 0) {
             for (int i = 0; i < StockInventory.size(); ++i) {
                 System.out.println("itemName: " + item.Name + "|iName: " + player.inventory.get(i).Name + "|");
                 if (StockInventory.get(i).Name.equals(item.Name)) {
-//.equals(item.Name)
+
                     item.ammount -= amount;
                     StockInventory.get(i).ammount += amount;
                     player.money = player.money + itemPrices;
