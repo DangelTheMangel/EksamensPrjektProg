@@ -23,13 +23,10 @@ public class AlmindeligKnap extends Knap {
             try {
                 File file = new File("Music/k.wav");
                 Scanner scanner = new Scanner(System.in);
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioInputStream);
-                clip.start();
-
-
-
+                AudioInputStream kas = AudioSystem.getAudioInputStream(file);
+                Clip k = AudioSystem.getClip();
+                k.open(kas);
+                k.start();
             } catch (Exception e) {
                 e.printStackTrace();
             }

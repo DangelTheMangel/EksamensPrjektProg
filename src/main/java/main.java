@@ -29,7 +29,9 @@ public class main extends PApplet {
         PApplet.main("main");
     }
 
-    Clip bgmusic;
+    public static Clip bgmusic;
+
+
     public PauseMenu pauseMenu;
     public SettingMenu settingMenu;
     public static MainMenu mainMenu;
@@ -66,6 +68,9 @@ public class main extends PApplet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+
 
 
     }
