@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class GameBoard {
     PApplet p;
 
-    boolean showTileImage = false;
+    boolean showTileImage = true;
     //til bord klassen
     ArrayList<Tile> tileSet = new ArrayList<Tile>();
     //ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
