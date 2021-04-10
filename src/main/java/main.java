@@ -1,6 +1,13 @@
+import com.sun.xml.internal.ws.api.config.management.policy.ManagementAssertion;
 import processing.core.PApplet;
 import processing.data.Table;
-
+import javax.sound.sampled.*;
+import java.io.File;
+import java.util.Objects;
+import java.util.Scanner;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.io.File;
 
 /*
@@ -22,7 +29,7 @@ public class main extends PApplet {
         PApplet.main("main");
     }
 
-
+    Clip bgmusic;
     public PauseMenu pauseMenu;
     public SettingMenu settingMenu;
     public static MainMenu mainMenu;
@@ -46,9 +53,25 @@ public class main extends PApplet {
         gb.visible = true;
         textSize(12);
         text("Loading", width / 2 - textWidth("Loading") / 2, height / 2);
+        try {
+            File file = new File("Music/bg.wav");
+            Scanner scanner = new Scanner(System.in);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
+            bgmusic = AudioSystem.getClip();
+            bgmusic.open(audioInputStream);
+            bgmusic.loop(Clip.LOOP_CONTINUOUSLY);
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
+
+
+
 
     public void loadedMap(File selection) {
         if (selection == null) {
@@ -69,7 +92,6 @@ public class main extends PApplet {
 
     @Override
     public void draw() {
-
 
         clear();
         background(200);
