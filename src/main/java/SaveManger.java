@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class SaveManger {
     PApplet p;
     GameBoard gb;
+     public float increment = (float) 0.09;
     ArrayList<PVector> cpuPos = new ArrayList<>();
 
     SaveManger(PApplet p) {
@@ -259,7 +260,7 @@ public class SaveManger {
         ArrayList<PVector> waterTiles = new ArrayList<>();
         int in = 0;
 
-        float increment = (float) 0.09;
+
         int antalSand = 0;
         int antalVand = 0;
         float xoff = 0.0f; // Start xoff at 0

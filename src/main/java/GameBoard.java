@@ -2,6 +2,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameBoard {
@@ -66,6 +67,8 @@ public class GameBoard {
 
     }
 
+
+
     void startGame(int antalCPU, ArrayList<PVector> cpuPos) {
 
         int playerPos = (int) p.random(0, cpuPos.size());
@@ -91,7 +94,7 @@ public class GameBoard {
         for (int i = 0; i < cpuArrayList.size(); ++i) {
 
             cpuArrayList.get(i).generateInventory();
-            cpuArrayList.get(i).boatPic = p.loadImage("Skibet32.png");
+            cpuArrayList.get(i).boatPic = p.loadImage("piratbad.png");
             // turnList.add(new Turn(p,cpuArrayList.get(i)));
         }
 
