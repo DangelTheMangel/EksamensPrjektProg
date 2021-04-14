@@ -2,6 +2,9 @@ import processing.core.PApplet;
 import processing.core.PSurface;
 import processing.core.PVector;
 
+import javax.sound.sampled.Control;
+import javax.sound.sampled.FloatControl;
+
 public class SettingMenu {
     PApplet p;
 
@@ -10,12 +13,13 @@ public class SettingMenu {
     int displayResolutionInt = 1;
     int lastDisplayResolutionInt = 1;
     public float size = 1;
+    int volume = 50;
     PVector[] displayResolution = {new PVector(640, 360, 0.5f), new PVector(1280, 720, 1), new PVector(1600, 900, 1.25f), new PVector(1920, 1080, 1.5f)};
     // Res  = Resolution
     PauseMenu pauseMenu;
     Textfeld tfNumbersOfPlayers, tfMaxRound,tfGenNum;
     boolean backToMainMenu = true;
-    AlmindeligKnap ResLeft, ResRight, backToMain;
+    AlmindeligKnap ResLeft, ResRight, backToMain,btnVolUp,btnVolDown;
     int screenWidth, screenHeight;
     GameBoard gb;
     SaveManger sm;
@@ -23,6 +27,8 @@ public class SettingMenu {
     SettingMenu(PApplet p) {
         this.p = p;
         //sds
+        btnVolDown = new AlmindeligKnap(p, 200, 100, 50, 50, "<");
+        btnVolUp = new AlmindeligKnap(p, 650, 100, 50, 50, ">");
         ResLeft = new AlmindeligKnap(p, 200, 200, 50, 50, "<");
         ResRight = new AlmindeligKnap(p, 650, 200, 50, 50, ">");
         tfNumbersOfPlayers = new Textfeld(p, 200, 400, 200, 50, "Antal af modspiller");
@@ -50,7 +56,8 @@ public class SettingMenu {
             String displayInfo = (int) displayResolution[displayResolutionInt].x + " X " + (int) displayResolution[displayResolutionInt].y;
             p.text(displayInfo,
                     (450 - p.textWidth(displayInfo) / 2) * size, (230) * size);
-
+            btnVolUp.tegnKnap();
+            btnVolDown.tegnKnap();
             backToMain.tegnKnap();
             ResLeft.tegnKnap();
             ResRight.tegnKnap();
@@ -60,9 +67,43 @@ public class SettingMenu {
 
             screenResManger();
 
+            String volInfo = volume+"%";
+            p.text(volInfo,
+                    (450 - p.textWidth(displayInfo) / 2) * size, (130) * size);
+            if(btnVolDown.klikket){
+                if(volume-1 <0){
+                    volume = 0;
+                }else {
+                    volume -= 1;
+                    changeVolume(volume);
+                }
+                btnVolDown.registrerRelease();
+
+            }
+
+            if(btnVolUp.klikket){
+                if(volume+1 >100){
+                    volume = 100;
+                }else {
+                    volume += 1;
+                    changeVolume(volume);
+                }
+                btnVolUp.registrerRelease();
+
+            }
+
+
         }
     }
+    void changeVolume(float volu){
+        FloatControl vol = (FloatControl) main.bgmusic.getControl(FloatControl.Type.MASTER_GAIN);
+        if(volu > 50){
+            vol.setValue(6);
+        }else {
+            vol.setValue(-80);
+        }
 
+    }
     void btnChangeScreen(MainMenu mm, GameBoard gb) {
         if (backToMain.klikket) {
 
@@ -129,6 +170,8 @@ public class SettingMenu {
                 ResRight.registrerRelease();
 
             }
+
+
         }
     }
 
@@ -145,6 +188,8 @@ public class SettingMenu {
         reSizeFT(s, tfNumbersOfPlayers);
         reSizeFT(s, tfMaxRound);
         reSizeFT(s,tfGenNum);
+        reSizeBtn(s,btnVolDown);
+        reSizeBtn(s,btnVolUp);
 
     }
 
@@ -167,6 +212,8 @@ public class SettingMenu {
             backToMain.registrerKlik(p.mouseX, p.mouseY);
             tfNumbersOfPlayers.KlikTjek(p.mouseX, p.mouseY);
             tfMaxRound.KlikTjek(p.mouseX, p.mouseY);
+            btnVolDown.registrerKlik(p.mouseX, p.mouseY);
+            btnVolUp.registrerKlik(p.mouseX, p.mouseY);
         }
     }
 

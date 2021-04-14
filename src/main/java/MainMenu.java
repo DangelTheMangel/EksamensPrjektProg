@@ -1,6 +1,7 @@
 import processing.core.PApplet;
 
 public class MainMenu {
+    //hello mand tjek resize
     PApplet p;
     GameBoard gb;
     PauseMenu pauseMenu;
