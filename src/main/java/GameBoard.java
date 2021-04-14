@@ -56,7 +56,8 @@ public class GameBoard {
         settingMenu.tfNumbersOfPlayers.indput = "" + numbersOfCpus;
         settingMenu.tfMaxRound.indput = "" + maxRounds;
         devConsole = new DevConsole(p, this);
-
+        settingMenu.sm = saveManger;
+        settingMenu.tfGenNum.indput = ""+saveManger.increment*100;
 
     }
 
