@@ -27,6 +27,7 @@ public class GameBoard {
     int roundCount = 1;
     int turnCount;
     float scaleSize = 1;
+    Boolean rul = false;
     Boolean visible = false;
     Boolean turnEnded = false;
     ArrayList<PVector> cpuPos = new ArrayList<>();
@@ -225,7 +226,7 @@ public class GameBoard {
                         showneTileSet.get(i).cliked = false;
                     }
                     turnCount = player.movePlayer(turnCount);
-                    if (turnCount <= 0) {
+                    if (turnCount <= 0 && !rul) {
                         turnEnded = true;
 
                     }
@@ -263,13 +264,12 @@ public class GameBoard {
                     cpuArrayList.get(j).Turn();
                     System.out.println("cpu number: " + j);
                 }
-
+                if (!rul)
                 ++roundCount;
-
-                Rul();
                 turnEnded = false;
-
+                rul = true;
             }
+            Rul();
 
 
         } else if (devConsole.visibale) {
@@ -344,11 +344,16 @@ public class GameBoard {
     }
 
     void Rul() {
-        float terningTal = (int)(p.random(1, 6));
-        PImage img2 = p.loadImage("terning0.png");
-        PImage img = p.loadImage("terning"+p.str(terningTal)+".png");
-        p.image(img2,p.width/2,p.height/2);
-        p.image(img,p.width/2,p.height/2);
+        if(rul){
+            int terningTal = (int)(p.random(1, 6));
+            System.out.println(terningTal);
+            PImage img2 = p.loadImage("terning0.png");
+            PImage img = p.loadImage("terning"+p.str(terningTal)+".png");
+            p.image(img2,p.width/2-100*scaleSize,p.height/2-100*scaleSize,200*scaleSize,200*scaleSize);
+            p.image(img,p.width/2-100*scaleSize,p.height/2-100*scaleSize,200*scaleSize,200*scaleSize);
+
+        }
+
 
     }
 
