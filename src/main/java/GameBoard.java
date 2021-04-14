@@ -12,7 +12,7 @@ public class GameBoard {
     //til bord klassen
     ArrayList<Tile> tileSet = new ArrayList<Tile>();
     //ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
-    AlmindeligKnap btnMenu, btnMap;
+    AlmindeligKnap btnMenu, btnMap,btnAcceptRul;
     public PauseMenu pauseMenu;
     SettingMenu settingMenu;
     SaveManger saveManger;
@@ -24,10 +24,10 @@ public class GameBoard {
     //  Cpu cpu;
     int maxRounds = 500;
     int numbersOfCpus = 3;
-    int roundCount = 1;
+    int roundCount = 0;
     int turnCount;
     float scaleSize = 1;
-    Boolean rul = false;
+    Boolean rul = true;
     Boolean visible = false;
     Boolean turnEnded = false;
     ArrayList<PVector> cpuPos = new ArrayList<>();
@@ -48,6 +48,7 @@ public class GameBoard {
         startGame(numbersOfCpus, cpuPos);
         btnMenu = new AlmindeligKnap(p, p.width - 60, 0, 60, 60, "-\n-\n-");
         btnMap = new AlmindeligKnap(p, 270, 650, 450, 50, "map");
+        btnAcceptRul= new AlmindeligKnap(p, 270, 650, 450, 50, "Rul");
         pauseMenu.gb = this;
         pauseMenu.mainMenu.gb = this;
         pauseMenu.mainMenu.chooseGameMenu.gb = this;
@@ -308,39 +309,42 @@ public class GameBoard {
     void boardmouseClicked() {
         ArrayList<Tile> showneTileSet = player.showneTileSet;
         devConsole.mouseClick();
+        if(!rul) {
+            btnMenu.registrerKlik(p.mouseX, p.mouseY);
+            btnMap.registrerKlik(p.mouseX, p.mouseY);
+            if (!drawmap)
+                if (turnEnded == false) {
+                    for (int i = 0; i < showneTileSet.size(); ++i) {
+                        float posX = showneTileSet.get(i).xPos;
+                        float posY = showneTileSet.get(i).yPos;
 
-        btnMenu.registrerKlik(p.mouseX, p.mouseY);
-        btnMap.registrerKlik(p.mouseX, p.mouseY);
-        if (!drawmap)
-            if (turnEnded == false) {
-                for (int i = 0; i < showneTileSet.size(); ++i) {
-                    float posX = showneTileSet.get(i).xPos;
-                    float posY = showneTileSet.get(i).yPos;
+                        if (i < 5) {
 
-                    if (i < 5) {
+                            //225*scaleSize
+                            posX = 2.5f;
+                            posY = i + 1.5f;
+                        } else if (i < 10) {
+                            posX = 3.5f;
+                            posY = i - 3.5f;
+                        } else if (i < 15) {
+                            posX = 4.5f;
+                            posY = i - 8.5f;
+                        } else if (i < 20) {
+                            posX = 5.5f;
+                            posY = i - 13.5f;
+                        } else {
+                            posX = 6.5f;
+                            posY = i - 18.5f;
+                        }/**/
 
-                        //225*scaleSize
-                        posX = 2.5f;
-                        posY = i + 1.5f;
-                    } else if (i < 10) {
-                        posX = 3.5f;
-                        posY = i - 3.5f;
-                    } else if (i < 15) {
-                        posX = 4.5f;
-                        posY = i - 8.5f;
-                    } else if (i < 20) {
-                        posX = 5.5f;
-                        posY = i - 13.5f;
-                    } else {
-                        posX = 6.5f;
-                        posY = i - 18.5f;
-                    }/**/
+                        showneTileSet.get(i).clickShop();
+                        showneTileSet.get(i).checkIfCliked((int) posX, (int) posY, (int) (100 * scaleSize));
 
-                    showneTileSet.get(i).clickShop();
-                    showneTileSet.get(i).checkIfCliked((int) posX, (int) posY, (int) (100 * scaleSize));
-
+                    }
                 }
-            }
+        }else{
+            btnAcceptRul.registrerKlik(p.mouseX, p.mouseY);
+        }
     }
 
     void Rul() {
@@ -349,9 +353,16 @@ public class GameBoard {
             System.out.println(terningTal);
             PImage img2 = p.loadImage("terning0.png");
             PImage img = p.loadImage("terning"+p.str(terningTal)+".png");
+            p.fill(200,200,200,200);
+            p.rect(0,60 * scaleSize,p.width,p.height);
             p.image(img2,p.width/2-100*scaleSize,p.height/2-100*scaleSize,200*scaleSize,200*scaleSize);
             p.image(img,p.width/2-100*scaleSize,p.height/2-100*scaleSize,200*scaleSize,200*scaleSize);
-
+            btnAcceptRul.tegnKnap();
+            if(btnAcceptRul.klikket){
+                rul = false;
+                turnCount = terningTal;
+                btnAcceptRul.registrerRelease();
+            }
         }
 
 
