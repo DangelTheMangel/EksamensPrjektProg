@@ -13,11 +13,12 @@ public class SettingMenu {
     PVector[] displayResolution = {new PVector(640, 360, 0.5f), new PVector(1280, 720, 1), new PVector(1600, 900, 1.25f), new PVector(1920, 1080, 1.5f)};
     // Res  = Resolution
     PauseMenu pauseMenu;
-    Textfeld tfNumbersOfPlayers, tfMaxRound;
+    Textfeld tfNumbersOfPlayers, tfMaxRound,tfGenNum;
     boolean backToMainMenu = true;
     AlmindeligKnap ResLeft, ResRight, backToMain;
     int screenWidth, screenHeight;
     GameBoard gb;
+    SaveManger sm;
 
     SettingMenu(PApplet p) {
         this.p = p;
@@ -29,6 +30,9 @@ public class SettingMenu {
 
         tfMaxRound = new Textfeld(p, 200, 500, 200, 50, "Antal Rundter");
         tfMaxRound.acceptLetters = false;
+
+        tfGenNum = new Textfeld(p, 200, 600, 200, 50, "Generation nummer");
+        tfGenNum.acceptLetters = false;
 
         backToMain = new AlmindeligKnap(p, 540, 600, 200, 50, "Back to Menu");
     }
@@ -52,6 +56,8 @@ public class SettingMenu {
             ResRight.tegnKnap();
             tfMaxRound.tegnTextFlet();
             tfNumbersOfPlayers.tegnTextFlet();
+            tfGenNum.tegnTextFlet();
+
             screenResManger();
 
         }
@@ -138,6 +144,7 @@ public class SettingMenu {
         reSizeBtn(s, backToMain);
         reSizeFT(s, tfNumbersOfPlayers);
         reSizeFT(s, tfMaxRound);
+        reSizeFT(s,tfGenNum);
 
     }
 
@@ -154,7 +161,7 @@ public class SettingMenu {
 
     void menuMouseClick() {
         if (visible) {
-
+            tfGenNum.KlikTjek(p.mouseX, p.mouseY);
             ResLeft.registrerKlik(p.mouseX, p.mouseY);
             ResRight.registrerKlik(p.mouseX, p.mouseY);
             backToMain.registrerKlik(p.mouseX, p.mouseY);
@@ -165,8 +172,13 @@ public class SettingMenu {
 
     void menuKeyTyped() {
         if (visible) {
+            tfGenNum.keyindput(p.key);
             tfNumbersOfPlayers.keyindput(p.key);
             tfMaxRound.keyindput(p.key);
+
+            if (tfGenNum.indput.length() > 0) {
+                sm.increment = Float.valueOf(tfGenNum.indput)/100;
+            }
             if (tfNumbersOfPlayers.indput.length() > 0) {
                 gb.numbersOfCpus = Integer.valueOf(tfNumbersOfPlayers.indput);
             }
