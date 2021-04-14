@@ -32,12 +32,6 @@ public class GameBoard {
     Boolean turnEnded = false;
     ArrayList<PVector> cpuPos = new ArrayList<>();
     PImage bg;
-    PImage te1;
-    PImage te2;
-    PImage te3;
-    PImage te4;
-    PImage te5;
-    PImage te6;
     int rulleAnimation = 0;
 
     GameBoard(PApplet p, PauseMenu pauseMenu) {
@@ -76,9 +70,6 @@ public class GameBoard {
         cpuPos.remove(playerPos);
         player.generateInventory();
         player.boatPic = p.loadImage("Skibet32.png");
-        for(int I=0; I==6; I++){
-
-        }
         //turnList.add(new Turn(p,player));
        // turnCount = (int) p.random(0, 7);
         turnCount = 1;
@@ -356,7 +347,8 @@ public class GameBoard {
         float terningTal = p.random(1, 6);
         turnCount = 1;
         p.fill(0, 0, 0);
-        p.image("terning"+p.str(terningTal)+".jpg",p.width/2,p.height/2);
+        //textSize ting her...
+      //  p.text(terningTal, p.width / 2, p.height / 2);
         if (rulleAnimation == 0) {
             //spillerens ture tilbage = terningTal;
         }
