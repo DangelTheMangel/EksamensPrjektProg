@@ -12,7 +12,6 @@ public class GameBoard {
     //til bord klassen
     ArrayList<Tile> tileSet = new ArrayList<Tile>();
     //ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
-    PImage playerPic;
     AlmindeligKnap btnMenu, btnMap;
     public PauseMenu pauseMenu;
     SettingMenu settingMenu;
@@ -344,14 +343,12 @@ public class GameBoard {
     }
 
     void Rul() {
-        float terningTal = p.random(1, 6);
-        turnCount = 1;
-        p.fill(0, 0, 0);
-        //textSize ting her...
-      //  p.text(terningTal, p.width / 2, p.height / 2);
-        if (rulleAnimation == 0) {
-            //spillerens ture tilbage = terningTal;
-        }
+        float terningTal = (int)(p.random(1, 6));
+        PImage img2 = p.loadImage("terning0.png");
+        PImage img = p.loadImage("terning"+p.str(terningTal)+".png");
+        p.image(img2,p.width/2,p.height/2);
+        p.image(img,p.width/2,p.height/2);
+
     }
 
     void keyTyped() {
