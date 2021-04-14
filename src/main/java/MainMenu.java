@@ -92,13 +92,15 @@ public class MainMenu {
 
     void menuMouseClick(float mx, float my) {
         if (!chooseGameMenu.visible) {
-            btnPlay.registrerKlik(mx, my);
+
+            btnPlay.registrerKlik(mx, my);;
             btnSettings.registrerKlik(mx, my);
             btnLoadGame.registrerKlik(mx, my);
             btnHowToPlay.registrerKlik(mx, my);
             btnCloseGame.registrerKlik(mx, my);
         } else {
-            chooseGameMenu.btnPlay.registrerKlik(mx, my);
+
+                chooseGameMenu.btnPlay.registrerKlik(mx, my);
             chooseGameMenu.btnLoadGame.registrerKlik(mx, my);
             chooseGameMenu.btnBackToMenu.registrerKlik(mx, my);
             chooseGameMenu.btnNewGame.registrerKlik(mx, my);

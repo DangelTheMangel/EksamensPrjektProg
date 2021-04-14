@@ -5,6 +5,7 @@ public class chooseGameMenu {
     GameBoard gb;
     MainMenu mainMenu;
     Boolean visible = false;
+    Boolean needNytSpil = false;
     AlmindeligKnap btnPlay, btnLoadGame, btnNewGame, btnBackToMenu;
 
     chooseGameMenu(PApplet p, GameBoard gb, MainMenu mainMenu) {
@@ -23,6 +24,8 @@ public class chooseGameMenu {
         p.clear();
         p.background(200);
         btnPlay.tegnKnap();
+
+
         btnLoadGame.tegnKnap();
         btnNewGame.tegnKnap();
         btnBackToMenu.tegnKnap();
@@ -44,12 +47,16 @@ public class chooseGameMenu {
         }
 
         if (btnNewGame.klikket) {
+
             gb.tileSet.clear();
             gb.saveManger.generateGame(32, gb.tileSet);
             gb.startGame(gb.numbersOfCpus, gb.saveManger.cpuPos);
             gb.visible = true;
+            gb.roundCount = 0;
+            gb.turnCount = 0;
             mainMenu.visible = false;
             visible = false;
+            needNytSpil = true;
             btnNewGame.registrerRelease();
         }
 

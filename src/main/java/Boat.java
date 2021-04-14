@@ -92,4 +92,15 @@ public class Boat {
 
         }
     }
+
+    float calRating(){
+        float price = 0;
+        price += money;
+        for(int i = 0; i<inventory.size();++i){
+
+            price+=inventory.get(i).value * inventory.get(i).ammount;
+        }
+        return price;
+
+    }
 }

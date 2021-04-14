@@ -2,7 +2,6 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameBoard {
@@ -10,19 +9,22 @@ public class GameBoard {
 
     boolean showTileImage = true;
     //til bord klassen
+    boolean won = false;
     ArrayList<Tile> tileSet = new ArrayList<Tile>();
     //ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
-    AlmindeligKnap btnMenu, btnMap,btnAcceptRul;
+    AlmindeligKnap btnMenu, btnMap, btnAcceptRul, btnBackToMenu;
     public PauseMenu pauseMenu;
     SettingMenu settingMenu;
     SaveManger saveManger;
     public Player player;
+    Boat theWinner;
+    boolean playerWon;
     boolean drawmap = false;
     DevConsole devConsole;
 
     ArrayList<Cpu> cpuArrayList = new ArrayList<Cpu>();
     //  Cpu cpu;
-    int maxRounds = 500;
+    int maxRounds = 300;
     int numbersOfCpus = 3;
     int roundCount = 0;
     int turnCount;
@@ -37,8 +39,6 @@ public class GameBoard {
     GameBoard(PApplet p, PauseMenu pauseMenu) {
 
         this.p = p;
-
-
         saveManger = new SaveManger(p);
         saveManger.gb = this;
         saveManger.generateGame(32, tileSet);
@@ -48,7 +48,8 @@ public class GameBoard {
         startGame(numbersOfCpus, cpuPos);
         btnMenu = new AlmindeligKnap(p, p.width - 60, 0, 60, 60, "-\n-\n-");
         btnMap = new AlmindeligKnap(p, 270, 650, 450, 50, "map");
-        btnAcceptRul= new AlmindeligKnap(p, 270, 650, 450, 50, "Rul");
+        btnAcceptRul = new AlmindeligKnap(p, 270, 650, 450, 50, "Rul");
+        btnBackToMenu = new AlmindeligKnap(p, 270, 650, 450, 50, "Tilbage til menu");
         pauseMenu.gb = this;
         pauseMenu.mainMenu.gb = this;
         pauseMenu.mainMenu.chooseGameMenu.gb = this;
@@ -59,10 +60,9 @@ public class GameBoard {
         settingMenu.tfMaxRound.indput = "" + maxRounds;
         devConsole = new DevConsole(p, this);
         settingMenu.sm = saveManger;
-        settingMenu.tfGenNum.indput = ""+saveManger.increment*100;
+        settingMenu.tfGenNum.indput = "" + saveManger.increment * 100;
 
     }
-
 
 
     void startGame(int antalCPU, ArrayList<PVector> cpuPos) {
@@ -73,7 +73,7 @@ public class GameBoard {
         player.generateInventory();
         player.boatPic = p.loadImage("Skibet32.png");
         //turnList.add(new Turn(p,player));
-       // turnCount = (int) p.random(0, 7);
+        // turnCount = (int) p.random(0, 7);
         turnCount = 1;
         for (int i = 0; i < antalCPU; ++i) {
             int cpurPos = (int) p.random(0, cpuPos.size());
@@ -96,7 +96,7 @@ public class GameBoard {
 
     void drawBoard() {
 
-        if (visible && !devConsole.visibale) {
+        if (visible && !devConsole.visibale && maxRounds > roundCount) {
 
             p.clear();
 
@@ -153,7 +153,6 @@ public class GameBoard {
             }
 
             ArrayList<Tile> showneTileSet = player.showneTileSet;
-
 
 
             if (!drawmap) {
@@ -255,18 +254,18 @@ public class GameBoard {
             }
 
             if (turnEnded) {
-                p.textSize(60*scaleSize);
-                p.fill(200,200,200,200);
-                p.rect(0,p.height/2-60*scaleSize,p.width,80*scaleSize);
+                p.textSize(60 * scaleSize);
+                p.fill(200, 200, 200, 200);
+                p.rect(0, p.height / 2 - 60 * scaleSize, p.width, 80 * scaleSize);
                 p.fill(0);
-                p.text("VENTER PÅ MODSPILLERNES TUR", p.width/2- p.textWidth("VENTER PÅ MODSPILLERNES TUR")/2,p.height/2);
+                p.text("VENTER PÅ MODSPILLERNES TUR", p.width / 2 - p.textWidth("VENTER PÅ MODSPILLERNES TUR") / 2, p.height / 2);
 
                 for (int j = 0; j < cpuArrayList.size(); ++j) {
                     cpuArrayList.get(j).Turn();
                     System.out.println("cpu number: " + j);
                 }
                 if (!rul)
-                ++roundCount;
+                    ++roundCount;
                 turnEnded = false;
                 rul = true;
             }
@@ -275,6 +274,27 @@ public class GameBoard {
 
         } else if (devConsole.visibale) {
             devConsole.display(scaleSize);
+        } else if (maxRounds <= roundCount) {
+            chooseWinner();
+            p.textSize(14 * scaleSize);
+            if (playerWon) {
+                String s = "Du vandt!";
+                p.text(s, p.width / 2 - p.textWidth(s) / 2, p.height / 2);
+            } else {
+                String s = "Du Tabte!";
+                p.text(s, p.width / 2 - p.textWidth(s) / 2, p.height / 2);
+            }
+            btnBackToMenu.tegnKnap();
+
+            if (btnBackToMenu.klikket) {
+                visible = false;
+
+                main.mainMenu.visible = true;
+                saveManger.increment += p.random(-0.02f, 0.02f);
+
+                main.mainMenu.chooseGameMenu.needNytSpil = true;
+                btnBackToMenu.registrerRelease();
+            }
         }
     }
 
@@ -309,7 +329,7 @@ public class GameBoard {
     void boardmouseClicked() {
         ArrayList<Tile> showneTileSet = player.showneTileSet;
         devConsole.mouseClick();
-        if(!rul) {
+        if (!rul) {
             btnMenu.registrerKlik(p.mouseX, p.mouseY);
             btnMap.registrerKlik(p.mouseX, p.mouseY);
             if (!drawmap)
@@ -342,23 +362,26 @@ public class GameBoard {
 
                     }
                 }
-        }else{
+        } else {
             btnAcceptRul.registrerKlik(p.mouseX, p.mouseY);
+        }
+        if (maxRounds <= roundCount) {
+            btnBackToMenu.registrerKlik(p.mouseX, p.mouseY);
         }
     }
 
     void Rul() {
-        if(rul){
-            int terningTal = (int)(p.random(1, 6));
+        if (rul) {
+            int terningTal = (int) (p.random(1, 6));
             System.out.println(terningTal);
             PImage img2 = p.loadImage("terning0.png");
-            PImage img = p.loadImage("terning"+p.str(terningTal)+".png");
-            p.fill(200,200,200,200);
-            p.rect(0,60 * scaleSize,p.width,p.height);
-            p.image(img2,p.width/2-100*scaleSize,p.height/2-100*scaleSize,200*scaleSize,200*scaleSize);
-            p.image(img,p.width/2-100*scaleSize,p.height/2-100*scaleSize,200*scaleSize,200*scaleSize);
+            PImage img = p.loadImage("terning" + p.str(terningTal) + ".png");
+            p.fill(200, 200, 200, 200);
+            p.rect(0, 60 * scaleSize, p.width, p.height);
+            p.image(img2, p.width / 2 - 100 * scaleSize, p.height / 2 - 100 * scaleSize, 200 * scaleSize, 200 * scaleSize);
+            p.image(img, p.width / 2 - 100 * scaleSize, p.height / 2 - 100 * scaleSize, 200 * scaleSize, 200 * scaleSize);
             btnAcceptRul.tegnKnap();
-            if(btnAcceptRul.klikket){
+            if (btnAcceptRul.klikket) {
                 rul = false;
                 turnCount = terningTal;
                 btnAcceptRul.registrerRelease();
@@ -371,6 +394,28 @@ public class GameBoard {
     void keyTyped() {
         if (visible) {
             devConsole.keybordTyped();
+        }
+    }
+
+    void chooseWinner() {
+        Boat winner = cpuArrayList.get(0);
+        for (int i = 0; i < cpuArrayList.size(); ++i) {
+            Boat boat = cpuArrayList.get(i);
+            if (winner != boat) {
+                if (winner.calRating() < boat.calRating()) {
+                    winner = boat;
+                    i = 0;
+                }
+            }
+        }
+
+
+        if (winner.calRating() < player.calRating()) {
+            theWinner = player;
+            playerWon = true;
+        } else {
+            theWinner = winner;
+            playerWon = false;
         }
     }
 
