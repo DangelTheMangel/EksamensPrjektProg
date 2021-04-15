@@ -74,7 +74,8 @@ public class ShopMenu {
             btnSellEye.registrerRelease();
         }
 
-        p.text(t.get(1).Name + ": " + t.get(1).ammount + " Køb/sælg for: " + eyepachPrices, xpos + 20 * s, ypos + 200 * s);
+
+        p.text(t.get(1).Name + ": " + t.get(1).ammount + " Køb/sælg for: " + rumPrices, xpos + 20 * s, ypos + 200 * s);
         btnBuyRum.tegnKnap();
         if (btnBuyRum.klikket) {
             buyItem(StockInventory.get(1), player, btnBuyRum, rumPrices);
@@ -87,7 +88,7 @@ public class ShopMenu {
             btnSellRum.registrerRelease();
         }
 
-        p.text(t.get(0).Name + ": " + t.get(0).ammount+ " Køb/sælg for: " + eyepachPrices, xpos + 20 * s, ypos + 300 * s);
+        p.text(t.get(0).Name + ": " + t.get(0).ammount+ " Køb/sælg for: " + bananPrices, xpos + 20 * s, ypos + 300 * s);
         btnBuyBa.tegnKnap();
         if (btnBuyBa.klikket) {
             buyItem(StockInventory.get(0), player, btnBuyBa, bananPrices);

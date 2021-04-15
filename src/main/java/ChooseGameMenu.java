@@ -1,6 +1,6 @@
 import processing.core.PApplet;
 
-public class chooseGameMenu {
+public class ChooseGameMenu {
     PApplet p;
     GameBoard gb;
     MainMenu mainMenu;
@@ -8,7 +8,7 @@ public class chooseGameMenu {
     Boolean needNytSpil = false;
     AlmindeligKnap btnPlay, btnLoadGame, btnNewGame, btnBackToMenu;
 
-    chooseGameMenu(PApplet p, GameBoard gb, MainMenu mainMenu) {
+    ChooseGameMenu(PApplet p, GameBoard gb, MainMenu mainMenu) {
         this.p = p;
         this.gb = gb;
         this.mainMenu = mainMenu;

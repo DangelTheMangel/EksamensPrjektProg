@@ -6,7 +6,7 @@ public class MainMenu {
     PApplet p;
     GameBoard gb;
     PauseMenu pauseMenu;
-    chooseGameMenu chooseGameMenu;
+    ChooseGameMenu chooseGameMenu;
     SettingMenu settingMenu;
     Boolean visible = true;
     Boolean howToPlay = false;
@@ -22,7 +22,7 @@ public class MainMenu {
         btnSettings = new AlmindeligKnap(p, 640 - 160, 340, 320, 50, "Indstillinger");
         btnHowToPlay = new AlmindeligKnap(p, 640 - 160, 420, 320, 50, "Hvordan man spiller");
         btnCloseGame = new AlmindeligKnap(p, 640 - 160, 500, 320, 50, "luk spil");
-        chooseGameMenu = new chooseGameMenu(p, gb, this);
+        chooseGameMenu = new ChooseGameMenu(p, gb, this);
         backToMain = new AlmindeligKnap(p, 540, 600, 200, 50, "Back to Menu");
         bg = p.loadImage("startside.png");
         howTo= p.loadImage("how.png");
