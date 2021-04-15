@@ -13,7 +13,8 @@ public class SettingMenu {
     int displayResolutionInt = 1;
     int lastDisplayResolutionInt = 1;
     public float size = 1;
-    int volume = 50;
+    PVector[] volumes ={new PVector(0,-80),new PVector(25,-20),new PVector(50,0),new PVector(75,3),new PVector(100,6)};
+    int volInt =2;
     PVector[] displayResolution = {new PVector(640, 360, 0.5f), new PVector(1280, 720, 1), new PVector(1600, 900, 1.25f), new PVector(1920, 1080, 1.5f)};
     // Res  = Resolution
     PauseMenu pauseMenu;
@@ -67,28 +68,24 @@ public class SettingMenu {
 
             screenResManger();
 
-            String volInfo = volume+"%";
+            String volInfo = volumes[volInt].x +"%";
             p.text(volInfo,
                     (450 - p.textWidth(displayInfo) / 2) * size, (130) * size);
-            if(btnVolDown.klikket){
-                if(volume-1 <0){
-                    volume = 0;
-                }else {
-                    volume -= 1;
-                    changeVolume(volume);
+            if(btnVolUp.klikket){
+                if(volInt +1 !=  volumes.length){
+                    volInt += 1;
+                    changeVolume(volumes[volInt].y);
                 }
-                btnVolDown.registrerRelease();
+                btnVolUp.registrerRelease();
 
             }
 
-            if(btnVolUp.klikket){
-                if(volume+1 >100){
-                    volume = 100;
-                }else {
-                    volume += 1;
-                    changeVolume(volume);
+            if(btnVolDown.klikket){
+                if(volInt -1 !=  -1){
+                    volInt -= 1;
+                    changeVolume(volumes[volInt].y);
                 }
-                btnVolUp.registrerRelease();
+                btnVolDown.registrerRelease();
 
             }
 
@@ -97,11 +94,8 @@ public class SettingMenu {
     }
     void changeVolume(float volu){
         FloatControl vol = (FloatControl) main.bgmusic.getControl(FloatControl.Type.MASTER_GAIN);
-        if(volu > 50){
-            vol.setValue(6);
-        }else {
-            vol.setValue(-80);
-        }
+        vol.setValue(volu);
+
 
     }
     void btnChangeScreen(MainMenu mm, GameBoard gb) {
