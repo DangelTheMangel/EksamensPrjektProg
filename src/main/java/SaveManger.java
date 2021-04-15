@@ -57,8 +57,8 @@ public class SaveManger {
         map.setInt(5, 32, gb.numbersOfCpus);
         loadBoatToString(map, "Player", 33, gb.player);
 
-        for (int i = 0; i < gb.cpuArrayList.size(); ++i) {
-            loadBoatToString(map, "CPU", 34 + i, gb.cpuArrayList.get(i));
+        for (int i = 0; i < gb.cpuBoatArrayList.size(); ++i) {
+            loadBoatToString(map, "CPU", 34 + i, gb.cpuBoatArrayList.get(i));
         }
 
         JFileChooser f = new JFileChooser();
@@ -152,9 +152,9 @@ public class SaveManger {
         gb.startGame(gb.numbersOfCpus, cpuPos);
 
         loadMapToBoat(map, "Player", 33, gb.player);
-        for (int i = 0; i < gb.cpuArrayList.size() - 2; i++) {
+        for (int i = 0; i < gb.cpuBoatArrayList.size() - 2; i++) {
 
-            loadMapToBoat(map, "CPU", 34 + i, gb.cpuArrayList.get(i));
+            loadMapToBoat(map, "CPU", 34 + i, gb.cpuBoatArrayList.get(i));
         }
 
 

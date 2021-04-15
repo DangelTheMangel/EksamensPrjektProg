@@ -7,7 +7,7 @@ public class ShopMenu {
     Boolean visible = false;
 
     ArrayList<Item> StockInventory = new ArrayList<Item>();
-    AlmindeligKnap btnBuyBa, btnBuyRum, btnBuyEye, btnSellBa, btnSellRum, btnSellEye, btnCloseShop;
+    NomalButton btnBuyBa, btnBuyRum, btnBuyEye, btnSellBa, btnSellRum, btnSellEye, btnCloseShop;
     float bananPrices, eyepachPrices, rumPrices;
 
     ShopMenu(PApplet p) {
@@ -21,15 +21,15 @@ public class ShopMenu {
         StockInventory.add(Rum);
         StockInventory.add(Eyepatch);
 
-        btnBuyEye = new AlmindeligKnap(p, xpos + 20, 270, 160, 50, "Køb en klap");
-        btnBuyRum = new AlmindeligKnap(p, xpos + 20, 360, 160, 50, "Køb en rom");
-        btnBuyBa = new AlmindeligKnap(p, xpos + 20, 460, 160, 50, "Køb en Banan");
+        btnBuyEye = new NomalButton(p, xpos + 20, 270, 160, 50, "Køb en klap");
+        btnBuyRum = new NomalButton(p, xpos + 20, 360, 160, 50, "Køb en rom");
+        btnBuyBa = new NomalButton(p, xpos + 20, 460, 160, 50, "Køb en Banan");
 
-        btnSellEye = new AlmindeligKnap(p, xpos + 400 - 180, 270, 160, 50, "sælg en klap");
-        btnSellRum = new AlmindeligKnap(p, xpos + 400 - 180, 360, 160, 50, "slæg en rom");
-        btnSellBa = new AlmindeligKnap(p, xpos + 400 - 180, 460, 160, 50, "sælg en Banan");
+        btnSellEye = new NomalButton(p, xpos + 400 - 180, 270, 160, 50, "sælg en klap");
+        btnSellRum = new NomalButton(p, xpos + 400 - 180, 360, 160, 50, "slæg en rom");
+        btnSellBa = new NomalButton(p, xpos + 400 - 180, 460, 160, 50, "sælg en Banan");
 
-        btnCloseShop = new AlmindeligKnap(p, xpos + 20, 580, 360, 50, "luk butik");
+        btnCloseShop = new NomalButton(p, xpos + 20, 580, 360, 50, "luk butik");
         bananPrices = determinePrice(StockInventory.get(0));
         rumPrices = determinePrice(StockInventory.get(1));
         eyepachPrices = determinePrice(StockInventory.get(2));
@@ -122,7 +122,7 @@ public class ShopMenu {
 
     }
 
-    void btbBuyItem(AlmindeligKnap btn, Player player, Item item) {
+    void btbBuyItem(NomalButton btn, Player player, Item item) {
 
     }
 
@@ -138,7 +138,7 @@ public class ShopMenu {
         btnCloseShop.registrerKlik(p.mouseX, p.mouseY);
     }
 
-    void buyItem(Item item, Player player, AlmindeligKnap btn, float itemPrices) {
+    void buyItem(Item item, Player player, NomalButton btn, float itemPrices) {
         if (player.money - itemPrices >= 0 && item.ammount - 1 >= 0 && btn.klikket) {
             for (int i = 0; i < player.inventory.size(); ++i) {
                 System.out.println("itemName: " + item.Name + "|iName: " + player.inventory.get(i).Name + "|");
@@ -156,7 +156,7 @@ public class ShopMenu {
         }
     }
 
-    void SellItem(Item item, Player player, AlmindeligKnap btn, int amount, float itemPrices) {
+    void SellItem(Item item, Player player, NomalButton btn, int amount, float itemPrices) {
 
         int sellAmount = item.ammount - amount;
         if (sellAmount >= 0) {

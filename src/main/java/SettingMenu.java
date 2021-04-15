@@ -2,7 +2,6 @@ import processing.core.PApplet;
 import processing.core.PSurface;
 import processing.core.PVector;
 
-import javax.sound.sampled.Control;
 import javax.sound.sampled.FloatControl;
 
 public class SettingMenu {
@@ -18,9 +17,9 @@ public class SettingMenu {
     PVector[] displayResolution = {new PVector(640, 360, 0.5f), new PVector(1280, 720, 1), new PVector(1600, 900, 1.25f), new PVector(1920, 1080, 1.5f)};
     // Res  = Resolution
     PauseMenu pauseMenu;
-    Textfeld tfNumbersOfPlayers, tfMaxRound,tfGenNum;
+    TextField tfNumbersOfPlayers, tfMaxRound,tfGenNum;
     boolean backToMainMenu = true;
-    AlmindeligKnap ResLeft, ResRight, backToMain,btnVolUp,btnVolDown;
+    NomalButton ResLeft, ResRight, backToMain,btnVolUp,btnVolDown;
     int screenWidth, screenHeight;
     GameBoard gb;
     SaveManger sm;
@@ -28,20 +27,20 @@ public class SettingMenu {
     SettingMenu(PApplet p) {
         this.p = p;
         //sds
-        btnVolDown = new AlmindeligKnap(p, 320, 100, 50, 50, "<");
-        btnVolUp = new AlmindeligKnap(p, 910, 100, 50, 50, ">");
+        btnVolDown = new NomalButton(p, 320, 100, 50, 50, "<");
+        btnVolUp = new NomalButton(p, 910, 100, 50, 50, ">");
 
-        ResLeft = new AlmindeligKnap(p, 320, 250, 50, 50, "<");
-        ResRight = new AlmindeligKnap(p, 910, 250, 50, 50, ">");
+        ResLeft = new NomalButton(p, 320, 250, 50, 50, "<");
+        ResRight = new NomalButton(p, 910, 250, 50, 50, ">");
 
 
-        tfNumbersOfPlayers = new Textfeld(p, 200, 450, 200, 50, "Antal af modspiller");
+        tfNumbersOfPlayers = new TextField(p, 200, 450, 200, 50, "Antal af modspiller");
         tfNumbersOfPlayers.acceptLetters = false;
-        tfMaxRound = new Textfeld(p, 540, 450, 200, 50, "Antal Rundter");
+        tfMaxRound = new TextField(p, 540, 450, 200, 50, "Antal Rundter");
         tfMaxRound.acceptLetters = false;
-        tfGenNum = new Textfeld(p, p.width-400, 450, 200, 50, "Generation nummer");
+        tfGenNum = new TextField(p, p.width-400, 450, 200, 50, "Generation nummer");
         tfGenNum.acceptLetters = false;
-        backToMain = new AlmindeligKnap(p, 540, 600, 200, 50, "Back to Menu");
+        backToMain = new NomalButton(p, 540, 600, 200, 50, "Back to Menu");
     }
 
     void drawMenu() {
@@ -195,12 +194,12 @@ public class SettingMenu {
 
     }
 
-    public void reSizeBtn(float s, Knap btn) {
+    public void reSizeBtn(float s, Button btn) {
         btn.size = s;
 
     }
 
-    public void reSizeFT(float s, Textfeld tf) {
+    public void reSizeFT(float s, TextField tf) {
         tf.size = s;
 
     }

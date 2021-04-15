@@ -12,7 +12,7 @@ public class GameBoard {
     boolean won = false;
     ArrayList<Tile> tileSet = new ArrayList<Tile>();
     //ArrayList<Tile> showneTileSet = new ArrayList<Tile>();
-    AlmindeligKnap btnMenu, btnMap, btnAcceptRul, btnBackToMenu;
+    NomalButton btnMenu, btnMap, btnAcceptRul, btnBackToMenu;
     public PauseMenu pauseMenu;
     SettingMenu settingMenu;
     SaveManger saveManger;
@@ -22,7 +22,7 @@ public class GameBoard {
     boolean drawmap = false;
     DevConsole devConsole;
 
-    ArrayList<Cpu> cpuArrayList = new ArrayList<Cpu>();
+    ArrayList<CpuBoat> cpuBoatArrayList = new ArrayList<CpuBoat>();
     //  Cpu cpu;
     int maxRounds = 300;
     int numbersOfCpus = 3;
@@ -46,10 +46,10 @@ public class GameBoard {
 
         this.pauseMenu = pauseMenu;
         startGame(numbersOfCpus, cpuPos);
-        btnMenu = new AlmindeligKnap(p, p.width - 60, 0, 60, 60, "-\n-\n-");
-        btnMap = new AlmindeligKnap(p, 270, 650, 450, 50, "map");
-        btnAcceptRul = new AlmindeligKnap(p, 270, 650, 450, 50, "Rul");
-        btnBackToMenu = new AlmindeligKnap(p, 270, 650, 450, 50, "Tilbage til menu");
+        btnMenu = new NomalButton(p, p.width - 60, 0, 60, 60, "-\n-\n-");
+        btnMap = new NomalButton(p, 270, 650, 450, 50, "map");
+        btnAcceptRul = new NomalButton(p, 270, 650, 450, 50, "Rul");
+        btnBackToMenu = new NomalButton(p, 270, 650, 450, 50, "Tilbage til menu");
         pauseMenu.gb = this;
         pauseMenu.mainMenu.gb = this;
         pauseMenu.mainMenu.chooseGameMenu.gb = this;
@@ -80,14 +80,14 @@ public class GameBoard {
             int x = (int) cpuPos.get(cpurPos).x, y = (int) cpuPos.get(cpurPos).y;
             cpuPos.remove(cpurPos);
             System.out.println("x: " + x + " y: " + y);
-            cpuArrayList.add(new Cpu(p, x, y, 0, 500));
+            cpuBoatArrayList.add(new CpuBoat(p, x, y, 0, 500));
 
         }
 
-        for (int i = 0; i < cpuArrayList.size(); ++i) {
+        for (int i = 0; i < cpuBoatArrayList.size(); ++i) {
 
-            cpuArrayList.get(i).generateInventory();
-            cpuArrayList.get(i).boatPic = p.loadImage("piratbad.png");
+            cpuBoatArrayList.get(i).generateInventory();
+            cpuBoatArrayList.get(i).boatPic = p.loadImage("piratbad.png");
             // turnList.add(new Turn(p,cpuArrayList.get(i)));
         }
 
@@ -127,8 +127,8 @@ public class GameBoard {
                     , 880 * scaleSize, 150 * scaleSize);
             player.fillUpShownTiles(tileSet);
 
-            for (int j = 0; j < cpuArrayList.size(); ++j) {
-                cpuArrayList.get(j).fillUpShownTiles(tileSet);
+            for (int j = 0; j < cpuBoatArrayList.size(); ++j) {
+                cpuBoatArrayList.get(j).fillUpShownTiles(tileSet);
 
                 //dette kan være med til program går unga
                 if (rulleAnimation > 0) {
@@ -189,8 +189,8 @@ public class GameBoard {
 
                     //drawing boats
                     drawShips(player, i, posX, posY);
-                    for (int j = 0; j < cpuArrayList.size(); ++j) {
-                        drawShips(cpuArrayList.get(j), i, posX, posY);
+                    for (int j = 0; j < cpuBoatArrayList.size(); ++j) {
+                        drawShips(cpuBoatArrayList.get(j), i, posX, posY);
                     }
                     p.popMatrix();
 
@@ -261,8 +261,8 @@ public class GameBoard {
                 p.fill(0);
                 p.text("VENTER PÅ MODSPILLERNES TUR", p.width / 2 - p.textWidth("VENTER PÅ MODSPILLERNES TUR") / 2, p.height / 2);
 
-                for (int j = 0; j < cpuArrayList.size(); ++j) {
-                    cpuArrayList.get(j).Turn();
+                for (int j = 0; j < cpuBoatArrayList.size(); ++j) {
+                    cpuBoatArrayList.get(j).Turn();
                     System.out.println("cpu number: " + j);
                 }
                 if (!rul)
@@ -304,7 +304,7 @@ public class GameBoard {
         settingMenu.reSizeBtn(scaleSize, btnMap);
         settingMenu.reSizeBtn(scaleSize,btnAcceptRul);
         settingMenu.reSizeBtn(scaleSize,btnBackToMenu);
-        settingMenu.reSizeFT(scaleSize, devConsole.textfeld);
+        settingMenu.reSizeFT(scaleSize, devConsole.textField);
 
     }
 
@@ -402,9 +402,9 @@ public class GameBoard {
     }
 
     void chooseWinner() {
-        Boat winner = cpuArrayList.get(0);
-        for (int i = 0; i < cpuArrayList.size(); ++i) {
-            Boat boat = cpuArrayList.get(i);
+        Boat winner = cpuBoatArrayList.get(0);
+        for (int i = 0; i < cpuBoatArrayList.size(); ++i) {
+            Boat boat = cpuBoatArrayList.get(i);
             if (winner != boat) {
                 if (winner.calRating() < boat.calRating()) {
                     winner = boat;

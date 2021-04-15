@@ -6,16 +6,16 @@ public class ChooseGameMenu {
     MainMenu mainMenu;
     Boolean visible = false;
     Boolean needNytSpil = false;
-    AlmindeligKnap btnPlay, btnLoadGame, btnNewGame, btnBackToMenu;
+    NomalButton btnPlay, btnLoadGame, btnNewGame, btnBackToMenu;
 
     ChooseGameMenu(PApplet p, GameBoard gb, MainMenu mainMenu) {
         this.p = p;
         this.gb = gb;
         this.mainMenu = mainMenu;
-        btnPlay = new AlmindeligKnap(p, 640 - 160, 100, 320, 50, "Forsæt spil");
-        btnLoadGame = new AlmindeligKnap(p, 640 - 160, 160, 320, 50, "Indlæs Spil");
-        btnNewGame = new AlmindeligKnap(p, 640 - 160, 220, 320, 50, "Nyt Spil");//280
-        btnBackToMenu = new AlmindeligKnap(p, 640 - 160, 280, 320, 50, "Tilbage");
+        btnPlay = new NomalButton(p, 640 - 160, 100, 320, 50, "Forsæt spil");
+        btnLoadGame = new NomalButton(p, 640 - 160, 160, 320, 50, "Indlæs Spil");
+        btnNewGame = new NomalButton(p, 640 - 160, 220, 320, 50, "Nyt Spil");//280
+        btnBackToMenu = new NomalButton(p, 640 - 160, 280, 320, 50, "Tilbage");
 
 
     }

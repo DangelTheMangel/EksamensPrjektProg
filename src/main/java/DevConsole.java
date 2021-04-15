@@ -5,7 +5,7 @@ public class DevConsole extends PApplet {
     PApplet p;
     boolean visibale = false;
     GameBoard gameBoard;
-    Textfeld textfeld;
+    TextField textField;
     String display = "...";
     PVector displayPos = new PVector(1, 1);
     float textSize = 30;
@@ -14,7 +14,7 @@ public class DevConsole extends PApplet {
     DevConsole(PApplet p, GameBoard gameBoard) {
         this.p = p;
         this.gameBoard = gameBoard;
-        textfeld = new Textfeld(p, p.width / 12 / 2, p.height - p.height / 5, p.width - p.width / 12, p.width / 12 / 2, "DevConsole");
+        textField = new TextField(p, p.width / 12 / 2, p.height - p.height / 5, p.width - p.width / 12, p.width / 12 / 2, "DevConsole");
         displayPos = new PVector(1, 1);
     }
 
@@ -23,8 +23,8 @@ public class DevConsole extends PApplet {
         displayPos = new PVector(p.width / 12 / 2 + textSize, p.height - p.height / 4 - textSize - extra * s);
         p.fill(0);
         p.rect((p.width / 12 / 2), 0, (p.width - p.width / 12), (p.height - p.height / 4));
-        textfeld.tegnTextFlet();
-        textfeld.size = s;
+        textField.tegnTextFlet();
+        textField.size = s;
         p.fill(255);
 
         p.textSize(textSize);
@@ -36,39 +36,39 @@ public class DevConsole extends PApplet {
 
     void mouseClick() {
         if (visibale) {
-            textfeld.KlikTjek(p.mouseX, p.mouseY);
+            textField.KlikTjek(p.mouseX, p.mouseY);
         }
     }
 
     void keybordTyped() {
         if (visibale) {
 
-            if (p.key == ENTER && textfeld.indput.length() > 0) {
-                textfeld.klikket = false;
-                display += "\n" + textfeld.indput;
+            if (p.key == ENTER && textField.indput.length() > 0) {
+                textField.klikket = false;
+                display += "\n" + textField.indput;
                 extra += 30;
                 comandos();
-                textfeld.indput = "";
-            } else if (p.key == BACKSPACE && textfeld.indput.length() > 0) {
-                textfeld.indput = textfeld.indput.substring(0, textfeld.indput.length() - 1);
+                textField.indput = "";
+            } else if (p.key == BACKSPACE && textField.indput.length() > 0) {
+                textField.indput = textField.indput.substring(0, textField.indput.length() - 1);
             } else {
-                textfeld.keyindput(p.key);
+                textField.keyindput(p.key);
             }
-            textfeld.klikket = true;
+            textField.klikket = true;
         } else {
-            textfeld.klikket = false;
+            textField.klikket = false;
         }
 
     }
 
 
     void comandos() {
-        String ip = textfeld.indput;
+        String ip = textField.indput;
         String[] letters = ip.split("-");
         for (int i = 0; i < letters.length; ++i)
             System.out.println("i: " + i + letters[i]);
 
-        if (textfeld.indput.equalsIgnoreCase("Cunt")) {
+        if (textField.indput.equalsIgnoreCase("Cunt")) {
             System.out.println("nå nå fuck dig");
         }
 

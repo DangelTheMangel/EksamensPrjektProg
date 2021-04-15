@@ -12,18 +12,18 @@ public class MainMenu {
     Boolean howToPlay = false;
     float scaleSize = 1;
     PImage bg,howTo;
-    AlmindeligKnap btnPlay, btnSettings, btnHowToPlay, btnLoadGame, btnCloseGame,backToMain;
+    NomalButton btnPlay, btnSettings, btnHowToPlay, btnLoadGame, btnCloseGame,backToMain;
 
     MainMenu(PApplet p) {
         this.p = p;
 
-        btnPlay = new AlmindeligKnap(p, 640 - 160, 260, 150, 50, "Spil");
-        btnLoadGame = new AlmindeligKnap(p, 640 + 170 - 160, 260, 150, 50, "Indlæs Spil");
-        btnSettings = new AlmindeligKnap(p, 640 - 160, 340, 320, 50, "Indstillinger");
-        btnHowToPlay = new AlmindeligKnap(p, 640 - 160, 420, 320, 50, "Hvordan man spiller");
-        btnCloseGame = new AlmindeligKnap(p, 640 - 160, 500, 320, 50, "luk spil");
+        btnPlay = new NomalButton(p, 640 - 160, 260, 150, 50, "Spil");
+        btnLoadGame = new NomalButton(p, 640 + 170 - 160, 260, 150, 50, "Indlæs Spil");
+        btnSettings = new NomalButton(p, 640 - 160, 340, 320, 50, "Indstillinger");
+        btnHowToPlay = new NomalButton(p, 640 - 160, 420, 320, 50, "Hvordan man spiller");
+        btnCloseGame = new NomalButton(p, 640 - 160, 500, 320, 50, "luk spil");
         chooseGameMenu = new ChooseGameMenu(p, gb, this);
-        backToMain = new AlmindeligKnap(p, 540, 600, 200, 50, "Back to Menu");
+        backToMain = new NomalButton(p, 540, 600, 200, 50, "Back to Menu");
         bg = p.loadImage("startside.png");
         howTo= p.loadImage("how.png");
     }

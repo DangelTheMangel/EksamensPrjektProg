@@ -1,6 +1,6 @@
 import processing.core.PApplet;
 
-public class Textfeld {
+public class TextField {
 
     //variabler
     float positionX, positionY, sizeX, sizeY;
@@ -15,7 +15,7 @@ public class Textfeld {
 
     PApplet p;
 
-    Textfeld(PApplet papp, int posX, int posY, int sizeX, int sizeY, String text) {
+    TextField(PApplet papp, int posX, int posY, int sizeX, int sizeY, String text) {
         p = papp;
         positionX = posX;
         positionY = posY;

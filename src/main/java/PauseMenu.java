@@ -6,7 +6,7 @@ public class PauseMenu {
     GameBoard gb;
     MainMenu mainMenu;
     SettingMenu settingMenu;
-    AlmindeligKnap btnResume, btnSettings, btnExitToMain, btnSave;
+    NomalButton btnResume, btnSettings, btnExitToMain, btnSave;
 
     PauseMenu(PApplet p, SettingMenu settingMenu, MainMenu mainMenu) {
         this.p = p;
@@ -18,10 +18,10 @@ public class PauseMenu {
         mainMenu.pauseMenu = this;
         settingMenu.pauseMenu = this;
 
-        btnResume = new AlmindeligKnap(p, 640 - 160, 100, 320, 50, "Forsæt");
-        btnSettings = new AlmindeligKnap(p, 640 - 160, 160, 320, 50, "Indstillinger");
-        btnSave = new AlmindeligKnap(p, 640 - 160, 220, 320, 50, "Gem Spil");
-        btnExitToMain = new AlmindeligKnap(p, 640 - 160, 280, 320, 50, "Tilbage Til Menu");
+        btnResume = new NomalButton(p, 640 - 160, 100, 320, 50, "Forsæt");
+        btnSettings = new NomalButton(p, 640 - 160, 160, 320, 50, "Indstillinger");
+        btnSave = new NomalButton(p, 640 - 160, 220, 320, 50, "Gem Spil");
+        btnExitToMain = new NomalButton(p, 640 - 160, 280, 320, 50, "Tilbage Til Menu");
 
 
     }
