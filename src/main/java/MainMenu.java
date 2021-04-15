@@ -25,7 +25,7 @@ public class MainMenu {
         chooseGameMenu = new chooseGameMenu(p, gb, this);
         backToMain = new AlmindeligKnap(p, 540, 600, 200, 50, "Back to Menu");
         bg = p.loadImage("startside.png");
-        howTo= p.loadImage("w4.png");
+        howTo= p.loadImage("how.png");
     }
 
     void drawMenu() {
