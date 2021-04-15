@@ -49,11 +49,11 @@ public class ShopMenu {
         //880*scaleSize,150*scaleSize
         float xpos = 830 * s, ypos = 150 * s;
         p.fill(209, 166, 96, 255);
-        p.rect(s * xpos, s * ypos, s * 400, s * 500);
+        p.rect(s * 830, s * 150, s * 400, s * 500);
         p.fill(0);
-        p.textSize(32);
+        p.textSize(32*s);
         p.text("Shop", xpos + 200 * s - p.textWidth("Shop") / 2, ypos + 50 * s);
-        p.textSize(16);
+        p.textSize(16*s);
         ArrayList<Item> t = StockInventory;
 
         // p.text("Taske: " +"\n" +t.get(0).Name +t.get(0).ammount +"\n" + t.get(1).Name +t.get(1).ammount +"\n" + t.get(2).Name +t.get(2).ammount,s*850 ,s*150);

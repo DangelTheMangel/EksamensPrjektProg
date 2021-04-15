@@ -43,9 +43,7 @@ public class MainMenu {
             btnCloseGame.tegnKnap();
 
             if (btnPlay.klikket) {
-             /*   gb.visible = true;
-                visible = false;
-                btnPlay.registrerRelease();*/
+
 
                 chooseGameMenu.visible = true;
 
@@ -60,7 +58,7 @@ public class MainMenu {
             }
 
             if (btnLoadGame.klikket) {
-                System.out.println("Bib bab og andre robotlyde");
+
                 p.selectInput("Select a file to process:", "loadedMap");
                 btnLoadGame.registrerRelease();
             }
@@ -101,6 +99,7 @@ public class MainMenu {
         settingMenu.reSizeBtn(scaleSize, chooseGameMenu.btnLoadGame);
         settingMenu.reSizeBtn(scaleSize, chooseGameMenu.btnNewGame);
         settingMenu.reSizeBtn(scaleSize, chooseGameMenu.btnPlay);
+        settingMenu.reSizeBtn(scaleSize,backToMain);
     }
 
     void menuMouseClick(float mx, float my) {

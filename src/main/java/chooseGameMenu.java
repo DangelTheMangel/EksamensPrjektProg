@@ -33,7 +33,8 @@ public class chooseGameMenu {
              /*   gb.visible = true;
                 visible = false;
                 btnPlay.registrerRelease();*/
-
+            gb.scaleSize = mainMenu.scaleSize;
+            gb.reSizeGamebord();
             gb.visible = true;
             mainMenu.visible = false;
             visible = false;
@@ -47,7 +48,8 @@ public class chooseGameMenu {
         }
 
         if (btnNewGame.klikket) {
-
+            gb.scaleSize = mainMenu.scaleSize;
+            gb.reSizeGamebord();
             gb.tileSet.clear();
             gb.saveManger.generateGame(32, gb.tileSet);
             gb.startGame(gb.numbersOfCpus, gb.saveManger.cpuPos);

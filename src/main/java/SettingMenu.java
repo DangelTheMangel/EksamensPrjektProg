@@ -52,9 +52,9 @@ public class SettingMenu {
 
             p.image(main.bg,0,0,p.width,p.height);
             p.textSize(32 * size);
-            p.text("Musikvolumen:", 320,70);
-            p.text("Skærmopløsning:", 320,230);
-            p.text("Spille Instillinger:", 320,410);
+            p.text("Musikvolumen:", 320*size,70*size);
+            p.text("Skærmopløsning:", 320*size,230*size);
+            p.text("Spille Instillinger:", 320*size,410*size);
             p.textSize(16 * size);
 
 

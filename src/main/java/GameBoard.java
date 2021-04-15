@@ -203,6 +203,7 @@ public class GameBoard {
                             System.out.println("ShopTime");
                             showneTileSet.get(i).showShop(scaleSize);
 
+
                         } else if (!showneTileSet.get(i).Contents.equals("BORDER")) {
 
 
@@ -301,13 +302,16 @@ public class GameBoard {
     void reSizeGamebord() {
         settingMenu.reSizeBtn(scaleSize, btnMenu);
         settingMenu.reSizeBtn(scaleSize, btnMap);
+        settingMenu.reSizeBtn(scaleSize,btnAcceptRul);
+        settingMenu.reSizeBtn(scaleSize,btnBackToMenu);
+        settingMenu.reSizeFT(scaleSize, devConsole.textfeld);
 
     }
 
     void drawShips(Boat boat, int i, float posX, float posY) {
         ArrayList<Tile> showneTileSet = player.showneTileSet;
         if (boat.xPos == showneTileSet.get(i).xPos && boat.yPos == showneTileSet.get(i).yPos) {
-            //p.ellipse(100*posX + 50,100*posY+ 50,100,100);
+
             boat.displayBoat(posX, posY, (int) (85 * scaleSize));
         }
     }
