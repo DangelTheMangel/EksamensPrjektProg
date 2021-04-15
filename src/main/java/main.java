@@ -1,5 +1,6 @@
 
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.data.Table;
 import javax.sound.sampled.*;
 import java.io.File;
@@ -28,15 +29,12 @@ public class main extends PApplet {
 
         PApplet.main("main");
     }
-
     public static Clip bgmusic;
-
-
     public PauseMenu pauseMenu;
     public SettingMenu settingMenu;
     public static MainMenu mainMenu;
     public GameBoard gb;
-
+    public static PImage bg;
 
     @Override
     public void settings() {
@@ -47,12 +45,12 @@ public class main extends PApplet {
 
     @Override
     public void setup() {
-
+        bg = loadImage("Tegnebraet 2.png");
         settingMenu = new SettingMenu(this);
         mainMenu = new MainMenu(this);
         pauseMenu = new PauseMenu(this, settingMenu, mainMenu);
         gb = new GameBoard(this, pauseMenu);
-        gb.visible = true;
+
         textSize(12);
         text("Loading", width / 2 - textWidth("Loading") / 2, height / 2);
         try {

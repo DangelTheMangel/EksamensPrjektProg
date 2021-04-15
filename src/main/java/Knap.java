@@ -39,7 +39,7 @@ public abstract class Knap {
 
     void setTekst(String tekst) {
         p.fill(0);
-
+        p.textSize(16 * size);
         p.text(tekst, positionX + (sizeX / 16), positionY + (sizeY / 2));
 
     }

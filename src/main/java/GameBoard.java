@@ -68,7 +68,7 @@ public class GameBoard {
     void startGame(int antalCPU, ArrayList<PVector> cpuPos) {
 
         int playerPos = (int) p.random(0, cpuPos.size());
-        player = new Player(p, cpuPos.get(playerPos).x, cpuPos.get(playerPos).y, 0, 1000);
+        player = new Player(p, cpuPos.get(playerPos).x, cpuPos.get(playerPos).y, 0, 500);
         cpuPos.remove(playerPos);
         player.generateInventory();
         player.boatPic = p.loadImage("Skibet32.png");
@@ -80,7 +80,7 @@ public class GameBoard {
             int x = (int) cpuPos.get(cpurPos).x, y = (int) cpuPos.get(cpurPos).y;
             cpuPos.remove(cpurPos);
             System.out.println("x: " + x + " y: " + y);
-            cpuArrayList.add(new Cpu(p, x, y, 0, 100));
+            cpuArrayList.add(new Cpu(p, x, y, 0, 500));
 
         }
 

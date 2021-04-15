@@ -28,35 +28,45 @@ public class SettingMenu {
     SettingMenu(PApplet p) {
         this.p = p;
         //sds
-        btnVolDown = new AlmindeligKnap(p, 200, 100, 50, 50, "<");
-        btnVolUp = new AlmindeligKnap(p, 650, 100, 50, 50, ">");
-        ResLeft = new AlmindeligKnap(p, 200, 200, 50, 50, "<");
-        ResRight = new AlmindeligKnap(p, 650, 200, 50, 50, ">");
-        tfNumbersOfPlayers = new Textfeld(p, 200, 400, 200, 50, "Antal af modspiller");
+        btnVolDown = new AlmindeligKnap(p, 320, 100, 50, 50, "<");
+        btnVolUp = new AlmindeligKnap(p, 910, 100, 50, 50, ">");
+
+        ResLeft = new AlmindeligKnap(p, 320, 250, 50, 50, "<");
+        ResRight = new AlmindeligKnap(p, 910, 250, 50, 50, ">");
+
+
+        tfNumbersOfPlayers = new Textfeld(p, 200, 450, 200, 50, "Antal af modspiller");
         tfNumbersOfPlayers.acceptLetters = false;
-
-        tfMaxRound = new Textfeld(p, 200, 500, 200, 50, "Antal Rundter");
+        tfMaxRound = new Textfeld(p, 540, 450, 200, 50, "Antal Rundter");
         tfMaxRound.acceptLetters = false;
-
-        tfGenNum = new Textfeld(p, 200, 600, 200, 50, "Generation nummer");
+        tfGenNum = new Textfeld(p, p.width-400, 450, 200, 50, "Generation nummer");
         tfGenNum.acceptLetters = false;
-
         backToMain = new AlmindeligKnap(p, 540, 600, 200, 50, "Back to Menu");
     }
 
     void drawMenu() {
 
 
-        p.textSize(16 * size);
+
         if (visible) {
 
-            p.background(200);
+            p.image(main.bg,0,0,p.width,p.height);
+            p.textSize(32 * size);
+            p.text("Musikvolumen:", 320,70);
+            p.text("Skærmopløsning:", 320,230);
+            p.text("Spille Instillinger:", 320,410);
+            p.textSize(16 * size);
 
-            p.text("mx: " + p.mouseX + " my: " + p.mouseY, p.mouseX, p.mouseY);
 
             String displayInfo = (int) displayResolution[displayResolutionInt].x + " X " + (int) displayResolution[displayResolutionInt].y;
             p.text(displayInfo,
-                    (450 - p.textWidth(displayInfo) / 2) * size, (230) * size);
+                    (p.width/2- p.textWidth(displayInfo) / 2) , (280) * size);
+            String volInfo = volumes[volInt].x +"%";
+            p.text(volInfo,
+                    (p.width/2- p.textWidth(displayInfo) / 2) , (130) * size);
+            p.textSize(16 * size);
+
+
             btnVolUp.tegnKnap();
             btnVolDown.tegnKnap();
             backToMain.tegnKnap();
@@ -68,9 +78,7 @@ public class SettingMenu {
 
             screenResManger();
 
-            String volInfo = volumes[volInt].x +"%";
-            p.text(volInfo,
-                    (450 - p.textWidth(displayInfo) / 2) * size, (130) * size);
+
             if(btnVolUp.klikket){
                 if(volInt +1 !=  volumes.length){
                     volInt += 1;

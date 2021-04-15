@@ -1,4 +1,5 @@
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class MainMenu {
     //hello mand tjek resize
@@ -7,30 +8,34 @@ public class MainMenu {
     PauseMenu pauseMenu;
     chooseGameMenu chooseGameMenu;
     SettingMenu settingMenu;
-    Boolean visible = false;
+    Boolean visible = true;
+    Boolean howToPlay = false;
     float scaleSize = 1;
-    AlmindeligKnap btnPlay, btnSettings, btnHowToPlay, btnLoadGame, btnCloseGame;
+    PImage bg,howTo;
+    AlmindeligKnap btnPlay, btnSettings, btnHowToPlay, btnLoadGame, btnCloseGame,backToMain;
 
     MainMenu(PApplet p) {
         this.p = p;
 
-        btnPlay = new AlmindeligKnap(p, 640 - 160, 100, 320, 50, "Spil");
-        btnLoadGame = new AlmindeligKnap(p, 640 - 160, 160, 320, 50, "Indlæs Spil");
-        btnSettings = new AlmindeligKnap(p, 640 - 160, 220, 320, 50, "Indstillinger");
-
-        btnHowToPlay = new AlmindeligKnap(p, 640 - 160, 280, 320, 50, "Hvordan man spiller");
-        btnCloseGame = new AlmindeligKnap(p, 640 - 160, 340, 320, 50, "luk spil");
+        btnPlay = new AlmindeligKnap(p, 640 - 160, 260, 150, 50, "Spil");
+        btnLoadGame = new AlmindeligKnap(p, 640 + 170 - 160, 260, 150, 50, "Indlæs Spil");
+        btnSettings = new AlmindeligKnap(p, 640 - 160, 340, 320, 50, "Indstillinger");
+        btnHowToPlay = new AlmindeligKnap(p, 640 - 160, 420, 320, 50, "Hvordan man spiller");
+        btnCloseGame = new AlmindeligKnap(p, 640 - 160, 500, 320, 50, "luk spil");
         chooseGameMenu = new chooseGameMenu(p, gb, this);
+        backToMain = new AlmindeligKnap(p, 540, 600, 200, 50, "Back to Menu");
+        bg = p.loadImage("startside.png");
+        howTo= p.loadImage("w4.png");
     }
 
     void drawMenu() {
-        if (chooseGameMenu.visible) {
+        if (chooseGameMenu.visible&& !howToPlay) {
             chooseGameMenu.drawMenu();
         }
 
-        if (!chooseGameMenu.visible) {
+        if (!chooseGameMenu.visible && !howToPlay) {
             p.clear();
-            p.background(200);
+            p.image(bg,0,0,p.width,p.height);
             btnPlay.tegnKnap();
             btnSettings.tegnKnap();
             btnLoadGame.tegnKnap();
@@ -61,7 +66,7 @@ public class MainMenu {
             }
 
             if (btnHowToPlay.klikket) {
-
+                howToPlay = true;
                 btnHowToPlay.registrerRelease();
             }
 
@@ -71,6 +76,13 @@ public class MainMenu {
 
             }
 
+        }else if(howToPlay) {
+            p.image(howTo,0,0,p.width,p.height);
+            backToMain.tegnKnap();
+            if (backToMain.klikket){
+                howToPlay = false;
+                backToMain.registrerRelease();
+            }
         }
 
 
@@ -92,19 +104,21 @@ public class MainMenu {
     }
 
     void menuMouseClick(float mx, float my) {
-        if (!chooseGameMenu.visible) {
+        if (!chooseGameMenu.visible&& !howToPlay) {
 
             btnPlay.registrerKlik(mx, my);;
             btnSettings.registrerKlik(mx, my);
             btnLoadGame.registrerKlik(mx, my);
             btnHowToPlay.registrerKlik(mx, my);
             btnCloseGame.registrerKlik(mx, my);
-        } else {
+        } else if(!howToPlay) {
 
                 chooseGameMenu.btnPlay.registrerKlik(mx, my);
             chooseGameMenu.btnLoadGame.registrerKlik(mx, my);
             chooseGameMenu.btnBackToMenu.registrerKlik(mx, my);
             chooseGameMenu.btnNewGame.registrerKlik(mx, my);
+        }else if(howToPlay){
+            backToMain.registrerKlik(mx,my);
         }
 
     }

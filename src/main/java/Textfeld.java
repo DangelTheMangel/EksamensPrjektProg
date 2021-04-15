@@ -45,6 +45,7 @@ public class Textfeld {
     }
 
     void tegnTextFlet() {
+
         positionX = realPositionX * size;
         positionY = realPositionY * size;
         sizeX = realSizeX * size;
@@ -61,7 +62,7 @@ public class Textfeld {
         p.rect(positionX, positionY, sizeX, sizeY);
 
         p.fill(0);
-        p.textSize(16);
+        p.textSize(16 * size);
         p.text(indput, positionX + (sizeX / 16), positionY + (sizeY / 2));
         p.text(textFletNavn, positionX, positionY);
     }

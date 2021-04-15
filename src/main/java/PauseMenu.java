@@ -28,7 +28,7 @@ public class PauseMenu {
 
     void drawMenu() {
         p.clear();
-        p.background(200);
+        p.image(main.bg,0,0,p.width,p.height);
         btnResume.tegnKnap();
         btnSettings.tegnKnap();
         btnExitToMain.tegnKnap();
