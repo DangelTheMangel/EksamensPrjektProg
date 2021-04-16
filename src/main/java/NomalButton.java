@@ -8,12 +8,15 @@ import java.util.Scanner;
 
 public class NomalButton extends Button {
 
+    //---------- CONSTRUCTOR :) ----------\\
     NomalButton(PApplet papp, int posX, int posY, int sizeX, int sizeY, String text) {
         super(papp, posX, posY, sizeX, sizeY, text);
     }
+    //----------METHODS----------\\
 
+    //This function checks if the mouse is over the button and is clicked change it clicked to true
     @Override
-    void registrerKlik(float mouseX, float mouseY) {
+    void registerClick(float mouseX, float mouseY) {
         this.mouseX = mouseX;
         this.mouseY = mouseY;
         if (mouseX > positionX &&
@@ -30,12 +33,13 @@ public class NomalButton extends Button {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            klikket = true;
+            clicked = true;
         }
     }
 
+    //This funktion set clicked to false
     void registrerRelease() {
-        klikket = false;
+        clicked = false;
     }
 }
 

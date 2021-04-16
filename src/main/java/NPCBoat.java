@@ -2,13 +2,16 @@ import processing.core.PApplet;
 
 import java.util.ArrayList;
 
-public class CpuBoat extends Boat {
+public class NPCBoat extends Boat {
 
-
-    public CpuBoat(PApplet p, float x, float y, float s, float m) {
-        super(p, x, y, s, m);
+    //---------- CONSTRUCTOR :) ----------\\
+    public NPCBoat(PApplet p, float x, float y, float m) {
+        super(p, x, y, m);
     }
 
+    //----------METHODS----------\\
+
+    //This function controls the NPC turn.
     void Turn() {
        ///cpu og player deler åbenbart items så hvad du gøre ved dene ene sker der også hos den anden
         boolean canSeeShop = false;
@@ -32,29 +35,37 @@ public class CpuBoat extends Boat {
 
     }
 
-    void shop(ShopTile shopTile) { //buy();
+    //This feature allows opponents to choose to buy or sell items
+    void shop(ShopTile shopTile) {
+
+        //finds the shop menu
         ShopMenu shop = shopTile.shopMenu;
+        //the size of the shop items
         int s = shop.StockInventory.size();
+
+        //booleans that tell you if you have bought or sold something
         boolean boughtSomthing = false;
         boolean soultSomthing = false;
+
+        //chooses with 50% whether to buy something
         if (Math.random() < 0.5) {
-            System.out.println("køber lortet");
             buy(shop.StockInventory.get((int) p.random(0, s)), (int) p.random(1, 100));
             boughtSomthing = true;
         }
 
+        //chooses with 50% whether to sell something
         if (Math.random() < 0.5) {
-            System.out.println("sælger lortet");
             sell(inventory.get((int) p.random(0, inventory.size())), (int) p.random(1, 100));
             soultSomthing = true;
         }
 
-
+        //show nothing is bought or sold try again
         if (!boughtSomthing || !soultSomthing) {
             shop(shopTile);
         }
     }
 
+    //This function finds its selected item and sells x amount of it
     void sell(Item item, int amount) {
         if (money - item.value >= 0 && item.ammount - amount >= 0) {
             for (int i = 0; i < inventory.size(); ++i) {
@@ -79,6 +90,7 @@ public class CpuBoat extends Boat {
         }
     }
 
+    //This function finds its selected item and buys x amount of it
     void buy(Item item, int amount) {
         if (money - item.value >= 0 && item.ammount - amount >= 0) {
             for (int i = 0; i < inventory.size(); ++i) {
@@ -99,6 +111,7 @@ public class CpuBoat extends Boat {
         }
     }
 
+    //This function moves the opponents to a random place
     void Move() {
         int xMove = (int) p.random(-3, 3);
         int yMove = (int) p.random(-3, 3);

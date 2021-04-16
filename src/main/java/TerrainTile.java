@@ -3,29 +3,24 @@ import processing.core.PImage;
 
 public class TerrainTile extends Tile {
 
-
+    //---------- CONSTRUCTOR :) ----------\\
     public TerrainTile(PApplet p, String C, float x, float y) {
 
         super(p, C, x, y);
 
     }
+    //----------METHODS----------\\
 
     @Override
-    public void drawShopMenu(Player player, float scaleSize) {
-
-    }
+    public void drawShopMenu(Player player, float scaleSize) { }
 
     @Override
-    public void showShop(float s) {
-
-    }
+    public void showShop(float s) { }
 
     @Override
-    public void clickShop() {
+    public void clickShop() { }
 
-
-    }
-
+    //this function change the image on the tile. depends on the type of terran it is
     @Override
     public void setTileImage() {
         if (Contents.equals("WATER")) {

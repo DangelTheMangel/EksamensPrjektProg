@@ -1,13 +1,26 @@
 import processing.core.PApplet;
 
 public class ChooseGameMenu {
+    //Menu variables
     PApplet p;
+    //This is so the menu can easily access the game board
     GameBoard gb;
+    //Quick access to the main menu
     MainMenu mainMenu;
+
+    //About the menu can be seen
     Boolean visible = false;
-    Boolean needNytSpil = false;
+
+    //This variable is only used if you have completed a game.
+    // Then we would like the users to click on the
+    // button that is used to make a new game and not
+    // the one that opens the current game. therefore we hide it away
+    Boolean needNewGame = false;
+
+    //All menu buttons
     NomalButton btnPlay, btnLoadGame, btnNewGame, btnBackToMenu;
 
+    //---------- CONSTRUCTOR :) ----------\\
     ChooseGameMenu(PApplet p, GameBoard gb, MainMenu mainMenu) {
         this.p = p;
         this.gb = gb;
@@ -20,16 +33,19 @@ public class ChooseGameMenu {
 
     }
 
+    //----------METHODS----------\\
+
+    //draws the menu
     void drawMenu() {
         p.clear();
         p.image(main.bg,0,0,p.width,p.height);
-        btnPlay.tegnKnap();
+        btnPlay.drawButton();
 
 
-        btnLoadGame.tegnKnap();
-        btnNewGame.tegnKnap();
-        btnBackToMenu.tegnKnap();
-        if (btnPlay.klikket) {
+        btnLoadGame.drawButton();
+        btnNewGame.drawButton();
+        btnBackToMenu.drawButton();
+        if (btnPlay.clicked) {
              /*   gb.visible = true;
                 visible = false;
                 btnPlay.registrerRelease();*/
@@ -41,13 +57,13 @@ public class ChooseGameMenu {
             btnPlay.registrerRelease();
         }
 
-        if (btnLoadGame.klikket) {
+        if (btnLoadGame.clicked) {
             System.out.println("Bib bab og andre robotlyde");
             p.selectInput("Select a file to process:", "loadedMap");
             btnLoadGame.registrerRelease();
         }
 
-        if (btnNewGame.klikket) {
+        if (btnNewGame.clicked) {
             gb.scaleSize = mainMenu.scaleSize;
             gb.reSizeGamebord();
             gb.tileSet.clear();
@@ -58,11 +74,11 @@ public class ChooseGameMenu {
             gb.turnCount = 0;
             mainMenu.visible = false;
             visible = false;
-            needNytSpil = true;
+            needNewGame = true;
             btnNewGame.registrerRelease();
         }
 
-        if (btnBackToMenu.klikket) {
+        if (btnBackToMenu.clicked) {
             mainMenu.visible = true;
             visible = false;
             btnBackToMenu.registrerRelease();

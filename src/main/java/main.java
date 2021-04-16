@@ -11,38 +11,30 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
-/*
- * ✔️så man kan vinde
- * ✔️så man kan se et terning kast-casper
- * ✔️map generation - Christian
- * ✔️mængde af spiller i settings
- *tilføj lyd
- *✔️Menuer i havnen påvirker i din ryk??? - Christian
- *✔️ esc for at få menuen frem
- *✔️Når man vælger en tile på kortet vælger spillet automatisk ruten derhen - Christian
- * gøre ui pænere - laura/ casper
-
- * */
-
 public class main extends PApplet {
     public static void main(String[] args) {
 
         PApplet.main("main");
     }
+    //background music
     public static Clip bgmusic;
+    //all the menus
     public PauseMenu pauseMenu;
     public SettingMenu settingMenu;
     public static MainMenu mainMenu;
+    //The play the board
     public GameBoard gb;
+    //background image
     public static PImage bg;
 
     @Override
     public void settings() {
-
+        //sets the size of the window
         size(1280, 720);
     }
 
 
+    //sets up the game by loading music, pictures and constructing all the classes
     @Override
     public void setup() {
         bg = loadImage("Tegnebraet 2.png");
@@ -76,7 +68,7 @@ public class main extends PApplet {
 
 
 
-
+    //loaded mappt from csv file vilel put it in savemanger but it pde could not figure out
     public void loadedMap(File selection) {
         if (selection == null) {
             println("Window was closed or the user hit cancel.");
@@ -93,7 +85,7 @@ public class main extends PApplet {
         }
     }
 
-
+    //This function is suitable for anything on the window
     @Override
     public void draw() {
 
@@ -118,7 +110,7 @@ public class main extends PApplet {
 
     }
 
-
+    //Do this function when the mouse is clicked
     @Override
     public void mouseClicked() {
 
@@ -141,6 +133,7 @@ public class main extends PApplet {
 
     }
 
+    //This function runs when the keyboard is clicked
     @Override
     public void keyPressed() {
 
@@ -160,6 +153,7 @@ public class main extends PApplet {
 
     }
 
+    //This function runs when the keyboard is clicked
     public void keyTyped() {
 
         settingMenu.menuKeyTyped();

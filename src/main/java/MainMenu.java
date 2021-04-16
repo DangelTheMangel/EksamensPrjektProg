@@ -2,18 +2,25 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class MainMenu {
-    //hello mand tjek resize
+    //main menu variables
     PApplet p;
+    //quick access to all the menus and the like
     GameBoard gb;
     PauseMenu pauseMenu;
     ChooseGameMenu chooseGameMenu;
     SettingMenu settingMenu;
+    //boolean which determines whether the main menu can be viewed
     Boolean visible = true;
+    //This variable is the one that determines whether the howTopla image should be viewed
     Boolean howToPlay = false;
+    //This variable helps to scale all ui elements with the screen size
     float scaleSize = 1;
-    PImage bg,howTo;
-    NomalButton btnPlay, btnSettings, btnHowToPlay, btnLoadGame, btnCloseGame,backToMain;
+    //the image of the background and description of how to play
+    PImage bg, howTo;
+    //all the buttons
+    NomalButton btnPlay, btnSettings, btnHowToPlay, btnLoadGame, btnCloseGame, backToMain;
 
+    //---------- CONSTRUCTOR :) ----------\\
     MainMenu(PApplet p) {
         this.p = p;
 
@@ -25,24 +32,26 @@ public class MainMenu {
         chooseGameMenu = new ChooseGameMenu(p, gb, this);
         backToMain = new NomalButton(p, 540, 600, 200, 50, "Back to Menu");
         bg = p.loadImage("startside.png");
-        howTo= p.loadImage("how.png");
+        howTo = p.loadImage("how.png");
     }
+    //----------METHODS----------\\
 
+    //This function draws the menu
     void drawMenu() {
-        if (chooseGameMenu.visible&& !howToPlay) {
+        if (chooseGameMenu.visible && !howToPlay) {
             chooseGameMenu.drawMenu();
         }
 
         if (!chooseGameMenu.visible && !howToPlay) {
             p.clear();
-            p.image(bg,0,0,p.width,p.height);
-            btnPlay.tegnKnap();
-            btnSettings.tegnKnap();
-            btnLoadGame.tegnKnap();
-            btnHowToPlay.tegnKnap();
-            btnCloseGame.tegnKnap();
+            p.image(bg, 0, 0, p.width, p.height);
+            btnPlay.drawButton();
+            btnSettings.drawButton();
+            btnLoadGame.drawButton();
+            btnHowToPlay.drawButton();
+            btnCloseGame.drawButton();
 
-            if (btnPlay.klikket) {
+            if (btnPlay.clicked) {
 
 
                 chooseGameMenu.visible = true;
@@ -50,34 +59,34 @@ public class MainMenu {
                 btnPlay.registrerRelease();
             }
 
-            if (btnSettings.klikket) {
+            if (btnSettings.clicked) {
                 settingMenu.backToMainMenu = true;
                 settingMenu.visible = true;
                 visible = false;
                 btnSettings.registrerRelease();
             }
 
-            if (btnLoadGame.klikket) {
+            if (btnLoadGame.clicked) {
 
                 p.selectInput("Select a file to process:", "loadedMap");
                 btnLoadGame.registrerRelease();
             }
 
-            if (btnHowToPlay.klikket) {
+            if (btnHowToPlay.clicked) {
                 howToPlay = true;
                 btnHowToPlay.registrerRelease();
             }
 
-            if (btnCloseGame.klikket) {
+            if (btnCloseGame.clicked) {
                 p.exit();
                 btnCloseGame.registrerRelease();
 
             }
 
-        }else if(howToPlay) {
-            p.image(howTo,0,0,p.width,p.height);
-            backToMain.tegnKnap();
-            if (backToMain.klikket){
+        } else if (howToPlay) {
+            p.image(howTo, 0, 0, p.width, p.height);
+            backToMain.drawButton();
+            if (backToMain.clicked) {
                 howToPlay = false;
                 backToMain.registrerRelease();
             }
@@ -86,7 +95,7 @@ public class MainMenu {
 
     }
 
-
+    //This function for all buttons and look to fit with the screen size
     void reSizeMainMenu() {
 
         settingMenu.reSizeBtn(scaleSize, btnPlay);
@@ -99,31 +108,28 @@ public class MainMenu {
         settingMenu.reSizeBtn(scaleSize, chooseGameMenu.btnLoadGame);
         settingMenu.reSizeBtn(scaleSize, chooseGameMenu.btnNewGame);
         settingMenu.reSizeBtn(scaleSize, chooseGameMenu.btnPlay);
-        settingMenu.reSizeBtn(scaleSize,backToMain);
+        settingMenu.reSizeBtn(scaleSize, backToMain);
     }
 
+    //This function allows you to click on the menu
     void menuMouseClick(float mx, float my) {
-        if (!chooseGameMenu.visible&& !howToPlay) {
+        if (!chooseGameMenu.visible && !howToPlay) {
 
-            btnPlay.registrerKlik(mx, my);;
-            btnSettings.registrerKlik(mx, my);
-            btnLoadGame.registrerKlik(mx, my);
-            btnHowToPlay.registrerKlik(mx, my);
-            btnCloseGame.registrerKlik(mx, my);
-        } else if(!howToPlay) {
+            btnPlay.registerClick(mx, my);
 
-                chooseGameMenu.btnPlay.registrerKlik(mx, my);
-            chooseGameMenu.btnLoadGame.registrerKlik(mx, my);
-            chooseGameMenu.btnBackToMenu.registrerKlik(mx, my);
-            chooseGameMenu.btnNewGame.registrerKlik(mx, my);
-        }else if(howToPlay){
-            backToMain.registrerKlik(mx,my);
+            btnSettings.registerClick(mx, my);
+            btnLoadGame.registerClick(mx, my);
+            btnHowToPlay.registerClick(mx, my);
+            btnCloseGame.registerClick(mx, my);
+        } else if (!howToPlay) {
+
+            chooseGameMenu.btnPlay.registerClick(mx, my);
+            chooseGameMenu.btnLoadGame.registerClick(mx, my);
+            chooseGameMenu.btnBackToMenu.registerClick(mx, my);
+            chooseGameMenu.btnNewGame.registerClick(mx, my);
+        } else if (howToPlay) {
+            backToMain.registerClick(mx, my);
         }
 
     }
-
-    void menuKeyTyped() {
-
-    }
-
 }

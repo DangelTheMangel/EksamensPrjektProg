@@ -3,19 +3,24 @@ import processing.core.PApplet;
 import java.util.ArrayList;
 
 public class ShopMenu {
+    //the variables
     PApplet p;
+    //menu variables
     Boolean visible = false;
-
+    //list of standard inventory
     ArrayList<Item> StockInventory = new ArrayList<Item>();
+    //all the buttons
     NomalButton btnBuyBa, btnBuyRum, btnBuyEye, btnSellBa, btnSellRum, btnSellEye, btnCloseShop;
+    //the shop's prices
     float bananPrices, eyepachPrices, rumPrices;
 
+    //---------- CONSTRUCTOR :) ----------\\
     ShopMenu(PApplet p) {
         this.p = p;
         int xpos = 830, ypos = 150;
-        Item Banana = new Item(10, (int) p.random(0, 100), "Banana", "idk");
-        Item Rum = new Item(50, (int) p.random(0, 100), "Rum", "idk");
-        Item Eyepatch = new Item(30, (int) p.random(0, 100), "Eyepatch", "idk");
+        Item Banana = new Item(10, (int) p.random(0, 100), "Banana");
+        Item Rum = new Item(50, (int) p.random(0, 100), "Rum");
+        Item Eyepatch = new Item(30, (int) p.random(0, 100), "Eyepatch");
 
         StockInventory.add(Banana);
         StockInventory.add(Rum);
@@ -33,10 +38,10 @@ public class ShopMenu {
         bananPrices = determinePrice(StockInventory.get(0));
         rumPrices = determinePrice(StockInventory.get(1));
         eyepachPrices = determinePrice(StockInventory.get(2));
-
-
     }
+    //----------METHODS----------\\
 
+    //this function selects the price of the shop's items
     float determinePrice(Item item) {
         float itemPrices = item.value;
         float extra = p.random(-(itemPrices / 2), (itemPrices / 2));
@@ -45,64 +50,61 @@ public class ShopMenu {
 
     }
 
+    //This function draws the menu
     void drawMenu(Player player, float s) {
-        //880*scaleSize,150*scaleSize
         float xpos = 830 * s, ypos = 150 * s;
         p.fill(209, 166, 96, 255);
         p.rect(s * 830, s * 150, s * 400, s * 500);
         p.fill(0);
-        p.textSize(32*s);
+        p.textSize(32 * s);
         p.text("Shop", xpos + 200 * s - p.textWidth("Shop") / 2, ypos + 50 * s);
-        p.textSize(16*s);
+        p.textSize(16 * s);
         ArrayList<Item> t = StockInventory;
 
-        // p.text("Taske: " +"\n" +t.get(0).Name +t.get(0).ammount +"\n" + t.get(1).Name +t.get(1).ammount +"\n" + t.get(2).Name +t.get(2).ammount,s*850 ,s*150);
-
-
         //buy
-        p.text(t.get(2).Name + ": " + t.get(2).ammount + " Køb/sælg for: " + eyepachPrices , xpos + 20 * s, ypos + 100 * s);
-        btnBuyEye.tegnKnap();
-        if (btnBuyEye.klikket) {
+        p.text(t.get(2).Name + ": " + t.get(2).ammount + " Køb/sælg for: " + eyepachPrices, xpos + 20 * s, ypos + 100 * s);
+        btnBuyEye.drawButton();
+        if (btnBuyEye.clicked) {
             buyItem(StockInventory.get(2), player, btnBuyEye, eyepachPrices);
             btnBuyEye.registrerRelease();
         }
 
         //sell
-        btnSellEye.tegnKnap();
-        if (btnSellEye.klikket) {
+        btnSellEye.drawButton();
+        if (btnSellEye.clicked) {
             SellItem(player.inventory.get(2), player, btnSellEye, 1, eyepachPrices);
             btnSellEye.registrerRelease();
         }
 
 
         p.text(t.get(1).Name + ": " + t.get(1).ammount + " Køb/sælg for: " + rumPrices, xpos + 20 * s, ypos + 200 * s);
-        btnBuyRum.tegnKnap();
-        if (btnBuyRum.klikket) {
+        btnBuyRum.drawButton();
+        if (btnBuyRum.clicked) {
             buyItem(StockInventory.get(1), player, btnBuyRum, rumPrices);
             btnBuyRum.registrerRelease();
         }
 
-        btnSellRum.tegnKnap();
-        if (btnSellRum.klikket) {
+        btnSellRum.drawButton();
+        if (btnSellRum.clicked) {
             SellItem(player.inventory.get(1), player, btnSellRum, 1, rumPrices);
             btnSellRum.registrerRelease();
         }
 
-        p.text(t.get(0).Name + ": " + t.get(0).ammount+ " Køb/sælg for: " + bananPrices, xpos + 20 * s, ypos + 300 * s);
-        btnBuyBa.tegnKnap();
-        if (btnBuyBa.klikket) {
+        p.text(t.get(0).Name + ": " + t.get(0).ammount + " Køb/sælg for: " + bananPrices, xpos + 20 * s, ypos + 300 * s);
+        btnBuyBa.drawButton();
+        if (btnBuyBa.clicked) {
             buyItem(StockInventory.get(0), player, btnBuyBa, bananPrices);
             btnBuyBa.registrerRelease();
         }
 
-        btnSellBa.tegnKnap();
-        if (btnSellBa.klikket) {
+        btnSellBa.drawButton();
+        if (btnSellBa.clicked) {
             SellItem(player.inventory.get(0), player, btnSellBa, 1, bananPrices);
             btnSellBa.registrerRelease();
         }
 
-        btnCloseShop.tegnKnap();
-        if (btnCloseShop.klikket) {
+        btnCloseShop.drawButton();
+        if (btnCloseShop.clicked) {
 
             visible = false;
             btnCloseShop.registrerRelease();
@@ -111,6 +113,7 @@ public class ShopMenu {
 
     }
 
+    //This function for all buttons and look to fit with the screen size
     void reSizeShopMenu(float s) {
         btnBuyBa.size = s;
         btnBuyRum.size = s;
@@ -122,24 +125,22 @@ public class ShopMenu {
 
     }
 
-    void btbBuyItem(NomalButton btn, Player player, Item item) {
-
-    }
-
+    //This function allows you to click on the menu
     void shopMenuClicked() {
-        btnBuyBa.registrerKlik(p.mouseX, p.mouseY);
-        btnBuyEye.registrerKlik(p.mouseX, p.mouseY);
-        btnBuyRum.registrerKlik(p.mouseX, p.mouseY);
+        btnBuyBa.registerClick(p.mouseX, p.mouseY);
+        btnBuyEye.registerClick(p.mouseX, p.mouseY);
+        btnBuyRum.registerClick(p.mouseX, p.mouseY);
 
-        btnSellBa.registrerKlik(p.mouseX, p.mouseY);
-        btnSellEye.registrerKlik(p.mouseX, p.mouseY);
-        btnSellRum.registrerKlik(p.mouseX, p.mouseY);
+        btnSellBa.registerClick(p.mouseX, p.mouseY);
+        btnSellEye.registerClick(p.mouseX, p.mouseY);
+        btnSellRum.registerClick(p.mouseX, p.mouseY);
 
-        btnCloseShop.registrerKlik(p.mouseX, p.mouseY);
+        btnCloseShop.registerClick(p.mouseX, p.mouseY);
     }
 
+    //This function allows you to purchase items
     void buyItem(Item item, Player player, NomalButton btn, float itemPrices) {
-        if (player.money - itemPrices >= 0 && item.ammount - 1 >= 0 && btn.klikket) {
+        if (player.money - itemPrices >= 0 && item.ammount - 1 >= 0 && btn.clicked) {
             for (int i = 0; i < player.inventory.size(); ++i) {
                 System.out.println("itemName: " + item.Name + "|iName: " + player.inventory.get(i).Name + "|");
                 if (player.inventory.get(i).Name.equals(item.Name)) {
@@ -156,6 +157,7 @@ public class ShopMenu {
         }
     }
 
+    //This function allows you to sell items
     void SellItem(Item item, Player player, NomalButton btn, int amount, float itemPrices) {
 
         int sellAmount = item.ammount - amount;

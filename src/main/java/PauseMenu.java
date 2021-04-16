@@ -1,13 +1,19 @@
 import processing.core.PApplet;
 
 public class PauseMenu {
+
+    //menu variables
     PApplet p;
+    //Boolean that tells about the menu can be seen
     Boolean visible = false;
+    //quick access to the other menus
     GameBoard gb;
     MainMenu mainMenu;
     SettingMenu settingMenu;
+    //all the buttons
     NomalButton btnResume, btnSettings, btnExitToMain, btnSave;
 
+    //---------- CONSTRUCTOR :) ----------\\
     PauseMenu(PApplet p, SettingMenu settingMenu, MainMenu mainMenu) {
         this.p = p;
         this.mainMenu = mainMenu;
@@ -25,33 +31,35 @@ public class PauseMenu {
 
 
     }
+    //----------METHODS----------\\
 
+    //This function draws the menu
     void drawMenu() {
         p.clear();
         p.image(main.bg,0,0,p.width,p.height);
-        btnResume.tegnKnap();
-        btnSettings.tegnKnap();
-        btnExitToMain.tegnKnap();
-        btnSave.tegnKnap();
+        btnResume.drawButton();
+        btnSettings.drawButton();
+        btnExitToMain.drawButton();
+        btnSave.drawButton();
 
-        if (btnResume.klikket) {
+        if (btnResume.clicked) {
             aktiverGameBord();
         }
 
-        if (btnSettings.klikket) {
+        if (btnSettings.clicked) {
             settingMenu.backToMainMenu = false;
             settingMenu.visible = true;
             visible = false;
             btnSettings.registrerRelease();
         }
 
-        if (btnExitToMain.klikket) {
+        if (btnExitToMain.clicked) {
             btnExitToMain.registrerRelease();
             mainMenu.visible = true;
             visible = false;
         }
 
-        if (btnSave.klikket) {
+        if (btnSave.clicked) {
             gb.saveManger.saveGame(32, gb.tileSet);
             btnSave.registrerRelease();
         }
@@ -59,6 +67,7 @@ public class PauseMenu {
 
     }
 
+    //This function for all buttons and look to fit with the screen size
     void reSizePauseMenu() {
 
         float size = settingMenu.displayResolution[settingMenu.displayResolutionInt].z;
@@ -68,13 +77,15 @@ public class PauseMenu {
         settingMenu.reSizeBtn(size, btnSave);
     }
 
+    //This function allows you to click on the menu
     void clickMenu(float mx, float my) {
-        btnResume.registrerKlik(mx, my);
-        btnSettings.registrerKlik(mx, my);
-        btnExitToMain.registrerKlik(mx, my);
-        btnSave.registrerKlik(mx, my);
+        btnResume.registerClick(mx, my);
+        btnSettings.registerClick(mx, my);
+        btnExitToMain.registerClick(mx, my);
+        btnSave.registerClick(mx, my);
     }
 
+    //This function activates the game board
     void aktiverGameBord() {
         gb.visible = true;
         gb.reSizeGamebord();
