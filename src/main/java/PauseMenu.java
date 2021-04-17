@@ -55,6 +55,7 @@ public class PauseMenu {
 
         if (btnExitToMain.clicked) {
             btnExitToMain.registrerRelease();
+            mainMenu.chooseGameMenu.needNewGame = false;
             mainMenu.visible = true;
             visible = false;
         }

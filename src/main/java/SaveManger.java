@@ -28,6 +28,7 @@ public class SaveManger {
 
     //This function saves all information in the game in a csv file
     void saveGame(int numberOfTiles, ArrayList<Tile> tileSet) {
+        System.out.println("s");
         ArrayList<Tile> mapTiles = new ArrayList<Tile>();
         for (int i = 0; i < tileSet.size(); ++i) {
             String contents = tileSet.get(i).Contents;
@@ -65,6 +66,11 @@ public class SaveManger {
         f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         f.showSaveDialog(null);
         System.out.println(f.getCurrentDirectory());
+        try{
+            System.out.println(p.saveTable(map,f.getCurrentDirectory() + "GameSave"+p.day()+"d"+p.month()+"m"+p.year()+"y.csv"));
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
     }
 
@@ -245,22 +251,22 @@ public class SaveManger {
         ArrayList<Integer> sandTiles = new ArrayList<>();
         ArrayList<PVector> waterTiles = new ArrayList<>();
         int in = 0;
-        float xoff = 0.0f; // Start xoff at 0
+        float xNoise = 0.0f;
 
         for (int x = -1; x < numberOfTiles + 3; ++x) {
-            xoff += increment;   // Increment xoff
-            float yoff = 0.0f;   // For every xoff, start yoff at 0
-            for (int j = -1; j < numberOfTiles + 3; ++j) {
-                yoff += increment; // Increment yoff
-                float bright = p.noise(xoff, yoff) * 255;
-                Tile t = new TerrainTile(p, "", x, j);
-                if ((x <= 0 || j <= 0) || (33 <= x || 33 <= j)) {
+            xNoise += increment;
+            float yNoise = 0.0f;
+            for (int y = -1; y < numberOfTiles + 3; ++y) {
+                yNoise += increment;
+                float tileFloat = p.noise(xNoise, yNoise) * 255;
+                Tile t = new TerrainTile(p, "", x, y);
+                if ((x <= 0 || y <= 0) || (33 <= x || 33 <= y)) {
                     t.Contents = "BORDER";
                 } else {
-                    if (bright > 99) {
-                        waterTiles.add(new PVector(x, j));
+                    if (tileFloat > 99) {
+                        waterTiles.add(new PVector(x, y));
                         t.Contents = "WATER";
-                    } else if (bright > 85) {
+                    } else if (tileFloat > 85) {
                         sandTiles.add(in);
                         t.Contents = "SAND";
                     } else {
