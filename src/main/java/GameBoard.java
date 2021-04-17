@@ -423,8 +423,9 @@ public class GameBoard {
             }
         }
 
+        System.out.println("cpu " + winner.calRating() + " player" + player.calRating());
 
-        if (winner.calRating() < player.calRating()) {
+        if (winner.calRating()  <= player.calRating()) {
             theWinner = player;
             playerWon = true;
         } else {
