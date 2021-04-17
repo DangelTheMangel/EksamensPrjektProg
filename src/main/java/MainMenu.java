@@ -122,7 +122,7 @@ public class MainMenu {
             btnHowToPlay.registerClick(mx, my);
             btnCloseGame.registerClick(mx, my);
         } else if (!howToPlay) {
-
+            if(!chooseGameMenu.needNewGame)
             chooseGameMenu.btnPlay.registerClick(mx, my);
             chooseGameMenu.btnLoadGame.registerClick(mx, my);
             chooseGameMenu.btnBackToMenu.registerClick(mx, my);

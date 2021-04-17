@@ -296,6 +296,7 @@ public class GameBoard {
                 visible = false;
 
                 main.mainMenu.visible = true;
+                main.mainMenu.chooseGameMenu.needNewGame = true;
                 saveManger.increment += p.random(-0.02f, 0.02f);
 
                 main.mainMenu.chooseGameMenu.needNewGame = true;

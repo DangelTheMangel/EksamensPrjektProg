@@ -39,6 +39,7 @@ public class ChooseGameMenu {
     void drawMenu() {
         p.clear();
         p.image(main.bg,0,0,p.width,p.height);
+        if(!needNewGame)
         btnPlay.drawButton();
 
 
@@ -46,24 +47,25 @@ public class ChooseGameMenu {
         btnNewGame.drawButton();
         btnBackToMenu.drawButton();
         if (btnPlay.clicked) {
-             /*   gb.visible = true;
-                visible = false;
-                btnPlay.registrerRelease();*/
+
             gb.scaleSize = mainMenu.scaleSize;
             gb.reSizeGamebord();
             gb.visible = true;
+            needNewGame =false;
             mainMenu.visible = false;
             visible = false;
             btnPlay.registrerRelease();
         }
 
         if (btnLoadGame.clicked) {
+            needNewGame =false;
             System.out.println("Bib bab og andre robotlyde");
             p.selectInput("Select a file to process:", "loadedMap");
             btnLoadGame.registrerRelease();
         }
 
         if (btnNewGame.clicked) {
+            needNewGame =false;
             gb.scaleSize = mainMenu.scaleSize;
             gb.reSizeGamebord();
             gb.tileSet.clear();
