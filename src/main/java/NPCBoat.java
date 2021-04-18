@@ -29,7 +29,7 @@ public class NPCBoat extends Boat {
             shop(shopTileset.get(random));
         } else {
             System.out.println("Valgte at rykke");
-            Move();
+            Move(0);
         }
 
 
@@ -49,13 +49,19 @@ public class NPCBoat extends Boat {
 
         //chooses with 50% whether to buy something
         if (Math.random() < 0.5) {
-            buy(shop.StockInventory.get((int) p.random(0, s)), (int) p.random(1, 100));
+            Item item = shop.StockInventory.get((int) p.random(0, s));
+            int amount = (int) (money/item.value);
+            amount = (int) p.random(amount/2,amount);
+            buy(item, amount);
             boughtSomthing = true;
         }
 
         //chooses with 50% whether to sell something
         if (Math.random() < 0.5) {
-            sell(inventory.get((int) p.random(0, inventory.size())), (int) p.random(1, 100));
+            Item item = shop.StockInventory.get((int) p.random(0, s));
+            int amount = item.ammount;
+            amount = (int) p.random(amount/2,amount);
+            sell(item, amount);
             soultSomthing = true;
         }
 
@@ -112,7 +118,7 @@ public class NPCBoat extends Boat {
     }
 
     //This function moves the opponents to a random place
-    void Move() {
+    void Move(int trys) {
         int xMove = (int) p.random(-3, 3);
         int yMove = (int) p.random(-3, 3);
         float newX = (int) (xPos + xMove);
@@ -145,8 +151,8 @@ public class NPCBoat extends Boat {
             }
         }
 
-        if (haveFoundMove == false) {
-            Move();
+        if (haveFoundMove == false&& trys<10) {
+            Move(trys+1);
         }
 
     }
